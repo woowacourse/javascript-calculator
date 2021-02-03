@@ -1,0 +1,11 @@
+{
+  "name": "javascript-calculator",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "https://github.com/jum0/javascript-calculator.git",
+  "author": "jum0 <wnsah052@naver.com>",
+  "license": "MIT",
+  "dependencies": {
+    "cypress": "^6.4.0"
+  }
+}
