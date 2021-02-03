@@ -5,8 +5,10 @@
 ### macOS ###
 # General
 .DS_Store
+.vscode
 .AppleDouble
 .LSOverride
+.node_modules
 
 # Icon must end with two \r
 Icon
