@@ -40,6 +40,11 @@ button {
 	background-color: orange;
 }
 
+.operations button.clicked-operation {
+	background-color: white;
+	color: orange;
+}
+
 .digits button {
 	background-color: #efefef;
 }
