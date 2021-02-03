@@ -1,0 +1,20 @@
+{
+  "name": "javascript-calculator",
+  "version": "1.0.0",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Puterism/javascript-calculator.git"
+  },
+  "author": "",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Puterism/javascript-calculator/issues"
+  },
+  "homepage": "https://github.com/Puterism/javascript-calculator#readme",
+  "dependencies": {
+    "cypress": "^6.4.0"
+  }
+}
