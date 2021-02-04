@@ -12,12 +12,14 @@
 </p>
 
 ## 🔥 Projects!
+
 <p align="middle">
   <img width="300" src="https://techcourse-storage.s3.ap-northeast-2.amazonaws.com/805329299a1a43c4850c410a545caf24">
 </p>
 
 ## 🎯 기능 요구사항
 
+- [ ] 입력한 숫자와 연산자를 계산기에 입력한다.
 - [ ] 2개의 숫자에 대해 덧셈이 가능하다.
 - [ ] 2개의 숫자에 대해 뺄셈이 가능하다.
 - [ ] 2개의 숫자에 대해 곱셈이 가능하다.
@@ -35,19 +37,23 @@
 <br/>
 
 ## 📄 참고 사항
-* 숫자 입력은 **클릭**으로만 가능하다.
+
+- 숫자 입력은 **클릭**으로만 가능하다.
 
 <br/>
 
 ## 👏 Contributing
-만약 미션 수행 중에 개선사항이 보인다면, 언제든 자유롭게 PR을 보내주세요. 
+
+만약 미션 수행 중에 개선사항이 보인다면, 언제든 자유롭게 PR을 보내주세요.
 
 <br/>
 
 ## 🐞 Bug Report
+
 버그를 발견한다면, [Issues](https://github.com/woowacourse/javascript-calculator/issues) 에 등록 후 @eastjun에게 dm을 보내주세요.
 
 <br/>
 
 ## 📝 License
+
 This project is [MIT](https://github.com/woowacourse/javascript-calculator/blob/master/LICENSE) licensed.
