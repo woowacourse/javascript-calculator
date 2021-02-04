@@ -4,7 +4,7 @@
   "description": "계산기 미션 with TDD",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "cypress": "./node_modules/.bin/cypress open"
   },
   "repository": {
     "type": "git",
@@ -19,6 +19,7 @@
   "homepage": "https://github.com/YUJO42/javascript-calculator#readme",
   "devDependencies": {
     "babel-eslint": "^10.1.0",
+    "cypress": "^6.4.0",
     "eslint": "^7.2.0",
     "eslint-config-airbnb-base": "^14.2.1",
     "eslint-config-prettier": "^7.2.0",
