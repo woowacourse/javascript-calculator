@@ -1,6 +1,7 @@
 class CalculatorView {
   constructor(calculator) {
     this.calculator = calculator;
+    this.handleOperator();
   }
 
   addNumber(num) {
@@ -10,6 +11,7 @@ class CalculatorView {
   }
 
   addOperator(operator) {
+    console.log(operator);
     // 연산자값 받기
     // 유효성 검사
     // 통과시 string에 넣기
@@ -24,7 +26,20 @@ class CalculatorView {
     });
   }
 
-  handleOperator() {}
+  handleOperator() {
+    const operationBtns = document.querySelectorAll(".operation");
+    operationBtns.forEach(operationBtn => {
+      operationBtn.addEventListener("click", () => {
+        if (operationBtn.innerHTML === "X") {
+          return this.addOperator("*");
+        } else if (operationBtn.innerHTML === "=") {
+          return this.calculator.operate();
+        }
+
+        return this.addOperator(operationBtn.innerHTML);
+      });
+    });
+  }
 }
 
 export default CalculatorView;
