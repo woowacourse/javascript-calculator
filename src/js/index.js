@@ -53,8 +53,17 @@ class Calculator {
     let result = 0;
     if (this.operator === '+') {
       result = this.operands[0] + this.operands[1];
+    } else if (this.operator === '-') {
+      result = this.operands[0] - this.operands[1];
+    } else if (this.operator === 'X') {
+      result = this.operands[0] * this.operands[1];
+    } else if (this.operator === '/') {
+      if (this.operands[1] === 0) {
+        result = 'NaN';
+      } else {
+        result = (this.operands[0] / this.operands[1]).toFixed(3);
+      }
     }
-    console.log(this.operands[0] + this.operands[1]);
 
     this.$.total.innerText = result;
   }
