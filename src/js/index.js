@@ -1,20 +1,20 @@
 const calculator = document.querySelector('.calculator');
 const total = document.querySelector('#total');
-let firstOperand;
-let secondOperand;
-let operator;
+let firstOperand = null;
+let secondOperand = null;
+let operator = '';
 let isClickedOperator = false;
 
 calculator.addEventListener('click', (e) => {
   const { className } = e.target;
 
   if (className === 'modifier') {
-    firstOperand = 0;
-    secondOperand = 0;
+    firstOperand = null;
+    secondOperand = null;
     operator = '';
     isClickedOperator = false;
-
     total.innerText = 0;
+
     document
       .querySelector('.clicked-operation')
       ?.classList.remove('clicked-operation');
@@ -41,16 +41,18 @@ calculator.addEventListener('click', (e) => {
 
     if (total.innerText.length === 3) {
       alert('3자리 이하의 숫자를 입력해주세요.');
+
       return;
     }
 
     const clickedDigit = Number(e.target.innerText);
     const displayedValue = Number(total.innerText) * 10 + clickedDigit;
     total.innerText = displayedValue;
-    console.log(displayedValue);
   }
 
   if (className === 'operation') {
+    const clickedOperator = e.target.innerText;
+
     if (clickedOperator === '=') {
       if (operator === '') {
         alert('두번째 숫자와 연산자를 선택해주세요.');
@@ -63,14 +65,13 @@ calculator.addEventListener('click', (e) => {
 
         return;
       }
-    document
-      .querySelector('.clicked-operation')
-      ?.classList.remove('clicked-operation');
-    e.target.classList.add('clicked-operation');
 
-    const clickedOperator = e.target.innerText;
+      document
+        .querySelector('.clicked-operation')
+        ?.classList.remove('clicked-operation');
 
-    if (clickedOperator === '=') {
+      e.target.classList.add('clicked-operation');
+
       secondOperand = Number(total.innerText);
 
       let displayedValue;
@@ -84,9 +85,22 @@ calculator.addEventListener('click', (e) => {
         displayedValue = Math.floor(firstOperand / secondOperand);
       }
       total.innerText = displayedValue;
-    } else {
-      operator = clickedOperator;
-      isClickedOperator = true;
+
+      return;
     }
+
+    document
+      .querySelector('.clicked-operation')
+      ?.classList.remove('clicked-operation');
+
+    if (firstOperand !== null) {
+      alert('2개의 숫자에 대한 계산만 가능합니다.');
+
+      return;
+    }
+
+    operator = clickedOperator;
+    isClickedOperator = true;
+    e.target.classList.add('clicked-operation');
   }
 });
