@@ -1,19 +1,21 @@
 {
   // 코드 포맷을 prettier로 설정
   "plugins": [
-    "prettier"
+    "prettier",
+    "cypress"
   ],
   
   // eslint의 룰을 기본 권장설정으로 설정
   "extends": [
     "eslint:recommended",
-    "plugin:prettier/recommended"
+    "plugin:prettier/recommended",
+    "plugin:cypress/recommended"
   ],
   
   // 코드를 해석하는 parser에 대한 설정
   "parserOptions": {
     // 자바스크립트 버전, 7은 ECMA2016
-    "ecmaVersion": 7,
+    "ecmaVersion": 2021,
     // 모듈 export를 위해 import, export를 사용 가능여부를 설정, script는 사용불가
     "sourceType": "module",
     // jsx 허용을 설정, back-end 설정이기 때문에 사용 안함
@@ -39,4 +41,5 @@
     // prettier에 맞게 룰을 설정
     "prettier/prettier": "error"
   }
+
 }
