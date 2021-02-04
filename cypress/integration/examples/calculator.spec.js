@@ -1,3 +1,6 @@
+const { expect } = require("chai");
+const { describe } = require("mocha");
+
 describe("ui-click", () => {
   beforeEach(() => {
     // 페이지 접속. 띄워진 서버 port를 작성해주세요.
@@ -33,5 +36,27 @@ describe("ui-click", () => {
   it("AC 버튼을 누르면 초기화된다", () => {
     cy.get(".modifier").click();
     cy.get("#total").should("have.text", 0);
+  });
+});
+
+describe("operate number", () => {
+  it("두수를 더한다", () => {
+    const { add } = require("../../../src/js/operator.js");
+    expect(add(2, 3).to.equal(5));
+  });
+
+  it("두수를 뺀다", () => {
+    const { minus } = require("../../../src/js/operator.js");
+    expect(minus(3, 1).to.equal(2));
+  });
+
+  it("두수를 곱한다", () => {
+    const { multiply } = require("../../../src/js/operator.js");
+    expect(multiply(2, 3).to.equal(6));
+  });
+
+  it("두수를 나눈다", () => {
+    const { divide } = require("../../../src/js/operator.js");
+    expect(divide(4, 2).to.equal(2));
   });
 });
