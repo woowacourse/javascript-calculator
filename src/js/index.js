@@ -55,7 +55,7 @@ calculator.addEventListener('click', (e) => {
 
     if (clickedOperator === '=') {
       if (operator === '') {
-        alert('두번째 숫자와 연산자를 선택해주세요.');
+        alert('연산자를 선택해주세요.');
 
         return;
       }
