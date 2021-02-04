@@ -117,9 +117,8 @@ describe('calculator', () => {
     });
   });
 
-  it('곱셈 연산 -999 * 999 의 결과값이 -998001이 나오는지 확인한다.', () => {
+  it('곱셈 연산 999 * 999 의 결과값이 998001이 나오는지 확인한다.', () => {
     cy.get('#total').then(() => {
-      cy.get('.operations').contains('-').click();
       cy.get('.digits').contains('9').click();
       cy.get('.digits').contains('9').click();
       cy.get('.digits').contains('9').click();
@@ -132,7 +131,7 @@ describe('calculator', () => {
 
       cy.get('.operations').contains('=').click();
 
-      cy.get('#total').should('have.text', '-998001');
+      cy.get('#total').should('have.text', '998001');
     });
   });
 
