@@ -53,19 +53,44 @@ function calculation(operation, firstInput, operator) {
   return firstInput;
 }
 
+function initState() {
+  state.tempInput = "";
+  state.firstInput = "";
+  state.secondInput = "";
+  state.operation = "";
+}
+
+function isDivideByZeroPossible() {
+  let isDivideByZeroPossible = false;
+
+  if (state.operation === "/" && state.secondInput === "0") {
+    isDivideByZeroPossible = true;
+    initState();
+  }
+
+  return isDivideByZeroPossible;
+}
+
 function onClickedEqual() {
   const operation = document.getElementsByClassName("operation")[4];
   const total = document.getElementById("total");
+  let result = "";
 
   operation.addEventListener("click", () => {
     if (state.operation === "X") {
       state.operation = "*";
     }
-    let result = parseInt(
-      eval(state.firstInput + state.operation + state.secondInput)
-    );
 
+    if (isDivideByZeroPossible()) {
+      result = "오류";
+    } else {
+      result = parseInt(
+        eval(state.firstInput + state.operation + state.secondInput)
+      );
+      console.log(state);
+    }
     total.innerText = result;
+    state.firstInput = String(result);
   });
 }
 
