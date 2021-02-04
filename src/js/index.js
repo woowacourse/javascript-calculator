@@ -1,8 +1,26 @@
+const OPERATORS = '/*-+=';
+const LEN_LIMIT = 3;
 const $total = document.querySelector('#total');
 const $digits = document.querySelector('.digits');
 const $operations = document.querySelector('.operations');
 
+const isValidLength = () => {
+  let displayValue = $total.innerText;
+  let operator = displayValue.find((v) => OPERATORS.includes(v));
+
+  if (!operator) {
+    return displayValue.length < LEN_LIMIT;
+  }
+
+  return displayValue
+    .split(operator)
+    .every((digits) => digits.length < LEN_LIMIT);
+};
+
 const putNumber = ({ target }) => {
+  if (!isValidLength()) {
+    return alert('숫자는 세 자리까지만 입력 가능합니다!');
+  }
   if ($total.innerText === '0') {
     return ($total.innerText = target.innerText);
   }
