@@ -1,3 +1,5 @@
+const { describe } = require("mocha");
+
 describe("ui-click", () => {
   beforeEach(() => {
     // 페이지 접속. 띄워진 서버 port를 작성해주세요.
@@ -41,6 +43,15 @@ describe("ui-click", () => {
     cy.get(".operation").eq(3).click().should("have.text", "+");
     cy.get(".digit").eq(1).click().should("have.text", 8);
     cy.get("#total").should("have.text", "9+8");
+  });
+
+  // 계산식 계산
+  it("계산식을 계산한다", () => {
+    cy.get(".digit").eq(0).click().should("have.text", 29);
+    cy.get(".operation").eq(3).click().should("have.text", "+");
+    cy.get(".digit").eq(1).click().should("have.text", 81);
+    cy.get(".operation").eq(4).click().shoud("have.text", "=");
+    cy.get("#total").should("have.text", "110");
   });
 });
 
