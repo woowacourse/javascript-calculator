@@ -31,16 +31,28 @@ calculator.addEventListener('click', (e) => {
   }
 
   if (className === 'operation') {
+    document
+      .querySelector('.clicked-operation')
+      ?.classList.remove('clicked-operation');
+    e.target.classList.add('clicked-operation');
+
     const clickedOperator = e.target.innerText;
 
     if (clickedOperator === '=') {
+      secondOperand = Number(total.innerText);
+
+      let displayedValue;
+      if (operator === '+') {
+        displayedValue = firstOperand + secondOperand;
+      } else if (operator === '-') {
+        displayedValue = firstOperand - secondOperand;
+      } else if (operator === 'X') {
+        displayedValue = firstOperand * secondOperand;
+      } else if (operator === '/') {
+        displayedValue = Math.floor(firstOperand / secondOperand);
+      }
+      total.innerText = displayedValue;
     } else {
-      document
-        .querySelector('.clicked-operation')
-        ?.classList.remove('clicked-operation');
-
-      e.target.classList.add('clicked-operation');
-
       operator = clickedOperator;
       isClickedOperator = true;
     }
