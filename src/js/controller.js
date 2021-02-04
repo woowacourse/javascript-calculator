@@ -6,6 +6,11 @@ class Calculator {
     this.operator = "0";
   }
 
+  showResult() {
+    const resultInput = document.querySelector("#total");
+    resultInput.innerHTML = this.operator;
+  }
+
   addInput(value) {
     this.operator += value;
   }
@@ -13,12 +18,14 @@ class Calculator {
   addNumber(num) {
     if (isNumberOverThreeChar(num)) {
       this.addInput(num);
+      this.showResult();
     }
   }
 
   addOperator(operator) {
     if (isOperatorOverTwoChar(operator)) {
       this.addInput(operator);
+      this.showResult();
     }
   }
 
