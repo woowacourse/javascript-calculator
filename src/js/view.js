@@ -4,24 +4,11 @@ class CalculatorView {
     this.handleOperator();
   }
 
-  addNumber(num) {
-    // 숫자값 받기
-    // 유효성 검사
-    // 통과시 string에 넣기
-  }
-
-  addOperator(operator) {
-    console.log(operator);
-    // 연산자값 받기
-    // 유효성 검사
-    // 통과시 string에 넣기
-  }
-
   handleNumber() {
     const digitBtns = document.querySelectorAll(".digit");
     digitBtns.forEach(digitBtn => {
       digitBtn.addEventListener("click", () => {
-        this.addNumber(digitBtn.innerHTML);
+        this.calculator.addNumber(digitBtn.innerHTML);
       });
     });
   }
@@ -31,12 +18,12 @@ class CalculatorView {
     operationBtns.forEach(operationBtn => {
       operationBtn.addEventListener("click", () => {
         if (operationBtn.innerHTML === "X") {
-          return this.addOperator("*");
+          return this.calculator.addOperator("*");
         } else if (operationBtn.innerHTML === "=") {
           return this.calculator.operate();
         }
 
-        return this.addOperator(operationBtn.innerHTML);
+        return this.calculator.addOperator(operationBtn.innerHTML);
       });
     });
   }
