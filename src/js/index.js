@@ -4,7 +4,7 @@ class Calculator {
       total: document.querySelector('#total'),
       digits: document.querySelector('.digits'),
       modifiers: document.querySelector('.modifiers'),
-      operations: document.querySelector('.operations'),
+      operations: document.querySelector('.operations')
     };
 
     this.operands = [];
@@ -61,7 +61,7 @@ class Calculator {
       if (this.operands[1] === 0) {
         result = 'NaN';
       } else {
-        result = (this.operands[0] / this.operands[1]).toFixed(3);
+        result = Math.floor(this.operands[0] / this.operands[1]);
       }
     }
 
@@ -71,10 +71,7 @@ class Calculator {
   setEventListener() {
     this.$.digits.addEventListener('click', this.onClickDigit.bind(this));
     this.$.modifiers.addEventListener('click', this.onClickModifier.bind(this));
-    this.$.operations.addEventListener(
-      'click',
-      this.onClickOperation.bind(this)
-    );
+    this.$.operations.addEventListener('click', this.onClickOperation.bind(this));
   }
 
   allClear() {
