@@ -6,6 +6,6 @@
   "author": "jum0 <wnsah052@naver.com>",
   "license": "MIT",
   "dependencies": {
-    "cypress": "^6.4.0"
+    "cypress": "6.2.1"
   }
 }

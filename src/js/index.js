@@ -27,14 +27,18 @@ const init = () => {
         if (firstNumber.charAt(0) === '0') {
           firstNumber = e.target.innerText;
         } else {
-          firstNumber += e.target.innerText;
+          if (firstNumber.length < 3) {
+            firstNumber += e.target.innerText;
+          }
         }
         console.log(firstNumber);
         resultArea.innerText = firstNumber;
       } else { // secondNumber
-        secondNumber += e.target.innerText;
-        console.log(secondNumber);
-        resultArea.innerText = secondNumber;
+        if (secondNumber.length < 3) {
+          secondNumber += e.target.innerText;
+          console.log(secondNumber);
+          resultArea.innerText = secondNumber;
+        }
       }
 
     })
@@ -54,7 +58,7 @@ const init = () => {
         }
 
         console.log(result);
-        resultArea.innerText = result;
+        resultArea.innerText = `${result}`;
       });
     } else {
       operatorElement.addEventListener('click', (e) => {
