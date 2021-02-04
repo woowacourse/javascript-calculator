@@ -1,9 +1,10 @@
-const OPERATORS = ['/', '*', '-', '+'];
+const OPERATORS = ['/', 'X', '-', '+'];
 const LEN_LIMIT = 3;
 const $total = document.querySelector('#total');
 const $digits = document.querySelector('.digits');
 const $operations = document.querySelector('.operations');
 const $equalSign = document.querySelector('#equal-sign');
+const $modifier = document.querySelector('.modifier');
 
 const isValidLength = () => {
   const displayValue = $total.innerText;
@@ -64,6 +65,11 @@ const putResult = () => {
   );
 };
 
+const clearDisplay = () => {
+  $total.innerText = '0';
+};
+
 $digits.addEventListener('click', putNumber);
 $operations.addEventListener('click', putOperator);
 $equalSign.addEventListener('click', putResult);
+$modifier.addEventListener('click', clearDisplay);
