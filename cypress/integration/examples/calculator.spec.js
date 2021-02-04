@@ -79,15 +79,15 @@ describe("operate number", () => {
 // 유효성 검사
 describe("check valid operator", () => {
   it("숫자가 3자리 초과인지 확인한다", () => {
-    const { isNumberOverThreeChar } = require("../../../src/js/valid.js");
-    expect(isNumberOverThreeChar("43+102").to.equal(false));
-    expect(isNumberOverThreeChar("529*34").to.equal(true));
+    const { isNumberLowerThreeChar } = require("../../../src/js/valid.js");
+    expect(isNumberLowerThreeChar("43+102").to.equal(false));
+    expect(isNumberLowerThreeChar("529*34").to.equal(true));
   });
 
   it("연산자가 두번 연속 나오는지 확인한다", () => {
-    const { isOperatorOverTwoChar } = require("../../../src/js/vaild.js");
-    expect(isOperatorOverTwoChar("18+").to.equal(false));
-    expect(isOperatorOverTwoChar("324").to.equal(true));
+    const { isOperatorLowerTwoChar } = require("../../../src/js/vaild.js");
+    expect(isOperatorLowerTwoChar("18+").to.equal(false));
+    expect(isOperatorLowerTwoChar("324").to.equal(true));
   });
 });
 

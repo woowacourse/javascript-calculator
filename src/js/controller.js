@@ -1,5 +1,5 @@
 import { add, minus, multiply, divide, dropDecimalPoint } from "./operator.js";
-import { isNumberOverThreeChar, isOperatorOverTwoChar } from "./valid.js";
+import { isNumberLowerThreeChar, isOperatorLowerTwoChar } from "./valid.js";
 
 class Calculator {
   constructor() {
@@ -12,7 +12,7 @@ class Calculator {
   }
 
   addInput(value) {
-    if (this.operator === "0") {
+    if (this.operator === "0" && !isNaN(value)) {
       this.operator = value;
     } else {
       this.operator += value;
@@ -20,14 +20,14 @@ class Calculator {
   }
 
   addNumber(num) {
-    if (isNumberOverThreeChar(this.operator)) {
+    if (isNumberLowerThreeChar(this.operator)) {
       this.addInput(num);
       this.showResult();
     }
   }
 
   addOperator(operator) {
-    if (isOperatorOverTwoChar(this.operator)) {
+    if (isOperatorLowerTwoChar(this.operator)) {
       this.addInput(operator);
       this.showResult();
     }
@@ -36,7 +36,6 @@ class Calculator {
   operate() {
     const inputOperator = this.operator.replace(/[0-9]/g, "");
     const [num1, num2] = this.operator.split(/[*+-/]/).map(x => parseInt(x));
-    console.log(inputOperator, num1, num2);
     if ("+" === inputOperator) {
       this.operator = add(num1, num2);
     } else if ("-" === inputOperator) {
