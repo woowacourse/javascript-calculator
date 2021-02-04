@@ -1,3 +1,4 @@
+import { INFINITE } from './contants.js';
 import { totalBox } from './store.js';
 import Controller from './Controller.js';
 import View from './View.js';
@@ -9,6 +10,13 @@ export const clickHandler = (event) => {
   switch ($click.className) {
     case 'operation':
       if (inputValue === '=') {
+        const calculatedValue = Controller.getCalculatedValue(totalBox.value);
+        if (!isFinite(calculatedValue)) {
+          // clear value
+          View.render(INFINITE);
+        }
+        totalBox.value = calculatedValue;
+        View.render(calculatedValue);
       } else {
         Controller.appendValue(inputValue);
         View.render(totalBox.value);
