@@ -25,4 +25,9 @@ describe('click event', () => {
     cy.get('.digit').contains('4').click();
     cy.get('#total').should('have.text', '123');
   });
+
+  it('AC 버튼 입력', () => {
+    cy.get('.modifier').click();
+    cy.get('#total').should('have.text', '0');
+  });
 });

@@ -1,9 +1,8 @@
 export default function Calculator() {
   this.$total = document.querySelector('#total');
-  this.$digits = document.querySelector('.digits');
   this.number = '0';
 
-  this.$digits.addEventListener('click', (e) => {
+  document.querySelector('.digits').addEventListener('click', (e) => {
     if (!e.target.classList.contains('digit')) {
       return;
     }
@@ -18,6 +17,10 @@ export default function Calculator() {
     }
 
     this.setState(this.number + e.target.textContent);
+  });
+
+  document.querySelector('.modifier').addEventListener('click', (e) => {
+    this.setState('0');
   });
 
   this.setState = (nextNumber) => {
