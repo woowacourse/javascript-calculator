@@ -49,4 +49,49 @@ describe('ui-counter', () => {
       .should('have.css', 'color', 'rgb(255, 165, 0)');
   });
 
+  it('2개의 숫자에 대해 뺄셈이 가능하다.', () => {
+    //  1. 초기에 표시되는 값은 0이다.
+    cy.get('#total').should('have.text', '0');
+
+    // 2. 6 0 4 을 차례대로 클릭한다. -> 표시되는 값은 6 60 604 이다.
+    cy.get('.digits').contains('6').click();
+    cy.get('#total').should('have.text', '6');
+
+    cy.get('.digits').contains('0').click();
+    cy.get('#total').should('have.text', '60');
+
+    cy.get('.digits').contains('4').click();
+    cy.get('#total').should('have.text', '604');
+
+    // 3. '-'을 클릭한다. -> '-'버튼의 배경색이 white로, 글자색이 Orange로 변경된다
+    cy.get('.operations').contains('-').click();
+    cy.get('.operations')
+      .contains('-')
+      .should('have.css', 'background-color', 'rgb(255, 255, 255)')
+      .should('have.css', 'color', 'rgb(255, 165, 0)');
+
+    // 4. 9를 클릭한다. -> '-'버튼의 배경색이 Orange로, 글자색이 black으로 변경되고표시값은 9이다.
+    cy.get('.digits').contains('9').click();
+    cy.get('#total').should('have.text', '9');
+    cy.get('.operations')
+      .contains('-')
+      .should('have.css', 'background-color', 'rgb(255, 165, 0)')
+      .should('have.css', 'color', 'rgb(0, 0, 0)');
+
+    // 5. 8 7을 차례대로 클릭한다 -> 표시값은 98 987이다.
+    cy.get('.digits').contains('8').click();
+    cy.get('#total').should('have.text', '98');
+
+    cy.get('.digits').contains('7').click();
+    cy.get('#total').should('have.text', '987');
+
+    // '='을 클릭한다. -> 표시되는 값은 -383이 되고, '='버튼의 배경색이 white로, 글자색이 Orange로 변경된다
+    cy.get('.operations').contains('=').click();
+    cy.get('#total').should('have.text', '-383');
+    cy.get('.operations')
+      .contains('=')
+      .should('have.css', 'background-color', 'rgb(255, 255, 255)')
+      .should('have.css', 'color', 'rgb(255, 165, 0)');
+  });
+
 });
