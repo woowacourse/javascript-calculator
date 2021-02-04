@@ -1,6 +1,5 @@
 import { totalBox } from './store.js';
 import Input from './Input.js';
-import Calculator from './Calculator.js';
 
 export default class Controller {
   static appendValue(inputValue) {

@@ -1,0 +1,11 @@
+{
+  "name": "javascript-calculator",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "https://github.com/WoowatechTeam-ChrisAndBroccoli/javascript-calculator",
+  "author": "swon3210 <swon3210@gmail.com>",
+  "license": "MIT",
+  "devDependencies": {
+    "cypress": "^6.4.0"
+  }
+}
