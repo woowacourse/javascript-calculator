@@ -9,12 +9,14 @@ describe('click event', () => {
 
   it('한 자리 숫자 입력', () => {
     cy.get('.digit').contains('1').click();
+
     cy.get('#total').should('have.text', '1');
   });
 
   it('두 자리 숫자 입력', () => {
     cy.get('.digit').contains('1').click();
     cy.get('.digit').contains('2').click();
+
     cy.get('#total').should('have.text', '12');
   });
 
@@ -23,6 +25,10 @@ describe('click event', () => {
     cy.get('.digit').contains('2').click();
     cy.get('.digit').contains('3').click();
     cy.get('.digit').contains('4').click();
+
+    cy.on('window:alert', (txt) => {
+      expect(txt).to.contains('숫자는 세자리까지 입력이 가능해요!!');
+    });
     cy.get('#total').should('have.text', '123');
   });
 
@@ -62,5 +68,18 @@ describe('click event', () => {
     cy.get('.operation').contains('=').click();
 
     cy.get('#total').should('have.text', '-22');
+  });
+
+  it('곱하기 연산', () => {
+    cy.get('.digit').contains('9').click();
+    cy.get('.digit').contains('8').click();
+    cy.get('.digit').contains('7').click();
+    cy.get('.operation').contains('X').click();
+    cy.get('.digit').contains('6').click();
+    cy.get('.digit').contains('5').click();
+    cy.get('.digit').contains('3').click();
+    cy.get('.operation').contains('=').click();
+
+    cy.get('#total').should('have.text', '644511');
   });
 });

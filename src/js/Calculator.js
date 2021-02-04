@@ -47,6 +47,9 @@ export default function Calculator() {
       case '-':
         return Number(this.numbers[0]) - Number(this.numbers[1]);
 
+      case 'X':
+        return Number(this.numbers[0]) * Number(this.numbers[1]);
+
       default:
     }
   };
