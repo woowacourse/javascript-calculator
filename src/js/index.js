@@ -3,6 +3,7 @@ const state = {
   firstInput: "",
   secondInput: "",
   operation: "",
+  error: false,
 };
 
 function checkInputLength(input) {
@@ -44,7 +45,7 @@ function onClickedDigit() {
   }
 }
 
-function calculation(operation, firstInput, operator) {
+function updateFirstInputAndOperator(operation, firstInput, operator) {
   if (operation.innerText !== "=") {
     state.operation = operator;
     firstInput = state.tempInput;
@@ -65,7 +66,9 @@ function isDivideByZeroPossible() {
 
   if (state.operation === "/" && state.secondInput === "0") {
     isDivideByZeroPossible = true;
+
     initState();
+    state.error = true;
   }
 
   return isDivideByZeroPossible;
@@ -83,28 +86,42 @@ function onClickedEqual() {
 
     if (isDivideByZeroPossible()) {
       result = "오류";
+      initState();
     } else {
       result = parseInt(
         eval(state.firstInput + state.operation + state.secondInput)
       );
-      console.log(state);
+      state.firstInput = String(result);
     }
     total.innerText = result;
-    state.firstInput = String(result);
   });
 }
 
 function onClickedOperation() {
   const operations = document.getElementsByClassName("operation");
-  let firstInput = "";
+  let firstInput = state.firstInput;
   let secondInput = "";
   onClickedDigit();
 
   for (let operation of operations) {
     operation.addEventListener("click", () => {
       let operator = operation.innerText;
-      firstInput = calculation(operation, firstInput, operator);
-      state.firstInput = firstInput;
+
+      if (firstInput === "") {
+        firstInput = updateFirstInputAndOperator(
+          operation,
+          firstInput,
+          operator
+        );
+        state.firstInput = firstInput;
+      }
+      if (operator !== "=" && operator !== "") {
+        state.operation = operator;
+        if (state.error) {
+          state.firstInput = state.tempInput;
+          state.error = false;
+        }
+      }
 
       onClickedDigit();
       secondInput = state.tempInput;
