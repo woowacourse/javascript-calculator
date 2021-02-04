@@ -21,3 +21,33 @@ const onDigitClick = (event) => {
 };
 
 digits.forEach((digit) => digit.addEventListener("click", onDigitClick));
+
+const onOperatorClick = (event) => {
+  // if(event.target.innerText ==='=') {}
+  switch (event.target.innerText) {
+    case "/": {
+      state.setState("operator", "divide");
+      state.setState("previousValue", state.currentValue);
+      state.setState("currentValue", "0");
+      break;
+    }
+    case "X": {
+      state.setState("operator", "multiple");
+      state.setState("previousValue", state.currentValue);
+      state.setState("currentValue", "0");
+      break;
+    }
+    case "+": {
+      state.setState("operator", "increase");
+      state.setState("previousValue", state.currentValue);
+      state.setState("currentValue", "0");
+      break;
+    }
+    case "-": {
+      state.setState("operator", "decrease");
+      state.setState("previousValue", state.currentValue);
+      state.setState("currentValue", "0");
+      break;
+    }
+  }
+};
