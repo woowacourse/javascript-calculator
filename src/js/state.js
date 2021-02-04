@@ -1,8 +1,8 @@
-class state {
+class State {
   constructor() {
     this.previousValue = "0";
     this.currentValue = "0";
-    this.operator = "0";
+    this.operator = "";
   }
 
   setState(name, value) {
