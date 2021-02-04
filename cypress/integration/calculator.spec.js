@@ -133,4 +133,45 @@ describe('ui-counter', () => {
       .should('have.css', 'color', 'rgb(255, 165, 0)');
   });
 
+  it('2개의 숫자에 대해 나눗셈이 가능하다.', () => {
+    //  1. 초기에 표시되는 값은 0이다.
+    cy.get('#total').should('have.text', '0');
+
+    // 2. 1 4 4을 차례대로 클릭한다. -> 표시되는 값은 1 14 144 이다.
+    cy.get('.digits').contains('1').click();
+    cy.get('#total').should('have.text', '1');
+
+    cy.get('.digits').contains('4').click();
+    cy.get('#total').should('have.text', '14');
+
+    cy.get('.digits').contains('4').click();
+    cy.get('#total').should('have.text', '144');
+
+    // 3. '/'을 클릭한다. -> '/'버튼의 배경색이 white로, 글자색이 Orange로 변경된다
+    cy.get('.operations').contains('/').click();
+    cy.get('.operations')
+      .contains('/')
+      .should('have.css', 'background-color', 'rgb(255, 255, 255)')
+      .should('have.css', 'color', 'rgb(255, 165, 0)');
+
+    // 4. 1를 클릭한다. -> '/'버튼의 배경색이 Orange로, 글자색이 black으로 변경되고표시값은 1이다.
+    cy.get('.digits').contains('1').click();
+    cy.get('#total').should('have.text', '1');
+    cy.get('.operations')
+      .contains('/')
+      .should('have.css', 'background-color', 'rgb(255, 165, 0)')
+      .should('have.css', 'color', 'rgb(0, 0, 0)');
+
+    // 5. 2을 클릭한다 -> 표시값은 12이다.
+    cy.get('.digits').contains('2').click();
+    cy.get('#total').should('have.text', '12');
+
+    // 6. '='을 클릭한다. -> 표시되는 값은 12가 되고, '='버튼의 배경색이 white로, 글자색이 Orange로 변경된다
+    cy.get('.operations').contains('=').click();
+    cy.get('#total').should('have.text', '12');
+    cy.get('.operations')
+      .contains('=')
+      .should('have.css', 'background-color', 'rgb(255, 255, 255)')
+      .should('have.css', 'color', 'rgb(255, 165, 0)');
+  });
 });
