@@ -89,3 +89,12 @@ describe("drop decimal point", () => {
     expect(dropDecimalPoint(1.533).to.equal(1));
   });
 });
+
+// 계산식 초기화
+describe("reset input", () => {
+  it("계산식을 초기화한다", () => {
+    const { reset } = require("../../../src/js/index.js");
+    reset();
+    cy.get("#total").should("have.text", "0");
+  });
+});
