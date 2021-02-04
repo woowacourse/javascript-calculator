@@ -1,4 +1,11 @@
 const $total = document.querySelector('#total');
+const $digits = document.querySelector('.digits');
 
-console.log($total.value);
-console.log($total.innerText);
+const putNumber = ({ target }) => {
+  if ($total.innerText === '0') {
+    return ($total.innerText = target.innerText);
+  }
+  return ($total.innerText += target.innerText);
+};
+
+$digits.addEventListener('click', putNumber);
