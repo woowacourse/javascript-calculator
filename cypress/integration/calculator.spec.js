@@ -13,7 +13,8 @@ describe('calculator', () => {
       digit2.click();
       digit3.click();
 
-      const result = digit1.innerText + digit2.innerText + digit3.innerText;
+      const result = parseInt(digit1.innerText + digit2.innerText + digit3.innerText, 10);
+      
       cy.get('#total').should('have.text', result);
     });
 
@@ -75,4 +76,49 @@ describe('calculator', () => {
     cy.get('.modifier').click();
     cy.get('#total').should('have.text', '0');
   });
-});
+
+  it('3 digit limitation', () => {
+    cy.get('.digit').then(digits => {
+      const length = 4;
+      const digit_1 = [];
+      const digit_2 = [];
+
+      cy.get('.operator').then(operators => {
+        for (let i = 0; i < length; i++) {
+          const digit = digits[Math.floor(Math.random() * 10)];
+
+          digit_1.push(digit.innerText);
+          digit.click();
+          
+          if (digit_1.length > 3) {
+            cy.on('window:alert', str => {
+              expect(str).to.equal('숫자는 3자리까지만 입력이 가능합니다.');
+            });
+            cy.on('window:confirm', () => true);
+
+            digit_1.pop();
+          }
+        }
+
+        const randomNumber = Math.floor(Math.random() * 4);
+        operators[randomNumber].click();
+
+        for (let i = 0; i < length; i++) {
+          const digit = digits[Math.floor(Math.random() * 10)];
+
+          digit_2.push(digit.innerText);
+          digit.click();
+
+          if (digit_2.length > 3) {
+            cy.on('window:alert', str => {
+              expect(str).to.equal('숫자는 3자리까지만 입력이 가능합니다.');
+            });
+            cy.on('window:confirm', () => true);
+
+            digit_2.pop();
+          }
+        }
+      });
+    })
+  })
+})
