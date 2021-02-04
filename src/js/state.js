@@ -15,3 +15,5 @@ class State {
     this.operator = "";
   }
 }
+
+export default State;
