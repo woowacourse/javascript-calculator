@@ -30,4 +30,15 @@ describe('click event', () => {
     cy.get('.modifier').click();
     cy.get('#total').should('have.text', '0');
   });
+
+  it('더하기 연산', () => {
+    cy.get('.digit').contains('1').click();
+    cy.get('.digit').contains('2').click();
+    cy.get('.operation').contains('+').click();
+    cy.get('.digit').contains('3').click();
+    cy.get('.digit').contains('4').click();
+    cy.get('.operation').contains('=').click();
+
+    cy.get('#total').should('have.text', '46');
+  });
 });
