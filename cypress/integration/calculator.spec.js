@@ -13,8 +13,11 @@ describe('calculator', () => {
       digit2.click();
       digit3.click();
 
-      const result = parseInt(digit1.innerText + digit2.innerText + digit3.innerText, 10);
-      
+      const result = parseInt(
+        digit1.innerText + digit2.innerText + digit3.innerText,
+        10,
+      );
+
       cy.get('#total').should('have.text', result);
     });
 
@@ -63,7 +66,11 @@ describe('calculator', () => {
         } else if (op === 'X') {
           result = num1 * num2;
         } else {
-          result = Math.floor(num1 / num2);
+          result = num1 / num2;
+          cy.get('#equal').click();
+          cy.get('#total').should('have.text', Math.floor(result));
+
+          return;
         }
 
         cy.get('#equal').click();
@@ -89,7 +96,7 @@ describe('calculator', () => {
 
           digit_1.push(digit.innerText);
           digit.click();
-          
+
           if (digit_1.length > 3) {
             cy.on('window:alert', str => {
               expect(str).to.equal('숫자는 3자리까지만 입력이 가능합니다.');
@@ -119,6 +126,6 @@ describe('calculator', () => {
           }
         }
       });
-    })
-  })
-})
+    });
+  });
+});
