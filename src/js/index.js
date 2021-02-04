@@ -18,6 +18,22 @@ function isRightInput(input) {
   return rightInput;
 }
 
+function addOperation(firstInput, secondInput) {
+  return firstInput + secondInput;
+}
+
+function substractOperation(firstInput, secondInput) {
+  return firstInput - secondInput;
+}
+
+function multiplyOperation(firstInput, secondInput) {
+  return firstInput * secondInput;
+}
+
+function divideOperation(firstInput, secondInput) {
+  return parseInt(firstInput / secondInput);
+}
+
 function onClickedDigit() {
   const digits = document.getElementsByClassName("digit");
   let input = "";
