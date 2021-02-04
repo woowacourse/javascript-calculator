@@ -43,20 +43,20 @@ export default function Calculator() {
   this.operate = () => {
     switch (this.operation) {
       case '+':
-        return Number(this.numbers[0]) + Number(this.numbers[1]);
+        return this.numbers.reduce((result, num) => result + Number(num), 0);
 
       case '-':
-        return Number(this.numbers[0]) - Number(this.numbers[1]);
+        return this.numbers.reduce((result, num) => result - Number(num));
 
       case 'X':
-        return Number(this.numbers[0]) * Number(this.numbers[1]);
+        return this.numbers.reduce((result, num) => result * Number(num));
 
       case '/':
         if (Number(this.numbers[1]) === 0) {
           alert('0으로 나눌 수 없습니다!!');
           return 0;
         }
-        return Math.floor(Number(this.numbers[0]) / Number(this.numbers[1]));
+        return Math.floor(this.numbers.reduce((result, num) => result / Number(num)));
 
       default:
     }
