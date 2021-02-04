@@ -51,6 +51,7 @@ class Calculator {
 
   reset() {
     this.operator = "0";
+    this.showResult();
   }
 }
 

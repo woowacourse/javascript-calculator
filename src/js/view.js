@@ -1,7 +1,9 @@
 class CalculatorView {
   constructor(calculator) {
     this.calculator = calculator;
+    this.handleNumber();
     this.handleOperator();
+    this.handleReset();
   }
 
   handleNumber() {
@@ -25,6 +27,13 @@ class CalculatorView {
 
         return this.calculator.addOperator(operationBtn.innerHTML);
       });
+    });
+  }
+
+  handleReset() {
+    const modifierBtn = document.querySelector(".modifier");
+    modifierBtn.addEventListener("click", () => {
+      this.calculator.reset();
     });
   }
 }
