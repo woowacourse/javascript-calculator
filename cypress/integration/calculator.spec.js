@@ -1,139 +1,123 @@
+// number : Number 타입으로 생성한 숫자들
+// digit : 계산기에 입력하거나 입력될 숫자들
+
+const MIN_INPUT_NUMBER = 0;
+const MAX_INPUT_NUMBER = 999;
+
+function generateRandomNumber(minNumber = MIN_INPUT_NUMBER, maxNumber = MAX_INPUT_NUMBER) {
+  const randomNumber = Math.floor(Math.random() * (maxNumber + 1) + minNumber);
+
+  return randomNumber;
+}
+
+function generateRandomNumberArray() {
+  const numbers = [];
+
+  for (let i = 0; i < 2; i++) {
+    numbers.push(generateRandomNumber());
+  }
+
+  return numbers;
+}
+
+function calculate(number1, operator, number2) {
+  let result = 0;
+
+  if (operator === '+') {
+    result = number1 + number2;
+  } else if (operator === '-') {
+    result = number1 - number2;
+  } else if (operator === 'X') {
+    result = number1 * number2;
+  } else if (operator === '/') {
+    if (number2 === 0) {
+      result = 'NaN';
+    } else {
+      result = Math.floor(number1 / number2);
+    }
+  }
+
+  return result;
+}
+
+function clickDigits(digits) {
+  for (let i = 0; i < digits.length; i++) {
+    cy.get('.digit').contains(digits[i]).click();
+  }
+}
+
+function clickTestCase(digits1, operator, digits2) {
+  clickDigits(digits1);
+  cy.get('.operation').contains(operator).click();
+
+  clickDigits(digits2);
+  cy.get('.operation').contains('=').click();
+}
+
+function numbersToDigits(numbers) {
+  return numbers.map((number) => String(number));
+}
+
+function testCalculate(operator) {
+  const numbers = generateRandomNumberArray();
+  const result = calculate(numbers[0], operator, numbers[1]);
+
+  const digits = numbersToDigits(numbers);
+  clickTestCase(digits[0], operator, digits[1]);
+
+  cy.get('#total').should('have.text', `${result}`);
+}
+
 context('calculator', () => {
   beforeEach(() => {
-    cy.visit('http://127.0.0.1:5501/javascript-calculator');
+    cy.visit('http://127.0.0.1:5500/');
   });
 
   it('2개의 임의의 3자리 숫자를 입력받고 더한다', () => {
-    const digits = [];
-
-    for (let i = 0; i < 2; i++) {
-      const randomDigit = `${Math.floor(Math.random() * 1000)}`;
-      digits.push(randomDigit);
-    }
-
-    const result = Number(digits[0]) + Number(digits[1]);
-
-    for (let i = 0; i < digits[0].length; i++) {
-      cy.get('.digit').contains(digits[0][i]).click();
-    }
-
-    cy.get('.operation').contains('+').click();
-
-    for (let i = 0; i < digits[1].length; i++) {
-      cy.get('.digit').contains(digits[1][i]).click();
-    }
-
-    cy.get('.operation').contains('=').click();
-
-    cy.get('#total').should('have.text', `${result}`);
+    testCalculate('+');
   });
 
   it('2개의 임의의 3자리 숫자를 입력받고 뺀다', () => {
-    const digits = [];
-
-    for (let i = 0; i < 2; i++) {
-      const randomDigit = `${Math.floor(Math.random() * 1000)}`;
-      digits.push(randomDigit);
-    }
-
-    const result = Number(digits[0]) - Number(digits[1]);
-
-    for (let i = 0; i < digits[0].length; i++) {
-      cy.get('.digit').contains(digits[0][i]).click();
-    }
-
-    cy.get('.operation').contains('-').click();
-
-    for (let i = 0; i < digits[1].length; i++) {
-      cy.get('.digit').contains(digits[1][i]).click();
-    }
-
-    cy.get('.operation').contains('=').click();
-
-    cy.get('#total').should('have.text', `${result}`);
+    testCalculate('-');
   });
 
   it('2개의 임의의 3자리 숫자를 입력받고 곱한다', () => {
-    const digits = [];
-
-    for (let i = 0; i < 2; i++) {
-      const randomDigit = `${Math.floor(Math.random() * 1000)}`;
-      digits.push(randomDigit);
-    }
-
-    const result = Number(digits[0]) * Number(digits[1]);
-
-    for (let i = 0; i < digits[0].length; i++) {
-      cy.get('.digit').contains(digits[0][i]).click();
-    }
-
-    cy.get('.operation').contains('X').click();
-
-    for (let i = 0; i < digits[1].length; i++) {
-      cy.get('.digit').contains(digits[1][i]).click();
-    }
-
-    cy.get('.operation').contains('=').click();
-
-    cy.get('#total').should('have.text', `${result}`);
+    testCalculate('X');
   });
 
   it('2개의 임의의 3자리 숫자를 입력받고 나눈다', () => {
-    const digits = [];
-
-    for (let i = 0; i < 2; i++) {
-      const randomDigit = `${Math.floor(Math.random() * 1000)}`;
-      digits.push(randomDigit);
-    }
-
-    const result = Math.floor(Number(digits[0]) / Number(digits[1]));
-
-    for (let i = 0; i < digits[0].length; i++) {
-      cy.get('.digit').contains(digits[0][i]).click();
-    }
-
-    cy.get('.operation').contains('/').click();
-
-    for (let i = 0; i < digits[1].length; i++) {
-      cy.get('.digit').contains(digits[1][i]).click();
-    }
-
-    cy.get('.operation').contains('=').click();
-
-    cy.get('#total').should('have.text', `${result}`);
+    testCalculate('/');
   });
 
   it('숫자가 있는 상태에서 AC버튼을 누르면 0으로 초기화 한다.', () => {
-    const randomDigit = `${Math.floor(Math.random() * 1000)}`;
+    const randomDigits = String(generateRandomNumber());
 
-    for (let i = 0; i < randomDigit.length; i++) {
-      cy.get('.digit').contains(randomDigit[i]).click();
-    }
-
+    clickDigits(randomDigits);
     cy.get('.modifier').contains('AC').click();
     cy.get('#total').should('have.text', `0`);
   });
 
   it('숫자를 최대 3자리 수까지만 입력받는다.', () => {
-    const randomDigit = `${Math.floor(Math.random() * 100000 + 1000)}`;
-    for (let i = 0; i < randomDigit.length; i++) {
-      cy.get('.digit').contains(randomDigit[i]).click();
-    }
-    cy.get('#total').should('have.text', `${randomDigit.slice(0, 3)}`);
+    const randomDigits = String(generateRandomNumber(1000, 99999));
+
+    clickDigits(randomDigits);
+    cy.get('#total').should('have.text', `${randomDigits.slice(0, 3)}`);
   });
 
   it('나누기 결과에서 소수점 이하는 버림한다.', () => {
     const digit1 = '777';
     const digit2 = '3';
-    const result = Math.floor(digit1 / digit2);
-    for (let i = 0; i < digit1.length; i++) {
-      cy.get('.digit').contains(digit1[i]).click();
-    }
-    cy.get('.operation').contains('/').click();
-    for (let i = 0; i < digit2.length; i++) {
-      cy.get('.digit').contains(digit2[i]).click();
-    }
-    cy.get('.operation').contains('=').click();
+    const result = calculate(digit1, '/', digit2);
+
+    clickTestCase(digit1, '/', digit2);
     cy.get('#total').should('have.text', `${result}`);
+  });
+
+  it('0으로 나눌 때 NaN으로 출력한다.', () => {
+    const randomDigits = String(generateRandomNumber());
+    const zero = '0';
+
+    clickTestCase(randomDigits, '/', zero);
+    cy.get('#total').should('have.text', 'NaN');
   });
 });

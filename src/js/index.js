@@ -50,13 +50,18 @@ class Calculator {
       return;
     }
 
+    this.$.total.innerText = this.calculate(this.operands[0], this.operator, this.operands[1]);
+  }
+
+  calculate(number1, operator, number2) {
     let result = 0;
-    if (this.operator === '+') {
-      result = this.operands[0] + this.operands[1];
-    } else if (this.operator === '-') {
-      result = this.operands[0] - this.operands[1];
-    } else if (this.operator === 'X') {
-      result = this.operands[0] * this.operands[1];
+
+    if (operator === '+') {
+      result = number1 + number2;
+    } else if (operator === '-') {
+      result = number1 - number2;
+    } else if (operator === 'X') {
+      result = number1 * number2;
     } else if (this.operator === '/') {
       if (this.operands[1] === 0) {
         result = 'NaN';
@@ -65,7 +70,7 @@ class Calculator {
       }
     }
 
-    this.$.total.innerText = result;
+    return result;
   }
 
   setEventListener() {
