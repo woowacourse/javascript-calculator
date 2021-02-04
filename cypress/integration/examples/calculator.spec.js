@@ -76,3 +76,11 @@ describe("check valid operator", () => {
     expect(isOperatorOverTwoChar("324").to.equal(true));
   });
 });
+
+// 소수점 버리기
+describe("drop decimal point", () => {
+  it("소수점을 버린다", () => {
+    const { dropDecimalPoint } = require("../../../src/js/operator.js");
+    expect(dropDecimalPoint(1.533).to.equal(1));
+  });
+});
