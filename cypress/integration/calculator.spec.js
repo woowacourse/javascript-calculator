@@ -107,4 +107,24 @@ describe('click event', () => {
     });
     cy.get('#total').should('have.text', '0');
   });
+
+  it('연산 2번 실행', () => {
+    cy.get('.digit').contains('1').click();
+    cy.get('.digit').contains('2').click();
+    cy.get('.operation').contains('+').click();
+    cy.get('.digit').contains('3').click();
+    cy.get('.digit').contains('4').click();
+    cy.get('.operation').contains('=').click();
+
+    cy.get('#total').should('have.text', '46');
+
+    cy.get('.digit').contains('9').click();
+    cy.get('.digit').contains('8').click();
+    cy.get('.operation').contains('-').click();
+    cy.get('.digit').contains('7').click();
+    cy.get('.digit').contains('6').click();
+    cy.get('.operation').contains('=').click();
+
+    cy.get('#total').should('have.text', '22');
+  });
 });

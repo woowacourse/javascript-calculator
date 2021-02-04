@@ -33,7 +33,8 @@ export default function Calculator() {
 
     if (e.target.textContent === '=') {
       const result = this.operate();
-      this.setState({ nextOperation: '', nextNumbers: [], nextNumberIndex: 0, nextTotalText: result.toString() });
+
+      this.setState({ nextOperation: '=', nextNumbers: [], nextNumberIndex: 0, nextTotalText: result.toString() });
     } else {
       this.setState({ nextOperation: e.target.textContent, nextNumberIndex: this.numberIndex + 1 });
     }
@@ -75,7 +76,7 @@ export default function Calculator() {
       this.totalText = nextTotalText;
     }
 
-    if (nextOperation && nextNumberIndex) {
+    if (nextOperation) {
       this.operation = nextOperation;
       this.numberIndex = nextNumberIndex;
     }
