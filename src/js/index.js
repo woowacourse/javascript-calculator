@@ -51,6 +51,18 @@ calculator.addEventListener('click', (e) => {
   }
 
   if (className === 'operation') {
+    if (clickedOperator === '=') {
+      if (operator === '') {
+        alert('두번째 숫자와 연산자를 선택해주세요.');
+
+        return;
+      }
+
+      if (isClickedOperator) {
+        alert('두번째 숫자를 입력해주세요.');
+
+        return;
+      }
     document
       .querySelector('.clicked-operation')
       ?.classList.remove('clicked-operation');
