@@ -2,6 +2,7 @@ describe('ui-counter', () => {
   beforeEach(() => {
     // 페이지 접속. 띄워진 서버 port를 작성해주세요.
     cy.visit('http://127.0.0.1:5500/');
+    cy.window().then((win) => cy.stub(win, 'alert').as('windowAlert'));
   });
 
   it('2개의 숫자에 대해 덧셈이 가능하다.', () => {
@@ -265,18 +266,11 @@ describe('ui-counter', () => {
 
     // 3. 6을 클릭한다 -> alert창으로 '3자리 이하의 숫자를 입력해주세요' 라는 문구가 표시되며, 표시되는 값은 여전히 258이다.
     cy.get('.digits').contains('6').click();
+    cy.get('@windowAlert').should(
+      'be.calledWith',
+      '3자리 이하의 숫자를 입력해주세요.'
+    );
 
-    const stub = cy.stub();
-    cy.on('window:alert', stub);
-
-    cy.get('.digits')
-      .contains('6')
-      .click()
-      .then(() => {
-        expect(stub.getCall(0)).to.be.calledWith(
-          '3자리 이하의 숫자를 입력해주세요.'
-        );
-      });
     cy.get('#total').should('have.text', '258');
 
     // 4. '+' 버튼을 클릭한다.
@@ -293,14 +287,11 @@ describe('ui-counter', () => {
     cy.get('#total').should('have.text', '147');
 
     // 6. 9를 클릭한다. -> alert창으로 '3자리 이하의 숫자를 입력해주세요' 라는 문구가 표시되며, 표시되는 값은 여전히 147이다.
-    cy.get('.digits')
-      .contains('9')
-      .click()
-      .then(() => {
-        expect(stub.getCall(0)).to.be.calledWith(
-          '3자리 이하의 숫자를 입력해주세요.'
-        );
-      });
+    cy.get('.digits').contains('9').click();
+    cy.get('@windowAlert').should(
+      'be.calledWith',
+      '3자리 이하의 숫자를 입력해주세요.'
+    );
     cy.get('#total').should('have.text', '147');
   });
 
@@ -345,9 +336,7 @@ describe('ui-counter', () => {
     });
   });
 
-  it.only("두번째 숫자를 입력한 후, '='을 제외한 연산자를 클릭하면 알림창이 나온다.", () => {
-    cy.window().then((win) => cy.stub(win, 'alert').as('windowAlert'));
-
+  it("두번째 숫자를 입력한 후, '='을 제외한 연산자를 클릭하면 알림창이 나온다.", () => {
     [1, 2, 3].forEach((num) => cy.get('.digits').contains(num).click());
 
     cy.get('.operations').contains('+').click();
@@ -364,8 +353,6 @@ describe('ui-counter', () => {
   });
 
   it('연산자 혹은 두번째 숫자가 입력되지 않은 상태에서 "="을 클릭하면 알림창이 나온다.', () => {
-    cy.window().then((win) => cy.stub(win, 'alert').as('windowAlert'));
-
     cy.get('.operations').contains('=').click();
     cy.get('@windowAlert').should('be.calledWith', '연산자를 선택해주세요.');
 
@@ -399,8 +386,6 @@ describe('ui-counter', () => {
   });
 
   it('연산을 마친 후에는 숫자 및 연산자를 클릭하면 표시값은 변화되지 않고 알림창이 나온다.', () => {
-    cy.window().then((win) => cy.stub(win, 'alert').as('windowAlert'));
-
     cy.get('.digits').contains('1').click();
     cy.get('.operations').contains('+').click();
     cy.get('.digits').contains('1').click();
