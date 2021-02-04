@@ -4,4 +4,8 @@ class state {
     this.currentValue = "0";
     this.operator = "0";
   }
+
+  setState(name, value) {
+    this[name] = value;
+  }
 }
