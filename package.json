@@ -1,0 +1,29 @@
+{
+  "name": "javascript-calculator",
+  "version": "1.0.0",
+  "description": "계산기 미션 with TDD",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/YUJO42/javascript-calculator.git"
+  },
+  "keywords": [],
+  "author": "유조, 하루",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/YUJO42/javascript-calculator/issues"
+  },
+  "homepage": "https://github.com/YUJO42/javascript-calculator#readme",
+  "devDependencies": {
+    "babel-eslint": "^10.1.0",
+    "eslint": "^7.2.0",
+    "eslint-config-airbnb-base": "^14.2.1",
+    "eslint-config-prettier": "^7.2.0",
+    "eslint-plugin-import": "^2.22.1",
+    "eslint-plugin-prettier": "^3.3.1",
+    "prettier": "^2.2.1"
+  }
+}
