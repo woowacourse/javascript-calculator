@@ -324,4 +324,25 @@ describe('ui-counter', () => {
     cy.get('.operations').contains('=').click();
     cy.get('#total').should('have.text', '3');
   });
+
+  it(' "="을 제외한 연산자는 마지막에 클릭한 연산자만 유효하다.', () => {
+    const haveOrangeBackground = (op) =>
+      cy
+        .wrap(op)
+        .should('have.css', 'background-color', 'rgb(255, 165, 0)')
+        .should('have.css', 'color', 'rgb(0, 0, 0)');
+
+    cy.get('.operation').each(haveOrangeBackground);
+
+    ['+', '-', 'X', '/', '-', '-', '-'].forEach((op) => {
+      cy.get('.operations')
+        .contains(op)
+        .click()
+        .should('have.css', 'background-color', 'rgb(255, 255, 255)')
+        .should('have.css', 'color', 'rgb(255, 165, 0)');
+
+      cy.get('.operation').not(`:contains("${op}")`).each(haveOrangeBackground);
+    });
+  });
+
 });
