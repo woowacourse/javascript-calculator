@@ -42,3 +42,43 @@ function onClickedDigit() {
     });
   }
 }
+
+function onClickedOperation() {
+  const operations = document.getElementsByClassName("operation");
+  let firstInput = "";
+  onClickedDigit();
+
+  for (let operation of operations) {
+    operation.addEventListener("click", () => {
+      if (operation.innerText === "+") {
+        state.operation = "+";
+        firstInput = state.input;
+      }
+      if (operation.innerText === "-") {
+        state.operation = "-";
+      }
+      if (operation.innerText === "X") {
+        state.operation = "X";
+      }
+      if (operation.innerText === "/") {
+        state.operation = "/";
+      }
+
+      onClickedDigit();
+      let secondInput = state.input;
+      console.log(firstInput, "뻐스트", secondInput, "쎄컨드");
+    });
+  }
+}
+
+new onClickedOperation();
+
+function onClickedEqual() {
+  const operation = document.getElementsByClassName("operation")[4];
+  const total = document.getElementById("total");
+
+  if (operation.innerText === "=") {
+    state.secondInput = total.innerText;
+    console.log(state);
+  }
+}
