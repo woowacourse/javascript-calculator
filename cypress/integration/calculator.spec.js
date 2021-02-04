@@ -17,4 +17,12 @@ describe('click event', () => {
     cy.get('.digit').contains('2').click();
     cy.get('#total').should('have.text', '12');
   });
+
+  it('세 자리 숫자 초과 입력', () => {
+    cy.get('.digit').contains('1').click();
+    cy.get('.digit').contains('2').click();
+    cy.get('.digit').contains('3').click();
+    cy.get('.digit').contains('4').click();
+    cy.get('#total').should('have.text', '123');
+  });
 });

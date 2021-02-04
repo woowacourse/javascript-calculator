@@ -1,18 +1,31 @@
 export default function Calculator() {
-  const $total = document.querySelector('#total');
-  const $digits = document.querySelector('.digits');
+  this.$total = document.querySelector('#total');
+  this.$digits = document.querySelector('.digits');
+  this.number = '0';
 
-  $digits.addEventListener('click', (e) => {
+  this.$digits.addEventListener('click', (e) => {
     if (!e.target.classList.contains('digit')) {
       return;
     }
 
-    let totalText = $total.textContent;
-
-    if (totalText === '0') {
-      totalText = '';
+    if (this.number.length >= 3) {
+      alert('숫자는 세자리까지 입력이 가능해요!!');
+      return;
     }
 
-    $total.innerHTML = totalText + e.target.textContent;
+    if (this.number === '0') {
+      this.number = '';
+    }
+
+    this.setState(this.number + e.target.textContent);
   });
+
+  this.setState = (nextNumber) => {
+    this.number = nextNumber;
+    this.render();
+  };
+
+  this.render = () => {
+    this.$total.innerHTML = this.number;
+  };
 }
