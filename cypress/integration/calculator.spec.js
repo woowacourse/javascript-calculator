@@ -66,9 +66,13 @@ describe('calculator', () => {
         }
 
         cy.get('#equal').click();
-
         cy.get('#total').should('have.text', result);
       });
     });
+  });
+
+  it('print 0 when click AC', () => {
+    cy.get('.modifier').click();
+    cy.get('#total').should('have.text', '0');
   });
 });
