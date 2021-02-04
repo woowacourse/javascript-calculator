@@ -363,5 +363,38 @@ describe('ui-counter', () => {
     cy.get('#total').should('have.text', 123 + 321);
   });
 
+  it('연산자 혹은 두번째 숫자가 입력되지 않은 상태에서 "="을 클릭하면 알림창이 나온다.', () => {
+    cy.window().then((win) => cy.stub(win, 'alert').as('windowAlert'));
+
+    cy.get('.operations').contains('=').click();
+    cy.get('@windowAlert').should('be.calledWith', '연산자를 선택해주세요.');
+
+    [4, 5, 6].forEach((num) => cy.get('.digits').contains(num).click());
+    cy.get('#total').should('have.text', '456');
+
+    cy.get('.operations').contains('=').click();
+    cy.get('@windowAlert').should('be.calledWith', '연산자를 선택해주세요.');
+    cy.get('#total').should('have.text', '456');
+
+    cy.get('.operations').contains('+').click();
+
+    cy.get('.operations').contains('=').click();
+    cy.get('@windowAlert').should(
+      'be.calledWith',
+      '두번째 숫자를 입력해주세요.'
+    );
+    cy.get('#total').should('have.text', '456');
+    cy.get('.operations')
+      .contains('+')
+      .should('have.css', 'background-color', 'rgb(255, 255, 255)')
+      .should('have.css', 'color', 'rgb(255, 165, 0)');
+
+    [7, 8, 9].forEach((num) => cy.get('.digits').contains(num).click());
+    cy.get('.operations').contains('=').click();
+    cy.get('#total').should('have.text', '1245');
+    cy.get('.operations')
+      .contains('=')
+      .should('have.css', 'background-color', 'rgb(255, 255, 255)')
+      .should('have.css', 'color', 'rgb(255, 165, 0)');
   });
 });
