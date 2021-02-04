@@ -39,6 +39,7 @@ describe("ui-click", () => {
   });
 });
 
+// 사칙 연산을 수행한다
 describe("operate number", () => {
   it("두수를 더한다", () => {
     const { add } = require("../../../src/js/operator.js");
@@ -58,5 +59,20 @@ describe("operate number", () => {
   it("두수를 나눈다", () => {
     const { divide } = require("../../../src/js/operator.js");
     expect(divide(4, 2).to.equal(2));
+  });
+});
+
+// 유효성 검사
+describe("check valid operator", () => {
+  it("숫자가 3자리 초과인지 확인한다", () => {
+    const { isNumberOverThreeChar } = require("../../../src/js/valid.js");
+    expect(isNumberOverThreeChar("43+102").to.equal(false));
+    expect(isNumberOverThreeChar("529*34").to.equal(true));
+  });
+
+  it("연산자가 두번 연속 나오는지 확인한다", () => {
+    const { isOperatorOverTwoChar } = require("../../../src/js/vaild.js");
+    expect(isOperatorOverTwoChar("18+").to.equal(false));
+    expect(isOperatorOverTwoChar("324").to.equal(true));
   });
 });
