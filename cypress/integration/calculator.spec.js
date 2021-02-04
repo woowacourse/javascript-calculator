@@ -41,4 +41,26 @@ describe('click event', () => {
 
     cy.get('#total').should('have.text', '46');
   });
+
+  it('빼기 연산', () => {
+    cy.get('.digit').contains('9').click();
+    cy.get('.digit').contains('8').click();
+    cy.get('.operation').contains('-').click();
+    cy.get('.digit').contains('7').click();
+    cy.get('.digit').contains('6').click();
+    cy.get('.operation').contains('=').click();
+
+    cy.get('#total').should('have.text', '22');
+  });
+
+  it('결과가 음수인 빼기 연산', () => {
+    cy.get('.digit').contains('5').click();
+    cy.get('.digit').contains('4').click();
+    cy.get('.operation').contains('-').click();
+    cy.get('.digit').contains('7').click();
+    cy.get('.digit').contains('6').click();
+    cy.get('.operation').contains('=').click();
+
+    cy.get('#total').should('have.text', '-22');
+  });
 });

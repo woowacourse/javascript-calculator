@@ -33,7 +33,7 @@ export default function Calculator() {
 
     if (e.target.textContent === '=') {
       const result = this.operate();
-      this.setState({ nextOperation: '', nextNumbers: [], nextNumberIndex: 0, nextTotalText: result });
+      this.setState({ nextOperation: '', nextNumbers: [], nextNumberIndex: 0, nextTotalText: result.toString() });
     } else {
       this.setState({ nextOperation: e.target.textContent, nextNumberIndex: this.numberIndex + 1 });
     }
@@ -43,6 +43,9 @@ export default function Calculator() {
     switch (this.operation) {
       case '+':
         return Number(this.numbers[0]) + Number(this.numbers[1]);
+
+      case '-':
+        return Number(this.numbers[0]) - Number(this.numbers[1]);
 
       default:
     }
