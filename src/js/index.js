@@ -14,6 +14,15 @@ const isValidLength = () => {
   return displayValue.split(operator)[1].length < LEN_LIMIT;
 };
 
+const isAbleAddOperator = () => {
+  const displayValue = $total.innerText;
+  if ($total.innerText === '0') {
+    return false;
+  }
+  console.log(displayValue[displayValue.length - 1]);
+  return !isNaN(Number(displayValue[displayValue.length - 1]));
+};
+
 const putNumber = ({ target }) => {
   if (!isValidLength()) {
     return alert('숫자는 세 자리까지만 입력 가능합니다!');
@@ -25,6 +34,9 @@ const putNumber = ({ target }) => {
 };
 
 const putOperator = ({ target }) => {
+  if (!isAbleAddOperator()) {
+    return alert('숫자를 먼저 입력한 후 연산자를 입력해주세요!');
+  }
   return ($total.innerText += target.innerText);
 };
 
