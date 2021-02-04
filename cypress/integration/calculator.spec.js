@@ -82,4 +82,29 @@ describe('click event', () => {
 
     cy.get('#total').should('have.text', '644511');
   });
+
+  it('나누기 연산', () => {
+    cy.get('.digit').contains('9').click();
+    cy.get('.digit').contains('8').click();
+    cy.get('.digit').contains('7').click();
+    cy.get('.operation').contains('/').click();
+    cy.get('.digit').contains('6').click();
+    cy.get('.digit').contains('5').click();
+    cy.get('.digit').contains('3').click();
+    cy.get('.operation').contains('=').click();
+
+    cy.get('#total').should('have.text', '1');
+  });
+
+  it('0으로 나누기 연산', () => {
+    cy.get('.digit').contains('9').click();
+    cy.get('.operation').contains('/').click();
+    cy.get('.digit').contains('0').click();
+    cy.get('.operation').contains('=').click();
+
+    cy.on('window:alert', (txt) => {
+      expect(txt).to.contains('0으로 나눌 수 없습니다!!');
+    });
+    cy.get('#total').should('have.text', '0');
+  });
 });
