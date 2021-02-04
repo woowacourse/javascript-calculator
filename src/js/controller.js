@@ -11,15 +11,15 @@ class Calculator {
   }
 
   addNumber(num) {
-    // 숫자값 받기
-    // 유효성 검사
-    // 통과시 string에 넣기
+    if (isNumberOverThreeChar(num)) {
+      this.addInput(num);
+    }
   }
 
   addOperator(operator) {
-    // 연산자값 받기
-    // 유효성 검사
-    // 통과시 string에 넣기
+    if (isOperatorOverTwoChar(operator)) {
+      this.addInput(operator);
+    }
   }
 
   operate() {
