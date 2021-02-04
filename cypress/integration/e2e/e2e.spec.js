@@ -99,4 +99,16 @@ context("Actions", () => {
     cy.get(".operations>.operation").eq(4).click();
     cy.get("#total").should("have.value", "3");
   });
+
+  it("연산자 연속해서 누르면 마지막 연산자가 적용되야 한다.", () => {
+    cy.get(".digits>.digit").eq(3).click();
+
+    cy.get(".operations>.operation").eq(0).click();
+    cy.get(".operations>.operation").eq(3).click();
+
+    cy.get(".digits>.digit").eq(5).click();
+
+    cy.get(".operations>.operation").eq(4).click();
+    cy.get("#total").should("have.value", "10");
+  });
 });
