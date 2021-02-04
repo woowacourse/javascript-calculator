@@ -62,8 +62,14 @@ const init = () => {
       });
     } else {
       operatorElement.addEventListener('click', (e) => {
-        operator = e.target.innerText;
-        console.log(operator);
+        if (firstNumber === '0' && e.target.innerText === '-') {
+          firstNumber = '-';
+        } else {
+          if (firstNumber !== '0') {
+            operator = e.target.innerText;
+            console.log(operator);
+          }
+        }
       });
     }
   })

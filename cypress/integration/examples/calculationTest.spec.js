@@ -2,6 +2,8 @@ const numberClick = (num) => {
   Array.from(num).forEach(chr => {
     if ('0' <= chr && chr <= '9') {
       cy.get('.digit').contains(chr).click();
+    } else {
+      cy.get('.operation').contains(chr).click();
     }
   })
 }
@@ -32,5 +34,6 @@ describe('사칙연산 테스트', () => {
     calculationTest('055', '+', '45', '100');
     calculationTest('5000', '+', '87', '587');
     calculationTest('-11', '+', '10', '-1');
+    calculationTest('X8', '+', '12', '20');
   })
 })
