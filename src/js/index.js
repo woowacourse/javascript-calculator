@@ -3,6 +3,7 @@ const LEN_LIMIT = 3;
 const $total = document.querySelector('#total');
 const $digits = document.querySelector('.digits');
 const $operations = document.querySelector('.operations');
+const $equalSign = document.querySelector('#equal-sign');
 
 const isValidLength = () => {
   const displayValue = $total.innerText;
@@ -34,11 +35,35 @@ const putNumber = ({ target }) => {
 };
 
 const putOperator = ({ target }) => {
+  if (target.innerText === '=') {
+    return;
+  }
   if (!isAbleAddOperator()) {
     return alert('숫자를 먼저 입력한 후 연산자를 입력해주세요!');
   }
   return ($total.innerText += target.innerText);
 };
 
+const putResult = () => {
+  const displayValue = $total.innerText;
+  const operator = displayValue.split('').find((v) => OPERATORS.includes(v));
+  const operands = displayValue.split(operator);
+  const operations = {
+    '+': (a, b) => Number(a) + Number(b),
+    '-': (a, b) => Number(a) - Number(b),
+    X: (a, b) => Number(a) * Number(b),
+    '/': (a, b) => Math.floor(Number(a) / Number(b)),
+  };
+  if (operands.length === 1) {
+    return;
+  }
+  console.log(operations['+']);
+  $total.innerText = operations[operator](
+    Number(operands[0]),
+    Number(operands[1]),
+  );
+};
+
 $digits.addEventListener('click', putNumber);
 $operations.addEventListener('click', putOperator);
+$equalSign.addEventListener('click', putResult);
