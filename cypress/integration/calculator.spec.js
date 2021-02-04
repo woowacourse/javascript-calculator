@@ -174,4 +174,59 @@ describe('ui-counter', () => {
       .should('have.css', 'background-color', 'rgb(255, 255, 255)')
       .should('have.css', 'color', 'rgb(255, 165, 0)');
   });
+
+  it('숫자는 한번에 최대 3자리 수까지 입력이 가능하다', () => {
+    // 1. 초기에 표시되는 값은 0이다.
+    cy.get('#total').should('have.text', '0');
+
+    // 2. 2 5 8를 차례대로 클릭한다 -> 표시되는 값은 2 25 258이다.
+    cy.get('.digits').contains('2').click();
+    cy.get('#total').should('have.text', '2');
+
+    cy.get('.digits').contains('5').click();
+    cy.get('#total').should('have.text', '25');
+
+    cy.get('.digits').contains('8').click();
+    cy.get('#total').should('have.text', '258');
+
+    // 3. 6을 클릭한다 -> alert창으로 '3자리 이하의 숫자를 입력해주세요' 라는 문구가 표시되며, 표시되는 값은 여전히 258이다.
+    cy.get('.digits').contains('6').click();
+
+    const stub = cy.stub();
+    cy.on('window:alert', stub);
+
+    cy.get('.digits')
+      .contains('6')
+      .click()
+      .then(() => {
+        expect(stub.getCall(0)).to.be.calledWith(
+          '3자리 이하의 숫자를 입력해주세요.'
+        );
+      });
+    cy.get('#total').should('have.text', '258');
+
+    // 4. '+' 버튼을 클릭한다.
+    cy.get('.operations').contains('+').click();
+
+    //5. 1 4 7을 차례대로 클릭한다. -> 1 14 147이 표시된다.
+    cy.get('.digits').contains('1').click();
+    cy.get('#total').should('have.text', '1');
+
+    cy.get('.digits').contains('4').click();
+    cy.get('#total').should('have.text', '14');
+
+    cy.get('.digits').contains('7').click();
+    cy.get('#total').should('have.text', '147');
+
+    // 6. 9를 클릭한다. -> alert창으로 '3자리 이하의 숫자를 입력해주세요' 라는 문구가 표시되며, 표시되는 값은 여전히 147이다.
+    cy.get('.digits')
+      .contains('9')
+      .click()
+      .then(() => {
+        expect(stub.getCall(0)).to.be.calledWith(
+          '3자리 이하의 숫자를 입력해주세요.'
+        );
+      });
+    cy.get('#total').should('have.text', '147');
+  });
 });
