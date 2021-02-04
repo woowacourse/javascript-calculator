@@ -42,19 +42,3 @@ function onClickedDigit() {
     });
   }
 }
-
-function addOperation() {
-  return String(firstInput + secondInput);
-}
-
-function substractOperation(firstInput, secondInput) {
-  return String(firstInput - secondInput);
-}
-
-function multiplyOperation(firstInput, secondInput) {
-  return String(firstInput * secondInput);
-}
-
-function divideOperation(firstInput, secondInput) {
-  return String(parseInt(firstInput / secondInput));
-}
