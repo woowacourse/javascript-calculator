@@ -345,4 +345,23 @@ describe('ui-counter', () => {
     });
   });
 
+  it.only("두번째 숫자를 입력한 후, '='을 제외한 연산자를 클릭하면 알림창이 나온다.", () => {
+    cy.window().then((win) => cy.stub(win, 'alert').as('windowAlert'));
+
+    [1, 2, 3].forEach((num) => cy.get('.digits').contains(num).click());
+
+    cy.get('.operations').contains('+').click();
+    [3, 2, 1].forEach((num) => cy.get('.digits').contains(num).click());
+    cy.get('.operations').contains('+').click();
+    cy.get('@windowAlert').should(
+      'be.calledWith',
+      '2개의 숫자에 대한 계산만 가능합니다.'
+    );
+    cy.get('#total').should('have.text', '321');
+
+    cy.get('.operations').contains('=').click();
+    cy.get('#total').should('have.text', 123 + 321);
+  });
+
+  });
 });
