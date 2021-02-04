@@ -1,6 +1,3 @@
-const { expect } = require("chai");
-const { describe } = require("mocha");
-
 describe("ui-click", () => {
   beforeEach(() => {
     // 페이지 접속. 띄워진 서버 port를 작성해주세요.
@@ -36,6 +33,14 @@ describe("ui-click", () => {
   it("AC 버튼을 누르면 초기화된다", () => {
     cy.get(".modifier").click();
     cy.get("#total").should("have.text", 0);
+  });
+
+  // 계산기에 값이 누적된다
+  it("계산기에 값이 누적된다", () => {
+    cy.get(".digit").eq(0).click().should("have.text", 9);
+    cy.get(".operation").eq(3).click().should("have.text", "+");
+    cy.get(".digit").eq(1).click().should("have.text", 8);
+    cy.get("#total").should("have.text", "9+8");
   });
 });
 
