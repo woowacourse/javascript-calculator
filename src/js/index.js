@@ -43,32 +43,32 @@ function onClickedDigit() {
   }
 }
 
+function calculation(operation, firstInput, operator) {
+  if (operation.innerText !== "=") {
+    state.operation = operator;
+    firstInput = state.input;
+  }
+
+  return firstInput;
+}
+
 function onClickedOperation() {
   const operations = document.getElementsByClassName("operation");
   let firstInput = "";
+  let secondInput = "";
   onClickedDigit();
 
   for (let operation of operations) {
     operation.addEventListener("click", () => {
-      if (operation.innerText === "+") {
-        state.operation = "+";
-        firstInput = state.input;
-      }
-      if (operation.innerText === "-") {
-        state.operation = "-";
-      }
-      if (operation.innerText === "X") {
-        state.operation = "X";
-      }
-      if (operation.innerText === "/") {
-        state.operation = "/";
-      }
+      let operator = operation.innerText;
+      firstInput = calculation(operation, firstInput, operator);
 
       onClickedDigit();
-      let secondInput = state.input;
-      console.log(firstInput, "뻐스트", secondInput, "쎄컨드");
+      secondInput = state.input;
     });
   }
+
+  console.log(firstInput, secondInput);
 }
 
 new onClickedOperation();
