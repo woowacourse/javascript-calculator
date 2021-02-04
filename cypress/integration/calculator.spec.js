@@ -26,43 +26,49 @@ describe('calculator', () => {
   });
 
   it('implement operations', () => {
-    const length_1 = Math.floor(Math.random() * 3) + 1;
-    const length_2 = Math.floor(Math.random() * 3) + 1;
-    const inputs = []; 
-
     cy.get('.digit').then(digits => {
+      const length_1 = Math.floor(Math.random() * 3) + 1;
+      const length_2 = Math.floor(Math.random() * 3) + 1;
+      const digit_1 = [];
+      const digit_2 = [];
+
       cy.get('.operator').then(operators => {
         for (let i = 0; i < length_1; i++) {
           const digit = digits[Math.floor(Math.random() * 10)];
-  
-          inputs.push(digit.innerText);
+
+          digit_1.push(digit.innerText);
           digit.click();
         }
 
         const randomNumber = Math.floor(Math.random() * 4);
         const op = operators[randomNumber].innerText;
-        if (op === 'X') {
-          inputs.push('*');
-        } else {
-          inputs.push(op);
-        }
-        
         operators[randomNumber].click();
 
         for (let i = 0; i < length_2; i++) {
           const digit = digits[Math.floor(Math.random() * 10)];
-  
-          inputs.push(digit.innerText);
+
+          digit_2.push(digit.innerText);
           digit.click();
+        }
+
+        const num1 = parseInt(digit_1.join(''), 10);
+        const num2 = parseInt(digit_2.join(''), 10);
+        let result;
+
+        if (op === '+') {
+          result = num1 + num2;
+        } else if (op === '-') {
+          result = num1 - num2;
+        } else if (op === 'X') {
+          result = num1 * num2;
+        } else {
+          result = Math.floor(num1 / num2);
         }
 
         cy.get('#equal').click();
 
-        console.log(inputs);
-        const result = Math.floor(eval(inputs.join('')));
-        console.log(result);
         cy.get('#total').should('have.text', result);
-      });      
+      });
     });
   });
 });
