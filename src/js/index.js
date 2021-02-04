@@ -1,7 +1,8 @@
 const state = {
-  input: "",
+  tempInput: "",
+  firstInput: "",
+  secondInput: "",
   operation: "",
-  result: "",
 };
 
 function checkInputLength(input) {
@@ -38,7 +39,7 @@ function onClickedDigit() {
         input = digit.innerText;
       }
       total.innerText = input;
-      state.input = input;
+      state.tempInput = input;
     });
   }
 }
@@ -46,10 +47,26 @@ function onClickedDigit() {
 function calculation(operation, firstInput, operator) {
   if (operation.innerText !== "=") {
     state.operation = operator;
-    firstInput = state.input;
+    firstInput = state.tempInput;
   }
 
   return firstInput;
+}
+
+function onClickedEqual() {
+  const operation = document.getElementsByClassName("operation")[4];
+  const total = document.getElementById("total");
+
+  operation.addEventListener("click", () => {
+    if (state.operation === "X") {
+      state.operation = "*";
+    }
+    let result = parseInt(
+      eval(state.firstInput + state.operation + state.secondInput)
+    );
+
+    total.innerText = result;
+  });
 }
 
 function onClickedOperation() {
@@ -62,23 +79,15 @@ function onClickedOperation() {
     operation.addEventListener("click", () => {
       let operator = operation.innerText;
       firstInput = calculation(operation, firstInput, operator);
+      state.firstInput = firstInput;
 
       onClickedDigit();
-      secondInput = state.input;
+      secondInput = state.tempInput;
+      state.secondInput = secondInput;
     });
   }
 
-  console.log(firstInput, secondInput);
+  onClickedEqual();
 }
 
 new onClickedOperation();
-
-function onClickedEqual() {
-  const operation = document.getElementsByClassName("operation")[4];
-  const total = document.getElementById("total");
-
-  if (operation.innerText === "=") {
-    state.secondInput = total.innerText;
-    console.log(state);
-  }
-}
