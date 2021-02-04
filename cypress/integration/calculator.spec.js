@@ -397,4 +397,34 @@ describe('ui-counter', () => {
       .should('have.css', 'background-color', 'rgb(255, 255, 255)')
       .should('have.css', 'color', 'rgb(255, 165, 0)');
   });
+
+  it('연산을 마친 후에는 숫자 및 연산자를 클릭하면 표시값은 변화되지 않고 알림창이 나온다.', () => {
+    cy.window().then((win) => cy.stub(win, 'alert').as('windowAlert'));
+
+    cy.get('.digits').contains('1').click();
+    cy.get('.operations').contains('+').click();
+    cy.get('.digits').contains('1').click();
+    cy.get('.operations').contains('=').click();
+    cy.get('#total').should('have.text', '2');
+
+    cy.get('.digits').contains('1').click();
+    cy.get('@windowAlert').should(
+      'be.calledWith',
+      'AC를 눌러 초기화를 해주세요.'
+    );
+
+    cy.get('.operations').contains('+').click();
+    cy.get('@windowAlert').should(
+      'be.calledWith',
+      'AC를 눌러 초기화를 해주세요.'
+    );
+
+    cy.get('.modifier').click();
+
+    cy.get('.digits').contains('9').click();
+    cy.get('.operations').contains('+').click();
+    cy.get('.digits').contains('9').click();
+    cy.get('.operations').contains('=').click();
+    cy.get('#total').should('have.text', '18');
+  });
 });
