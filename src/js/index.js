@@ -8,6 +8,20 @@ let isClickedOperator = false;
 calculator.addEventListener('click', (e) => {
   const { className } = e.target;
 
+  if (className === 'modifier') {
+    firstOperand = 0;
+    secondOperand = 0;
+    operator = '';
+    isClickedOperator = false;
+
+    total.innerText = 0;
+    document
+      .querySelector('.clicked-operation')
+      ?.classList.remove('clicked-operation');
+
+    return;
+  }
+
   if (className === 'digit') {
     if (isClickedOperator) {
       firstOperand = Number(total.innerText);
