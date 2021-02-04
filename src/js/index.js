@@ -2,6 +2,7 @@ import State from "./state.js";
 
 const state = new State();
 
+const digits = document.querySelectorAll(".digit");
 const total = document.getElementById("total");
 
 function onDigitClick(event) {
@@ -13,3 +14,7 @@ function onDigitClick(event) {
     state.setState("currentValue", total.innerText);
   }
 }
+
+digits.forEach((digit) => {
+  digit.addEventListener("click", onDigitClick);
+});
