@@ -175,6 +175,80 @@ describe('ui-counter', () => {
       .should('have.css', 'color', 'rgb(255, 165, 0)');
   });
 
+  const testAfterACClick = () => {
+    cy.get('#total').should('have.text', '0');
+    cy.get('.digits').contains('1').click();
+    cy.get('.operations').contains('+').click();
+    cy.get('.digits').contains('1').click();
+    cy.get('.operations').contains('=').click();
+    cy.get('#total').should('have.text', '2');
+  };
+
+  it('첫번째 숫자가 입력되고 난 후 AC(All Clear)버튼을 누르면 0으로 초기화 한다. - case1', () => {
+    cy.get('#total').should('have.text', '0');
+
+    cy.get('.digits').contains('5').click();
+    cy.get('#total').should('have.text', '5');
+
+    cy.get('.modifier').click();
+    testAfterACClick();
+  });
+
+  it('연산자가 입력되고 난 후 AC(All Clear)버튼을 누르면 0으로 초기화 한다. - case2', () => {
+    cy.get('#total').should('have.text', '0');
+
+    cy.get('.digits').contains('5').click();
+    cy.get('#total').should('have.text', '5');
+
+    cy.get('.operations').contains('X').click();
+
+    cy.get('.modifier').click();
+
+    cy.get('.operations')
+      .contains('X')
+      .should('have.css', 'background-color', 'rgb(255, 165, 0)')
+      .should('have.css', 'color', 'rgb(0, 0, 0)');
+
+    testAfterACClick();
+  });
+
+  it('두번째 숫자가 입력되고 난 후 AC(All Clear)버튼을 누르면 0으로 초기화 한다. - case3', () => {
+    cy.get('#total').should('have.text', '0');
+
+    cy.get('.digits').contains('5').click();
+    cy.get('#total').should('have.text', '5');
+
+    cy.get('.operations').contains('X').click();
+
+    cy.get('.digits').contains('5').click();
+    cy.get('#total').should('have.text', '5');
+
+    cy.get('.modifier').click();
+    testAfterACClick();
+  });
+
+  it('결과값이 표시되고 난 후 AC(All Clear)버튼을 누르면 0으로 초기화 한다. - case4', () => {
+    cy.get('#total').should('have.text', '0');
+
+    cy.get('.digits').contains('5').click();
+    cy.get('#total').should('have.text', '5');
+
+    cy.get('.operations').contains('X').click();
+
+    cy.get('.digits').contains('5').click();
+    cy.get('#total').should('have.text', '5');
+
+    cy.get('.operations').contains('=').click();
+    cy.get('#total').should('have.text', '25');
+
+    cy.get('.modifier').click();
+    cy.get('.operations')
+      .contains('=')
+      .should('have.css', 'background-color', 'rgb(255, 165, 0)')
+      .should('have.css', 'color', 'rgb(0, 0, 0)');
+    testAfterACClick();
+  });
+
   it('숫자는 한번에 최대 3자리 수까지 입력이 가능하다', () => {
     // 1. 초기에 표시되는 값은 0이다.
     cy.get('#total').should('have.text', '0');
