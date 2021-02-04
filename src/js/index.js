@@ -6,6 +6,7 @@ const digits = document.querySelectorAll(".digit");
 const total = document.getElementById("total");
 
 const isZero = (a) => a === "0";
+const isThree = (a) => a === 3;
 
 function onDigitClick(event) {
   if (isZero(total.innerText)) {
