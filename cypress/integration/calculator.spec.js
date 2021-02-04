@@ -77,7 +77,7 @@ describe('calculator', () => {
         .click()
         .then(() => {
           expect(stub.getCall(0)).to.be.calledWith(
-            '숫자는 세 자리까지만 입력 가능합니다!',
+            '숫자를 먼저 입력한 후 연산자를 입력해주세요!',
           );
         });
     });
@@ -95,6 +95,8 @@ describe('calculator', () => {
       cy.get('.digits').contains('9').click();
       cy.get('.digits').contains('9').click();
 
+      cy.get('.operations').contains('=').click();
+
       cy.get('#total').should('have.text', '1998');
     });
   });
@@ -109,6 +111,8 @@ describe('calculator', () => {
 
       cy.get('.digits').contains('1').click();
 
+      cy.get('.operations').contains('=').click();
+
       cy.get('#total').should('have.text', '998');
     });
   });
@@ -120,11 +124,13 @@ describe('calculator', () => {
       cy.get('.digits').contains('9').click();
       cy.get('.digits').contains('9').click();
 
-      cy.get('.operations').contains('*').click();
+      cy.get('.operations').contains('X').click();
 
       cy.get('.digits').contains('9').click();
       cy.get('.digits').contains('9').click();
       cy.get('.digits').contains('9').click();
+
+      cy.get('.operations').contains('=').click();
 
       cy.get('#total').should('have.text', '-998001');
     });
@@ -140,6 +146,8 @@ describe('calculator', () => {
 
       cy.get('.digits').contains('9').click();
 
+      cy.get('.operations').contains('=').click();
+
       cy.get('#total').should('have.text', '111');
     });
   });
@@ -153,6 +161,8 @@ describe('calculator', () => {
       cy.get('.operations').contains('/').click();
 
       cy.get('.digits').contains('5').click();
+
+      cy.get('.operations').contains('=').click();
 
       cy.get('#total').should('have.text', '199');
     });
