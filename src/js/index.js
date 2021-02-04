@@ -1,20 +1,17 @@
-const OPERATORS = '/*-+=';
+const OPERATORS = ['/', '*', '-', '+'];
 const LEN_LIMIT = 3;
 const $total = document.querySelector('#total');
 const $digits = document.querySelector('.digits');
 const $operations = document.querySelector('.operations');
 
 const isValidLength = () => {
-  let displayValue = $total.innerText;
-  let operator = displayValue.find((v) => OPERATORS.includes(v));
+  const displayValue = $total.innerText;
+  const operator = displayValue.split('').find((v) => OPERATORS.includes(v));
 
   if (!operator) {
     return displayValue.length < LEN_LIMIT;
   }
-
-  return displayValue
-    .split(operator)
-    .every((digits) => digits.length < LEN_LIMIT);
+  return displayValue.split(operator)[1].length < LEN_LIMIT;
 };
 
 const putNumber = ({ target }) => {
@@ -26,6 +23,7 @@ const putNumber = ({ target }) => {
   }
   return ($total.innerText += target.innerText);
 };
+
 const putOperator = ({ target }) => {
   return ($total.innerText += target.innerText);
 };
