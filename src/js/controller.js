@@ -25,7 +25,9 @@ class Calculator {
     return this.operator;
   }
 
-  reset() {}
+  reset() {
+    this.operator = "0";
+  }
 }
 
 export default Calculator;
