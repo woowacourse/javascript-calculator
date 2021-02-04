@@ -9,6 +9,8 @@ const isZero = (a) => a === "0";
 const isThree = (a) => a === 3;
 
 function onDigitClick(event) {
+  if (isThree(state.currentValue.length)) return;
+
   if (isZero(total.innerText)) {
     total.innerText = event.target.innerText;
     state.setState("currentValue", total.innerText);
