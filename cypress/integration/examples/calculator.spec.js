@@ -4,8 +4,13 @@ describe("ui-click", () => {
     cy.visit("http://localhost:5500/");
   });
 
+  // 계산기 초기 값은 0 이다 (따로 설정 안할시)
+  it("계산기 초기 값은 0이다", () => {
+    cy.get("#total").should("have.text", 0);
+  });
+
   // 숫자 UI 클릭하면 입력된다
-  /*it("숫자를 클릭하면 입력된다", () => {
+  it("숫자를 클릭하면 입력된다", () => {
     cy.get(".digit").each(num => {
       cy.get(num).click();
       cy.get("#total").should("have.text", num[0].outerText);
@@ -23,19 +28,10 @@ describe("ui-click", () => {
     cy.get(".operation").eq(3).click().should("have.text", "+");
     cy.get("#total").should("have.text", "+");
   });
-*/
-  // = 기호 클릭하면 계산된다
-  it("= 기호 클릭하면 계산된 값이 입력된다", () => {
-    cy.get("#total").then($res => {
-      cy.get(".operation").eq(4).click().should("have.text", "=");
-
-      cy.get("#total").should($res2 => {
-        expect($res2.text()).eq(eval($res.text()).toString());
-      });
-    });
-  });
 
   // AC 누르면 초기화된다
-
-  // 최대 입력 길이는 3자리 수이다
+  it("AC 버튼을 누르면 초기화된다", () => {
+    cy.get(".modifier").click();
+    cy.get("#total").should("have.text", 0);
+  });
 });
