@@ -1,5 +1,3 @@
-const { describe } = require("mocha");
-
 describe("ui-click", () => {
   beforeEach(() => {
     // 페이지 접속. 띄워진 서버 port를 작성해주세요.
@@ -98,14 +96,5 @@ describe("drop decimal point", () => {
   it("소수점을 버린다", () => {
     const { dropDecimalPoint } = require("../../../src/js/operator.js");
     expect(dropDecimalPoint(1.533).to.equal(1));
-  });
-});
-
-// 계산식 초기화
-describe("reset input", () => {
-  it("계산식을 초기화한다", () => {
-    const { reset } = require("../../../src/js/index.js");
-    reset();
-    cy.get("#total").should("have.text", "0");
   });
 });
