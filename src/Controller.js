@@ -18,4 +18,8 @@ export default class Controller {
 
     return Math.floor(eval(expression));
   }
+
+  static clearTotalBox() {
+    totalBox.value = '';
+  }
 }

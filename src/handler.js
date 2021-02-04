@@ -12,8 +12,9 @@ export const clickHandler = (event) => {
       if (inputValue === '=') {
         const calculatedValue = Controller.getCalculatedValue(totalBox.value);
         if (!isFinite(calculatedValue)) {
-          // clear value
+          Controller.clearTotalBox();
           View.render(INFINITE);
+          return;
         }
         totalBox.value = calculatedValue;
         View.render(calculatedValue);
@@ -30,6 +31,8 @@ export const clickHandler = (event) => {
       break;
 
     case 'modifier':
+      Controller.clearTotalBox();
+      View.render('0');
       break;
 
     default:
