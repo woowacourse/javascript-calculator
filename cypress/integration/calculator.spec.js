@@ -23,4 +23,34 @@ describe('calculator', () => {
       cy.get('#total').should('have.text', displayText + '/');
     });
   });
+
+  it('네자리 이상의 숫자가 입력됐을 경우 경고메세지가 뜬다.', () => {
+    const stub = cy.stub();
+
+    cy.on('window:alert', stub);
+
+    cy.get('#total').then(() => {
+      for (let i = 0; i < 3; i++) {
+        cy.get('.digits').contains('1').click();
+      }
+      cy.get('.digits')
+        .contains('1')
+        .click()
+        .then(() => {
+          expect(stub.getCall(0)).to.be.calledWith('I am an alert box!');
+        });
+      cy.get('.operations').contains('/').click();
+      for (let i = 0; i < 3; i++) {
+        cy.get('.digits').contains('1').click();
+      }
+      cy.get('.digits')
+        .contains('1')
+        .click()
+        .then(() => {
+          expect(stub.getCall(0)).to.be.calledWith('I am an alert box!');
+        });
+
+      cy.get('#total').should('have.text', '111/111');
+    });
+  });
 });
