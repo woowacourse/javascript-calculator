@@ -13,20 +13,17 @@ describe("ui-click", () => {
   it("숫자를 클릭하면 입력된다", () => {
     cy.get(".digit").each(num => {
       cy.get(num).click();
-      cy.get("#total").should("have.text", num[0].outerText);
     });
+    cy.get("#total").should("have.text", "9876543210");
   });
 
   // 연산 기호를 클릭하면 입력된다 - 하드코딩
   it("연산 기호를 클릭하면 입력된다", () => {
     cy.get(".operation").eq(0).click().should("have.text", "/");
-    cy.get("#total").should("have.text", "/");
     cy.get(".operation").eq(1).click().should("have.text", "X");
-    cy.get("#total").should("have.text", "*");
     cy.get(".operation").eq(2).click().should("have.text", "-");
-    cy.get("#total").should("have.text", "-");
     cy.get(".operation").eq(3).click().should("have.text", "+");
-    cy.get("#total").should("have.text", "+");
+    cy.get("#total").should("have.text", "0/*-+");
   });
 
   // AC 누르면 초기화된다
@@ -45,11 +42,11 @@ describe("ui-click", () => {
 
   // 계산식 계산
   it("계산식을 계산한다", () => {
-    cy.get(".digit").eq(0).click().should("have.text", 29);
+    cy.get(".digit").eq(0).click().should("have.text", 9);
     cy.get(".operation").eq(3).click().should("have.text", "+");
-    cy.get(".digit").eq(1).click().should("have.text", 81);
-    cy.get(".operation").eq(4).click().shoud("have.text", "=");
-    cy.get("#total").should("have.text", "110");
+    cy.get(".digit").eq(1).click().should("have.text", 8);
+    cy.get(".operation").eq(4).click().should("have.text", "=");
+    cy.get("#total").should("have.text", "17");
   });
 });
 
@@ -57,22 +54,22 @@ describe("ui-click", () => {
 describe("operate number", () => {
   it("두수를 더한다", () => {
     const { add } = require("../../../src/js/operator.js");
-    expect(add(2, 3).to.equal(5));
+    expect(add(2, 3)).to.equal(5);
   });
 
   it("두수를 뺀다", () => {
     const { minus } = require("../../../src/js/operator.js");
-    expect(minus(3, 1).to.equal(2));
+    expect(minus(3, 1)).to.equal(2);
   });
 
   it("두수를 곱한다", () => {
     const { multiply } = require("../../../src/js/operator.js");
-    expect(multiply(2, 3).to.equal(6));
+    expect(multiply(2, 3)).to.equal(6);
   });
 
   it("두수를 나눈다", () => {
     const { divide } = require("../../../src/js/operator.js");
-    expect(divide(4, 2).to.equal(2));
+    expect(divide(4, 2)).to.equal(2);
   });
 });
 
@@ -80,14 +77,14 @@ describe("operate number", () => {
 describe("check valid operator", () => {
   it("숫자가 3자리 초과인지 확인한다", () => {
     const { isNumberLowerThreeChar } = require("../../../src/js/valid.js");
-    expect(isNumberLowerThreeChar("43+102").to.equal(false));
-    expect(isNumberLowerThreeChar("529*34").to.equal(true));
+    expect(!isNumberLowerThreeChar("43+102")).to.equal(true);
+    expect(isNumberLowerThreeChar("529*34")).to.equal(true);
   });
 
   it("연산자가 두번 연속 나오는지 확인한다", () => {
-    const { isOperatorLowerTwoChar } = require("../../../src/js/vaild.js");
-    expect(isOperatorLowerTwoChar("18+").to.equal(false));
-    expect(isOperatorLowerTwoChar("324").to.equal(true));
+    const { isOperatorLowerTwoChar } = require("../../../src/js/valid.js");
+    expect(!isOperatorLowerTwoChar("18+")).to.equal(true);
+    expect(isOperatorLowerTwoChar("324")).to.equal(true);
   });
 });
 
@@ -95,6 +92,6 @@ describe("check valid operator", () => {
 describe("drop decimal point", () => {
   it("소수점을 버린다", () => {
     const { dropDecimalPoint } = require("../../../src/js/operator.js");
-    expect(dropDecimalPoint(1.533).to.equal(1));
+    expect(dropDecimalPoint(1.533)).to.equal(1);
   });
 });
