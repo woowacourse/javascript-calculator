@@ -229,4 +229,25 @@ describe('ui-counter', () => {
       });
     cy.get('#total').should('have.text', '147');
   });
+
+  it('계산 결과를 표현할 때 소수점 이하는 버림한다.', () => {
+    // 1. 초기에 표시되는 값은 0이다.
+    cy.get('#total').should('have.text', '0');
+
+    // 2. 1 0을 차례대로 클릭한다. -> 표시되는 값은 10 이다.
+    cy.get('.digits').contains('1').click();
+    cy.get('.digits').contains('0').click();
+    cy.get('#total').should('have.text', '10');
+
+    // 3. '/'을 클릭한다.
+    cy.get('.operations').contains('/').click();
+
+    // 4. 3을 클릭한다 -> 표시값은 3이다.
+    cy.get('.digits').contains('3').click();
+    cy.get('#total').should('have.text', '3');
+
+    //   5. '='을 클릭한다. -> 표시되는 값은 3이다
+    cy.get('.operations').contains('=').click();
+    cy.get('#total').should('have.text', '3');
+  });
 });
