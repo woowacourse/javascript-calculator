@@ -9,4 +9,5 @@ export default class App {
     new Calculator();
   }
 }
+
 new App();
