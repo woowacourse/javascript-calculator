@@ -22,6 +22,12 @@ calculator.addEventListener('click', (e) => {
     return;
   }
 
+  if (secondOperand !== null) {
+    alert('AC를 눌러 초기화를 해주세요.');
+
+    return;
+  }
+
   if (className === 'digit') {
     if (isClickedOperator) {
       firstOperand = Number(total.innerText);
