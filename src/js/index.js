@@ -8,7 +8,7 @@ const total = document.getElementById("total");
 const isStringZero = (a) => a === "0";
 const isThree = (a) => a === 3;
 
-function onDigitClick(event) {
+const onDigitClick = (event) => {
   if (isThree(state.currentValue.length)) return;
 
   if (isStringZero(total.innerText)) {
@@ -18,6 +18,6 @@ function onDigitClick(event) {
     total.innerText += event.target.innerText;
     state.setState("currentValue", total.innerText);
   }
-}
+};
 
 digits.forEach((digit) => digit.addEventListener("click", onDigitClick));
