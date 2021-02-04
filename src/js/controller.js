@@ -12,18 +12,22 @@ class Calculator {
   }
 
   addInput(value) {
-    this.operator += value;
+    if (this.operator === "0") {
+      this.operator = value;
+    } else {
+      this.operator += value;
+    }
   }
 
   addNumber(num) {
-    if (isNumberOverThreeChar(num)) {
+    if (isNumberOverThreeChar(this.operator)) {
       this.addInput(num);
       this.showResult();
     }
   }
 
   addOperator(operator) {
-    if (isOperatorOverTwoChar(operator)) {
+    if (isOperatorOverTwoChar(this.operator)) {
       this.addInput(operator);
       this.showResult();
     }
@@ -32,6 +36,7 @@ class Calculator {
   operate() {
     const inputOperator = this.operator.replace(/[0-9]/g, "");
     const [num1, num2] = this.operator.split(/[*+-/]/).map(x => parseInt(x));
+    console.log(inputOperator, num1, num2);
     if ("+" === inputOperator) {
       this.operator = add(num1, num2);
     } else if ("-" === inputOperator) {
@@ -42,7 +47,7 @@ class Calculator {
       this.operator = dropDecimalPoint(divide(num1, num2));
     }
 
-    return this.operator;
+    this.showResult();
   }
 
   reset() {

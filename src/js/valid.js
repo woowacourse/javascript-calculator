@@ -1,6 +1,6 @@
 const isNumberOverThreeChar = operator => {
   const splitedOperator = operator.split(/[*+-/]/);
-  if (splitedOperator.slice(-1)[0].length > 3) {
+  if (splitedOperator.slice(-1)[0].length > 2) {
     return alert("숫자는 3자리를 넘을 수 없습니다.");
   }
 
