@@ -1,4 +1,4 @@
-import { totalBox } from './store';
+import { totalBox } from './store.js';
 import {
   OPERAND_LENGTH_LIMIT,
   OPERAND_LENGTH_EXCEEDED_LIMIT,

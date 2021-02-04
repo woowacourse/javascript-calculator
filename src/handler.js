@@ -6,8 +6,6 @@ export const clickHandler = (event) => {
   const $click = event.target;
   const inputValue = $click.innerText;
 
-  console.log('hey');
-
   switch ($click.className) {
     case 'operation':
       if (inputValue === '=') {

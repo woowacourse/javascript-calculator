@@ -21,7 +21,7 @@ export default class TotalBox {
   getOperands() {
     const newValue = this.getNonNagativeValue();
 
-    const [operator] = Controller.getOperators();
+    const [operator] = this.getOperators();
     const operands = newValue.split(operator);
 
     return operands;
@@ -36,7 +36,7 @@ export default class TotalBox {
   }
 
   isOperatorExist() {
-    return this.getOperator().length > 0;
+    return this.getOperators().length > 0;
   }
 
   isLeftOperandEmpty() {
