@@ -1,3 +1,9 @@
+const state = {
+  input: "",
+  operation: "",
+  result: "",
+};
+
 function checkInputLength(input) {
   let checkLength = false;
 
@@ -18,22 +24,6 @@ function isRightInput(input) {
   return rightInput;
 }
 
-function addOperation(firstInput, secondInput) {
-  return firstInput + secondInput;
-}
-
-function substractOperation(firstInput, secondInput) {
-  return firstInput - secondInput;
-}
-
-function multiplyOperation(firstInput, secondInput) {
-  return firstInput * secondInput;
-}
-
-function divideOperation(firstInput, secondInput) {
-  return parseInt(firstInput / secondInput);
-}
-
 function onClickedDigit() {
   const digits = document.getElementsByClassName("digit");
   let input = "";
@@ -41,17 +31,30 @@ function onClickedDigit() {
   for (let digit of digits) {
     digit.addEventListener("click", () => {
       const total = document.getElementById("total");
-      if (
-        checkInputLength(input) &&
-        (input.length !== 0 || digit.innerText !== "0")
-      ) {
+
+      if (isRightInput(input) && checkInputLength(input)) {
         input += digit.innerText;
+      } else if (!isRightInput(input)) {
+        input = digit.innerText;
       }
       total.innerText = input;
+      state.input = input;
     });
   }
-
-  return input;
 }
 
-new onClickedDigit();
+function addOperation() {
+  return String(firstInput + secondInput);
+}
+
+function substractOperation(firstInput, secondInput) {
+  return String(firstInput - secondInput);
+}
+
+function multiplyOperation(firstInput, secondInput) {
+  return String(firstInput * secondInput);
+}
+
+function divideOperation(firstInput, secondInput) {
+  return String(parseInt(firstInput / secondInput));
+}
