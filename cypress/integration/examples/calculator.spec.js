@@ -41,27 +41,25 @@ describe("ui-click", () => {
     cy.get(".modifier").click();
     cy.get("#total").should("have.text", 0);
   });
-});
 
-// 유효성 검사
-describe("check valid operator", () => {
+  // 유효성 검사
+
   it("숫자가 3자리 초과인지 확인한다", () => {
-    const { isNumberLowerThreeChar } = require("../../../src/js/valid.js");
-    expect(!isNumberLowerThreeChar("43+102")).to.equal(true);
-    expect(isNumberLowerThreeChar("529*34")).to.equal(true);
+    cy.get(".digit").contains(1).click();
+    cy.get(".digit").contains(2).click();
+    cy.get(".digit").contains(3).click();
+    cy.get(".digit").contains(4).click();
+    cy.on("window:alert", txt => {
+      expect(txt).to.equal("숫자는 3자리를 넘을 수 없습니다.");
+    });
   });
 
   it("연산자가 두번 연속 나오는지 확인한다", () => {
-    const { isOperatorLowerTwoChar } = require("../../../src/js/valid.js");
-    expect(!isOperatorLowerTwoChar("18+")).to.equal(true);
-    expect(isOperatorLowerTwoChar("324")).to.equal(true);
-  });
-});
+    cy.get(".operation").contains("+").click();
+    cy.get(".operation").contains("/").click();
 
-// 소수점 버리기
-describe("drop decimal point", () => {
-  it("소수점을 버린다", () => {
-    const { dropDecimalPoint } = require("../../../src/js/operator.js");
-    expect(dropDecimalPoint(1.533)).to.equal(1);
+    cy.on("window:alert", txt => {
+      expect(txt).to.equal("연산자는 두번 연속 작성할 수 없습니다.");
+    });
   });
 });
