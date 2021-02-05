@@ -5,16 +5,15 @@ describe('calculator', () => {
 
   it('print digits & operators on display', () => {
     cy.get('.digit').then(digits => {
-      const digit1 = digits[Math.floor(Math.random() * 10)];
-      const digit2 = digits[Math.floor(Math.random() * 10)];
-      const digit3 = digits[Math.floor(Math.random() * 10)];
+      const digitsArr = [];
 
-      digit1.click();
-      digit2.click();
-      digit3.click();
+      for (let i = 0; i < 3; i++) {
+        digitsArr.push(digits[Math.floor(Math.random() * 10)]);
+        digitsArr[i].click();
+      }
 
       const result = parseInt(
-        digit1.innerText + digit2.innerText + digit3.innerText,
+        digitsArr[0].innerText + digitsArr[1].innerText + digitsArr[2].innerText,
         10,
       );
 
@@ -29,6 +28,15 @@ describe('calculator', () => {
     });
   });
 
+  const pressNumbers = (length, digitElements, digitsArr) => {
+    for (let i = 0; i < length; i++) {
+      const digit = digitElements[Math.floor(Math.random() * 10)];
+
+      digitsArr.push(digit.innerText);
+      digit.click();
+    }
+  }
+
   it('implement operations', () => {
     cy.get('.digit').then(digits => {
       const length_1 = Math.floor(Math.random() * 3) + 1;
@@ -37,36 +45,26 @@ describe('calculator', () => {
       const digit_2 = [];
 
       cy.get('.operator').then(operators => {
-        for (let i = 0; i < length_1; i++) {
-          const digit = digits[Math.floor(Math.random() * 10)];
+        pressNumbers(length_1, digits, digit_1);
 
-          digit_1.push(digit.innerText);
-          digit.click();
-        }
+        const op = operators[Math.floor(Math.random() * 4)];
+        const opText = op.innerText;
+        op.click();
 
-        const randomNumber = Math.floor(Math.random() * 4);
-        const op = operators[randomNumber].innerText;
-        operators[randomNumber].click();
+        pressNumbers(length_2, digits, digit_2);
 
-        for (let i = 0; i < length_2; i++) {
-          const digit = digits[Math.floor(Math.random() * 10)];
-
-          digit_2.push(digit.innerText);
-          digit.click();
-        }
-
-        const num1 = parseInt(digit_1.join(''), 10);
-        const num2 = parseInt(digit_2.join(''), 10);
+        const num_1 = parseInt(digit_1.join(''), 10);
+        const num_2 = parseInt(digit_2.join(''), 10);
         let result;
 
-        if (op === '+') {
-          result = num1 + num2;
-        } else if (op === '-') {
-          result = num1 - num2;
-        } else if (op === 'X') {
-          result = num1 * num2;
+        if (opText === '+') {
+          result = num_1 + num_2;
+        } else if (opText === '-') {
+          result = num_1 - num_2;
+        } else if (opText === 'X') {
+          result = num_1 * num_2;
         } else {
-          result = num1 / num2;
+          result = num_1 / num_2;
           cy.get('#equal').click();
           cy.get('#total').should('have.text', Math.floor(result));
 
@@ -84,47 +82,37 @@ describe('calculator', () => {
     cy.get('#total').should('have.text', '0');
   });
 
+  const pressNumberOverThree = (digitElements, digitsArr) => {
+    const length = 4;
+
+    for (let i = 0; i < length; i++) {
+      const digit = digitElements[Math.floor(Math.random() * 10)];
+
+      digitsArr.push(digit.innerText);
+      digit.click();
+
+      if (digitsArr.length > 3) {
+        cy.on('window:alert', str => {
+          expect(str).to.equal('숫자는 3자리까지만 입력이 가능합니다.');
+        });
+        cy.on('window:confirm', () => true);
+
+        digitsArr.pop();
+      }
+    }
+  }
+
   it('3 digit limitation', () => {
     cy.get('.digit').then(digits => {
-      const length = 4;
       const digit_1 = [];
       const digit_2 = [];
 
       cy.get('.operator').then(operators => {
-        for (let i = 0; i < length; i++) {
-          const digit = digits[Math.floor(Math.random() * 10)];
-
-          digit_1.push(digit.innerText);
-          digit.click();
-
-          if (digit_1.length > 3) {
-            cy.on('window:alert', str => {
-              expect(str).to.equal('숫자는 3자리까지만 입력이 가능합니다.');
-            });
-            cy.on('window:confirm', () => true);
-
-            digit_1.pop();
-          }
-        }
-
         const randomNumber = Math.floor(Math.random() * 4);
+
+        pressNumberOverThree(digits, digit_1);
         operators[randomNumber].click();
-
-        for (let i = 0; i < length; i++) {
-          const digit = digits[Math.floor(Math.random() * 10)];
-
-          digit_2.push(digit.innerText);
-          digit.click();
-
-          if (digit_2.length > 3) {
-            cy.on('window:alert', str => {
-              expect(str).to.equal('숫자는 3자리까지만 입력이 가능합니다.');
-            });
-            cy.on('window:confirm', () => true);
-
-            digit_2.pop();
-          }
-        }
+        pressNumberOverThree(digits, digit_2);
       });
     });
   });
