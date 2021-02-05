@@ -4,7 +4,8 @@ export default class MainController {
   init() {
     this.CalculatorView = new CalculatorView()
       .setup(document.querySelector('#app'))
-      .on('clickDigit', (e) => this.onClickDigitHandler(e.detail));
+      .on('clickDigit', (e) => this.onClickDigitHandler(e.detail))
+      .on('clickAC', () => this.onClickACHandler());
 
     this.digits = '';
   }
@@ -14,5 +15,9 @@ export default class MainController {
       this.digits += digit;
       this.CalculatorView.showDigit(this.digits);
     }
+  }
+
+  onClickACHandler() {
+    this.CalculatorView.showDigit('0');
   }
 }

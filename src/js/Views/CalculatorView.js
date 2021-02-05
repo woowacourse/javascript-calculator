@@ -4,6 +4,7 @@ export default class CalculatorView extends View {
   setup($element) {
     this.init($element);
     this.bindDigitClickEvent();
+    this.bindACClickEvent();
     return this;
   }
 
@@ -20,5 +21,15 @@ export default class CalculatorView extends View {
 
   showDigit(digit) {
     this.$element.querySelector('#total').innerText = digit;
+  }
+
+  bindACClickEvent() {
+    this.$element.querySelector('.modifier').addEventListener('click', () => {
+      this.onClickACHandler();
+    });
+  }
+
+  onClickACHandler() {
+    this.emit('clickAC');
   }
 }
