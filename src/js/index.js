@@ -33,7 +33,7 @@ const calculateResult = () => {
   if (operator.value === 'X')
     return parseInt(firstNumber.value) * parseInt(secondNumber.value);
   if (operator.value === '/')
-    return parseInt(firstNumber.value) / parseInt(secondNumber.value);
+    return parseInt(parseInt(firstNumber.value) / parseInt(secondNumber.value));
 }
 
 function handleFirstNumber(chr) {
