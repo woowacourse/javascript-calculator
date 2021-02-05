@@ -46,7 +46,6 @@ export default class TotalBox {
   }
 
   isLeftOperandNagative() {
-    console.log(this.value);
     if (this.value.length > 0 && this.value[0] === '-') {
       return true;
     }

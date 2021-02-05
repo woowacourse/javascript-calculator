@@ -1,4 +1,4 @@
-import TotalBox from './TotalBox.js';
+import TotalBox from './calculator/TotalBox.js';
 
 export const totalBox = new TotalBox('');
 

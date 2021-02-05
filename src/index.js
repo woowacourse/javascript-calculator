@@ -1,3 +1,3 @@
-import { clickHandler } from './handler.js';
+import { addCalculatorEventListeners } from './listener.js';
 
-document.addEventListener('click', clickHandler);
+addCalculatorEventListeners();

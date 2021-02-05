@@ -1,10 +1,10 @@
-import { totalBox } from './store.js';
+import { totalBox } from '../store.js';
 import {
   OPERAND_LENGTH_LIMIT,
   OPERAND_LENGTH_EXCEEDED_LIMIT,
   OPERATOR_EXISTANCE_ERROR,
   SHOULD_INPUT_LEFT_OPERAND,
-} from './contants.js';
+} from '../contants.js';
 
 export default class Input {
   static isValidLength(operand) {

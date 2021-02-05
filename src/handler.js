@@ -1,45 +1,38 @@
-import { INFINITE } from './contants.js';
-import { totalBox } from './store.js';
-import Controller from './Controller.js';
-import View from './View.js';
+import CalculatorController from './calculator/CalculatorController.js';
 
-export const clickHandler = (event) => {
-  const $click = event.target;
-  const inputValue = $click.innerText;
-
-  switch ($click.className) {
-    case 'operation':
-      if (inputValue === '=') {
-        const calculatedValue = Controller.getCalculatedValue(totalBox.value);
-        if (!isFinite(calculatedValue)) {
-          Controller.clearTotalBox();
-          View.render(INFINITE);
-          return;
-        }
-        totalBox.value = calculatedValue;
-        View.render(calculatedValue);
-      } else {
-        Controller.appendValue(inputValue);
-        View.render(totalBox.value);
-      }
-
-      break;
-
-    case 'digit':
-      Controller.appendValue(inputValue);
-      View.render(totalBox.value);
-      break;
-
-    case 'modifier':
-      Controller.clearTotalBox();
-      View.render('0');
-      break;
-
-    default:
-      break;
+export const operationHandler = (event) => {
+  const $clicked = event.target;
+  const inputValue = $clicked.innerText;
+  if ($clicked.className !== 'operation') {
+    return
   }
-};
+  if (inputValue === '=') {
+    CalculatorController.calculate();
+    return;
+  }
+  CalculatorController.put(inputValue);
+}
+
+export const digitHandler = (event) => {
+  const $clicked = event.target;
+  const inputValue = $clicked.innerText;
+  if ($clicked.className !== 'digit') {
+    return
+  }
+  CalculatorController.put(inputValue);
+}
+
+export const modifierHandler = (event) => {
+  const $clicked = event.target;
+  const inputValue = $clicked.innerText;
+  if ($clicked.className !== 'modifier') {
+    return
+  }
+  CalculatorController.clearTotalBox();
+}
 
 export default {
-  clickHandler,
+  operationHandler,
+  digitHandler,
+  modifierHandler
 };

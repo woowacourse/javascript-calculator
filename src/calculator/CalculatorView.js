@@ -1,6 +1,6 @@
 const $total = document.querySelector('#total');
 
-export default class View {
+export default class CalculatorView {
   static render(newTotalValue) {
     $total.innerText = newTotalValue;
   }
