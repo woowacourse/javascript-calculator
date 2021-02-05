@@ -29,7 +29,7 @@ describe("ui-click", () => {
   });
 
   it("두수를 곱한다", () => {
-    operateNumber("1", "X", "3", "=", "3");
+    operateNumber("5", "X", "3", "=", "15");
   });
 
   it("두수를 나눈다", () => {
