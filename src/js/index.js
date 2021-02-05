@@ -87,12 +87,13 @@ function onClickedEqual() {
     if (isDivideByZeroPossible()) {
       result = "오류";
       initState();
-    } else {
+    } else if (state.operation !== "=") {
       result = parseInt(
         eval(state.firstInput + state.operation + state.secondInput)
       );
       state.firstInput = String(result);
     }
+
     total.innerText = result;
   });
 }
@@ -107,7 +108,7 @@ function onClickedOperation() {
     operation.addEventListener("click", () => {
       let operator = operation.innerText;
 
-      if (firstInput === "") {
+      if (firstInput === "" || state.error) {
         firstInput = updateFirstInputAndOperator(
           operation,
           firstInput,
@@ -115,6 +116,7 @@ function onClickedOperation() {
         );
         state.firstInput = firstInput;
       }
+
       if (operator !== "=" && operator !== "") {
         state.operation = operator;
         if (state.error) {
@@ -132,4 +134,16 @@ function onClickedOperation() {
   onClickedEqual();
 }
 
+function modifier() {
+  const modifier = document.getElementsByClassName("modifier")[0];
+  const total = document.getElementById("total");
+
+  modifier.addEventListener("click", () => {
+    state.error = true;
+    initState();
+    total.innerText = "0";
+  });
+}
+
+new modifier();
 new onClickedOperation();
