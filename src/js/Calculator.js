@@ -1,6 +1,6 @@
 export default function Calculator() {
   this.$total = document.querySelector('#total');
-  this.totalText = '0';
+  this.totalNumber = 0;
   this.numbers = [];
   this.numberIndex = 0;
   this.operation = '';
@@ -10,20 +10,20 @@ export default function Calculator() {
       return;
     }
 
-    if (this.numbers[this.numberIndex] && this.numbers[this.numberIndex].length >= 3) {
+    if (this.numbers[this.numberIndex] >= 100) {
       alert('숫자는 세자리까지 입력이 가능해요!!');
       return;
     }
 
+    const inputNumber = e.target.textContent;
+
     this.setState({
-      nextNumber: this.numbers[this.numberIndex]
-        ? this.numbers[this.numberIndex] + e.target.textContent
-        : e.target.textContent,
+      nextNumber: this.numbers[this.numberIndex] ? this.numbers[this.numberIndex] + inputNumber : e.target.textContent,
     });
   });
 
   document.querySelector('.modifier').addEventListener('click', (e) => {
-    this.setState({ nextNumbers: [], nextTotalText: '0' });
+    this.setState({ nextNumbers: [], nextTotalNumber: 0 });
   });
 
   document.querySelector('.operations').addEventListener('click', (e) => {
@@ -34,7 +34,7 @@ export default function Calculator() {
     if (e.target.textContent === '=') {
       const result = this.operate();
 
-      this.setState({ nextOperation: '=', nextNumbers: [], nextNumberIndex: 0, nextTotalText: result.toString() });
+      this.setState({ nextOperation: '=', nextNumbers: [], nextNumberIndex: 0, nextTotalNumber: result });
     } else {
       this.setState({ nextOperation: e.target.textContent, nextNumberIndex: this.numberIndex + 1 });
     }
@@ -62,18 +62,18 @@ export default function Calculator() {
     }
   };
 
-  this.setState = ({ nextNumbers, nextTotalText, nextNumber, nextOperation, nextNumberIndex }) => {
+  this.setState = ({ nextNumbers, nextTotalNumber, nextNumber, nextOperation, nextNumberIndex }) => {
     if (nextNumber) {
-      this.totalText = nextNumber;
-      this.numbers[this.numberIndex] = nextNumber;
+      this.totalNumber = Number(nextNumber);
+      this.numbers[this.numberIndex] = Number(nextNumber);
     }
 
     if (nextNumbers) {
       this.numbers = nextNumbers;
     }
 
-    if (nextTotalText) {
-      this.totalText = nextTotalText;
+    if (typeof nextTotalNumber === 'number') {
+      this.totalNumber = nextTotalNumber;
     }
 
     if (nextOperation) {
@@ -85,6 +85,6 @@ export default function Calculator() {
   };
 
   this.render = () => {
-    this.$total.innerHTML = this.totalText;
+    this.$total.innerHTML = this.totalNumber;
   };
 }

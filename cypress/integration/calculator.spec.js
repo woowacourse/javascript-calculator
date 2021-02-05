@@ -32,6 +32,17 @@ describe('click event', () => {
     cy.get('#total').should('have.text', '123');
   });
 
+  it('숫자 앞에 0을 입력하는 경우', () => {
+    cy.get('.digit').contains('0').click();
+    cy.get('#total').should('have.text', '0');
+    cy.get('.digit').contains('1').click();
+    cy.get('#total').should('have.text', '1');
+    cy.get('.digit').contains('2').click();
+    cy.get('#total').should('have.text', '12');
+    cy.get('.digit').contains('3').click();
+    cy.get('#total').should('have.text', '123');
+  });
+
   it('AC 버튼 입력', () => {
     cy.get('.modifier').click();
     cy.get('#total').should('have.text', '0');
