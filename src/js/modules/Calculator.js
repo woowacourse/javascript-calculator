@@ -67,7 +67,7 @@ export default class Calculator {
       return this.number;
     }
 
-    return Math.floor(operations[this.operator](num1, num2));
+    return operations[this.operator](num1, num2);
   }
 
   reset() {
@@ -78,6 +78,12 @@ export default class Calculator {
 
   render(input) {
     const $total = document.querySelector('#total');
-    $total.innerText = this.isDigit(input) ? this.number : this.total;
+    $total.innerText = this.isDigit(input)
+      ? this.number
+      : this.formatTotal(this.total);
+  }
+
+  formatTotal(input) {
+    return Math.floor(input);
   }
 }
