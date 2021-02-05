@@ -1,6 +1,13 @@
+function testCalculate(num1, op, num2, result) {
+  cy.get('.digit').contains(num1).click();
+  cy.get('.operation').contains(op).click();
+  cy.get('.digit').contains(num2).click();
+  cy.get('.operation').contains('=').click();
+}
+
 describe('Calculator test', () => {
   beforeEach(() => {
-    cy.visit('http://127.0.0.1:5500/index.html');
+    cy.visit('http://127.0.0.1:5501/index.html');
   });
 
   it('Render initial value (0).', () => {
@@ -8,70 +15,38 @@ describe('Calculator test', () => {
   });
 
   it('Render digit when clicking digit button.', () => {
-    cy.get(`[data-test-digit='1']`).click();
+    cy.get('.digit').contains('1').click();
     cy.get('#total').should('have.text', '1');
   });
 
   it('Ignore only continuous input (0).', () => {
     for (let i = 0; i < 3; i++) {
-      cy.get(`[data-test-digit='0']`).click();
+      cy.get('.digit').contains('0').click();
     }
     cy.get('#total').should('have.text', '0');
   });
 
   it('Limit max digit length (3).', () => {
     for (let i = 1; i < 5; i++) {
-      cy.get(`[data-test-digit='${i}']`).click();
+      cy.get('.digit').contains(`${i}`).click();
     }
     cy.get('#total').should('have.text', '123');
   });
 
   it('Can add number.', () => {
-    for (let i = 1; i < 4; i++) {
-      cy.get(`[data-test-digit='${i}']`).click();
-    }
-    cy.get(`[data-test-operator='+']`).click();
-    for (let i = 1; i < 4; i++) {
-      cy.get(`[data-test-digit='${i}']`).click();
-    }
-    cy.get(`[data-test-operator='=']`).click();
-    cy.get('#total').should('have.text', '246');
+    testCalculate('1', '+', '1', '2');
   });
 
   it('Can subtract number.', () => {
-    for (let i = 1; i < 4; i++) {
-      cy.get(`[data-test-digit='${i}']`).click();
-    }
-    cy.get(`[data-test-operator='-']`).click();
-    for (let i = 1; i < 4; i++) {
-      cy.get(`[data-test-digit='${i}']`).click();
-    }
-    cy.get(`[data-test-operator='=']`).click();
-    cy.get('#total').should('have.text', '0');
+    testCalculate('1', '-', '1', '0');
   });
 
   it('Can multiply number.', () => {
-    for (let i = 1; i < 4; i++) {
-      cy.get(`[data-test-digit='${i}']`).click();
-    }
-    cy.get(`[data-test-operator='X']`).click();
-    for (let i = 1; i < 4; i++) {
-      cy.get(`[data-test-digit='${i}']`).click();
-    }
-    cy.get(`[data-test-operator='=']`).click();
-    cy.get('#total').should('have.text', '15129');
+    testCalculate('2', 'X', '3', '6');
   });
 
   it('Can divide number.', () => {
-    for (let i = 1; i < 4; i++) {
-      cy.get(`[data-test-digit='${i}']`).click();
-    }
-    cy.get(`[data-test-operator='/']`).click();
-    for (let i = 1; i < 4; i++) {
-      cy.get(`[data-test-digit='${i}']`).click();
-    }
-    cy.get(`[data-test-operator='=']`).click();
-    cy.get('#total').should('have.text', '1');
+    testCalculate('8', '/', '4', '2');
   });
 
   it('Can all clear when clicking AC button.', () => {
@@ -81,19 +56,11 @@ describe('Calculator test', () => {
   });
 
   it('Can format result (decimal => integer).', () => {
-    cy.get('.digit').contains('3').click();
-    cy.get('.operation').contains('/').click();
-    cy.get('.digit').contains('2').click();
-    cy.get('.operation').contains('=').click();
-    cy.get('#total').should('have.text', 1);
+    testCalculate('3', '/', '2', '1');
   });
 
-  it('Ignore first operator', () => {
+  it('Ignore first operator.', () => {
     cy.get('.operation').contains('/').click();
-    cy.get('.digit').contains('3').click();
-    cy.get('.operation').contains('+').click();
-    cy.get('.digit').contains('2').click();
-    cy.get('.operation').contains('=').click();
-    cy.get('#total').should('have.text', 5);
+    testCalculate('3', '+', '2', '5');
   });
 });

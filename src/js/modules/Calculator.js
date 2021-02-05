@@ -3,6 +3,7 @@ import {
   MAX_DIGIT_LENGTH,
   BASE,
 } from '../constants/index.js';
+
 export default class Calculator {
   constructor() {
     this.number = 0;
@@ -37,7 +38,7 @@ export default class Calculator {
     if (this.total === 0 && this.number === 0) {
       return;
     }
-    this.total = this.operate(this.total, this.number);
+    this.total = this.operate(this.total, this.operator, this.number);
     this.operator = input === 'X' ? '*' : input;
     this.number = 0;
   }
@@ -47,27 +48,26 @@ export default class Calculator {
   }
 
   addDigit(digit) {
-    const currentValue = this.number * BASE + digit;
-    if (String(currentValue).length > MAX_DIGIT_LENGTH) {
+    if (String(this.number).length === MAX_DIGIT_LENGTH) {
       alert(MAX_LENGTH_ALERT);
 
       return;
     }
-    this.number = currentValue;
+    this.number = this.number * BASE + digit;
   }
 
-  operate(num1, num2) {
+  operate(num1, op, num2) {
     const operations = {
       '+': (a, b) => a + b,
       '-': (a, b) => a - b,
       '*': (a, b) => a * b,
       '/': (a, b) => a / b,
     };
-    if (this.operator === '' || this.operator === '=') {
-      return this.number;
+    if (op === '' || op === '=') {
+      return num2;
     }
 
-    return operations[this.operator](num1, num2);
+    return operations[op](num1, num2);
   }
 
   reset() {
