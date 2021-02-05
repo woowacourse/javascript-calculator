@@ -1,6 +1,6 @@
 describe('calculator-test', () => {
   beforeEach(() => {
-    cy.visit('http://localhost:5500/Lv1/javascript-calculator');
+    cy.visit('http://localhost:5500/');
   });
 
   it('숫자를 눌렀을 때 화면에 표시되는지 확인한다.', () => {
@@ -10,5 +10,14 @@ describe('calculator-test', () => {
       cy.get('.digit').contains(number).click();
       cy.get('#total').should('have.text', number);
     });
+  });
+
+  it('숫자를 여러번 눌렀을 때, 수가 누적된다.', () => {
+    cy.get('.digit').contains('1').click();
+    cy.get('#total').should('have.text', '1');
+    cy.get('.digit').contains('2').click();
+    cy.get('#total').should('have.text', '12');
+    cy.get('.digit').contains('3').click();
+    cy.get('#total').should('have.text', '123');
   });
 });
