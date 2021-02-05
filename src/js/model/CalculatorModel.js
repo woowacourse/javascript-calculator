@@ -27,7 +27,8 @@ export default class CalculatorModel {
     const [operand1, operand2, ...surpluses] = this.#fomula
       .split(/[-+\/X]/)
       .map(operand => parseInt(operand));
-    const operator = this.#fomula.match(/[-+\/X]/)[0];
+    const operator = (this.#fomula.match(/[-+\/X]/) ?? [null])[0];
+    if (!operator) throw new Error('SHOULD HAVE 1 OPERATOR');
     if (surpluses.length > 0) throw new Error('TOO MANY OPERATERS');
 
     return { operand1, operand2, operator };
