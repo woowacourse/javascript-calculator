@@ -43,7 +43,11 @@ class Calculator {
       "/": dropDecimalPoint(divide(num1, num2)),
     };
 
-    this.operator = operateList[inputOperator];
+    if (inputOperator === "/" && num2 === 0) {
+      this.operator = "error";
+    } else {
+      this.operator = operateList[inputOperator];
+    }
     this.showResult();
   }
 
