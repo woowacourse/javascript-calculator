@@ -114,27 +114,6 @@ function onClickedOperation() {
   let secondInput = "";
   onClickedDigit();
 
-  // document.querySelector(".operations").addEventListener("click", (e) => {
-  //   let operator = e.target.innerText;
-  //   console.log(e.target.innerText, e.target);
-  //   console.log(state);
-  //   if (firstInput === "" || state.error) {
-  //     firstInput = updateFirstInputAndOperator(e.target, firstInput, operator);
-  //     state.firstInput = firstInput;
-  //   }
-
-  //   if (operator !== "=" && operator !== "") {
-  //     state.operation = operator;
-  //     if (state.error) {
-  //       state.firstInput = state.tempInput;
-  //       state.error = false;
-  //     }
-  //   }
-
-  //   onClickedDigit();
-  //   secondInput = state.tempInput;
-  //   state.secondInput = secondInput;
-  // });
   for (let operation of operations) {
     operation.addEventListener("click", () => {
       let operator = operation.innerText;
