@@ -17,10 +17,14 @@ export default class Calculator {
   }
 
   onClickButton({ target: { className, innerText } }) {
-    if (className !== 'digit' && className !== 'operation') {
+    if (
+      className !== 'digit' &&
+      className !== 'operation' &&
+      className !== 'modifier'
+    ) {
       return;
     }
-    this.calculate(innerText);
+    className !== 'modifier' ? this.calculate(innerText) : this.reset();
     this.render(innerText);
   }
 
@@ -64,6 +68,12 @@ export default class Calculator {
     }
 
     return Math.floor(operations[this.operator](num1, num2));
+  }
+
+  reset() {
+    this.number = 0;
+    this.operator = '';
+    this.total = 0;
   }
 
   render(input) {

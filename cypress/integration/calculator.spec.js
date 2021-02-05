@@ -1,6 +1,6 @@
 describe('Calculator test', () => {
   beforeEach(() => {
-    cy.visit('http://127.0.0.1:5501/index.html');
+    cy.visit('http://127.0.0.1:5500/index.html');
   });
 
   it('Render initial value (0).', () => {
@@ -72,6 +72,12 @@ describe('Calculator test', () => {
     }
     cy.get(`[data-test-operator='=']`).click();
     cy.get('#total').should('have.text', '1');
+  });
+
+  it('Can all clear when clicking AC button.', () => {
+    cy.get('.digit').contains('3').click();
+    cy.get('.modifier').click();
+    cy.get('#total').should('have.text', '0');
   });
 
   // 소수점 계산을 했을 때 => 정수값으로 나오는지
