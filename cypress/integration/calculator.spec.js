@@ -62,4 +62,18 @@ describe('계산 기능', () => {
     cy.get('.operations').contains('=').click();
     cy.get('#total').should('have.text', 'SYNTAX ERROR');
   });
+
+  it('계산 결과를 표현할 때 소수점 이하는 버림한다.', () => {
+    cy.get('.digit').contains('2').click();
+    cy.get('.operations').contains('+').click();
+    cy.get('.digit').contains('3').click();
+  });
+
+  it('계산 결과를 표현할 때 소수점 이하는 버림한다.', () => {
+    cy.get('.digit').contains('7').click();
+    cy.get('.operations').contains('/').click();
+    cy.get('.digit').contains('3').click();
+    cy.get('.operations').contains('=').click();
+    cy.get('#total').should('have.text', '2');
+  });
 });
