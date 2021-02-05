@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "<p align=\"middle\" >\r   <img width=\"100px;\" src=\"https://github.com/woowacourse/javascript-calculator/blob/main/src/images/calculator.png?raw=true\"/>\r </p>\r <h2 align=\"middle\">level1 - 자바스크립트 계산기</h2>\r <p align=\"middle\">자바스크립트 계산기로 익혀보는 프론트엔드 테스트</p>\r <p align=\"middle\">\r <img src=\"https://img.shields.io/badge/version-1.0.0-blue?style=flat-square\" alt=\"template version\"/>\r <img src=\"https://img.shields.io/badge/language-html-blue.svg?style=flat-square\"/>\r <a href=\"https://github.com/daybrush/moveable/blob/master/LICENSE\" target=\"_blank\">\r   <img src=\"https://img.shields.io/github/license/daybrush/moveable.svg?style=flat-square&label=license&color=08CE5D\"/>\r   </a>\r </p>",
   "main": "index.js",
+  "type": "module",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
