@@ -154,7 +154,7 @@ function onClickedOperation() {
   onClickedEqual();
 }
 
-function modifier() {
+function onClickedModifier() {
   const modifier = document.getElementsByClassName("modifier")[0];
 
   modifier.addEventListener("click", () => {
@@ -164,5 +164,5 @@ function modifier() {
   });
 }
 
-new modifier();
+new onClickedModifier();
 new onClickedOperation();
