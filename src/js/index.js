@@ -13,6 +13,11 @@ class Calculator {
     this.setEventListener();
   }
 
+  initOperandsAndOperator() {
+    this.operands = [];
+    this.operator = '';
+  }
+
   onClickDigit(event) {
     if (event.target.className !== 'digit') return;
 
@@ -26,6 +31,7 @@ class Calculator {
     }
 
     this.$.total.innerText += digit;
+    console.log(this.operands);
   }
 
   onClickModifier(event) {
@@ -51,6 +57,8 @@ class Calculator {
     }
 
     this.$.total.innerText = this.calculate(this.operands[0], this.operator, this.operands[1]);
+    this.initOperandsAndOperator();
+    this.isTimeToInputNumber = true;
   }
 
   calculate(number1, operator, number2) {

@@ -69,8 +69,8 @@ function testCalculate(operator) {
 }
 
 context('calculator', () => {
-  beforeEach(() => {
-    cy.visit('http://127.0.0.1:5500/');
+  before(() => {
+    cy.visit('http://127.0.0.1:5501/javascript-calculator/');
   });
 
   it('2개의 임의의 3자리 숫자를 입력받고 더한다', () => {
@@ -102,6 +102,7 @@ context('calculator', () => {
 
     clickDigits(randomDigits);
     cy.get('#total').should('have.text', `${randomDigits.slice(0, 3)}`);
+    cy.get('.modifier').contains('AC').click();
   });
 
   it('나누기 결과에서 소수점 이하는 버림한다.', () => {
