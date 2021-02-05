@@ -76,24 +76,34 @@ function isDivideError() {
   return isDivideError;
 }
 
+function calculateResult() {
+  let result = 0;
+
+  if (state.operation === "+") {
+    result = parseInt(state.firstInput) + parseInt(state.secondInput);
+  } else if (state.operation === "-") {
+    result = parseInt(state.firstInput) - parseInt(state.secondInput);
+  } else if (state.operation === "X") {
+    result = parseInt(state.firstInput) * parseInt(state.secondInput);
+  } else if (state.operation === "/") {
+    result = parseInt(parseInt(state.firstInput) / parseInt(state.secondInput));
+  }
+
+  return result;
+}
+
 function onClickedEqual() {
   const operation = document.getElementsByClassName("operation")[4];
   let result = "";
 
   operation.addEventListener("click", () => {
-    if (state.operation === "X") {
-      state.operation = "*";
-    }
-
     if (isDivideError()) {
       result = "오류";
       resetState();
-    } else if (state.operation !== "=") {
-      result = parseInt(
-        eval(state.firstInput + state.operation + state.secondInput)
-      );
-      state.firstInput = String(result);
+    } else {
+      result = calculateResult();
     }
+    state.firstInput = String(result);
     setTotalText(result);
   });
 }
