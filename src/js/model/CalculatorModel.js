@@ -30,6 +30,8 @@ export default class CalculatorModel {
     const operator = (this.#fomula.match(/[-+\/X]/) ?? [null])[0];
     if (!operator) throw new Error('SHOULD HAVE 1 OPERATOR');
     if (surpluses.length > 0) throw new Error('TOO MANY OPERATERS');
+    if (operand1 > 999 || operand2 > 999)
+      throw new Error('MAXIMUM OF OPERAND IS 999');
 
     return { operand1, operand2, operator };
   }
