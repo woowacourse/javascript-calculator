@@ -10,7 +10,9 @@ export default class MainController {
   }
 
   onClickDigitHandler(digit) {
-    this.digits += digit;
-    this.CalculatorView.showDigit(this.digits);
+    if (this.digits.length < 3) {
+      this.digits += digit;
+      this.CalculatorView.showDigit(this.digits);
+    }
   }
 }

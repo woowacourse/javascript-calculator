@@ -11,4 +11,17 @@ describe('calculator-test', () => {
     cy.get('.digit').contains('3').click();
     cy.get('#total').should('have.text', '123');
   });
+
+  it('숫자가 3개이상 입력된 후에는 숫자가 더이상 입력되지 않는다.', () => {
+    cy.get('.digit').contains('1').click();
+    cy.get('#total').should('have.text', '1');
+    cy.get('.digit').contains('2').click();
+    cy.get('#total').should('have.text', '12');
+    cy.get('.digit').contains('3').click();
+    cy.get('#total').should('have.text', '123');
+    cy.get('.digit').contains('4').click();
+    cy.get('#total').should('have.text', '123');
+    cy.get('.digit').contains('5').click();
+    cy.get('#total').should('have.text', '123');
+  });
 });
