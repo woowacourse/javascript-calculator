@@ -34,4 +34,12 @@ context("e2e", () => {
     cy.get(".digit").contains("6").click();
     cy.get("#total").should("have.text", "234");
   });
+
+  it("'='를 제외한 연산자(.operation)을 눌렀을 때 결과창이 변하지 않아야 한다.", () => {
+    cy.get(".digit").contains("2").click();
+    cy.get(".digit").contains("3").click();
+    cy.get(".digit").contains("4").click();
+    cy.get(".operation").contains("X").click();
+    cy.get("#total").should("have.text", "234");
+  });
 });
