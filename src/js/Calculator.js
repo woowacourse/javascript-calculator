@@ -1,3 +1,5 @@
+import { ERROR_MESSAGE } from './errorMessage.js';
+
 export default function Calculator() {
   this.$total = document.querySelector('#total');
   this.totalNumber = 0;
@@ -11,7 +13,7 @@ export default function Calculator() {
     }
 
     if (this.numbers[this.numberIndex] >= 100) {
-      alert('숫자는 세자리까지 입력이 가능해요!!');
+      alert(ERROR_MESSAGE.OVER_MAX_NUMBER);
       return;
     }
 
@@ -53,7 +55,7 @@ export default function Calculator() {
 
       case '/':
         if (Number(this.numbers[1]) === 0) {
-          alert('0으로 나눌 수 없습니다!!');
+          alert(ERROR_MESSAGE.DIVIDE_BY_ZERO);
           return 0;
         }
         return Math.floor(this.numbers.reduce((result, num) => result / Number(num)));

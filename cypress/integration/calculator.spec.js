@@ -1,3 +1,5 @@
+import { ERROR_MESSAGE } from '../../src/js/errorMessage.js';
+
 describe('계산기 테스트', () => {
   beforeEach(() => {
     cy.visit('http://localhost:5500/');
@@ -27,7 +29,7 @@ describe('계산기 테스트', () => {
     cy.get('.digit').contains('4').click();
 
     cy.on('window:alert', (txt) => {
-      expect(txt).to.contains('숫자는 세자리까지 입력이 가능해요!!');
+      expect(txt).to.contains(ERROR_MESSAGE.OVER_MAX_NUMBER);
     });
     cy.get('#total').should('have.text', '123');
   });
@@ -114,7 +116,7 @@ describe('계산기 테스트', () => {
     cy.get('.operation').contains('=').click();
 
     cy.on('window:alert', (txt) => {
-      expect(txt).to.contains('0으로 나눌 수 없습니다!!');
+      expect(txt).to.contains(ERROR_MESSAGE.DIVIDE_BY_ZERO);
     });
     cy.get('#total').should('have.text', '0');
   });
