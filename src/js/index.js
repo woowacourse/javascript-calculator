@@ -48,15 +48,6 @@ function onClickedDigit() {
   });
 }
 
-function updateFirstInputAndOperator(operation, firstInput, operator) {
-  if (operation.innerText !== "=") {
-    state.operation = operator;
-    firstInput = state.tempInput;
-  }
-
-  return firstInput;
-}
-
 function resetState() {
   state.tempInput = "";
   state.firstInput = "";
@@ -108,35 +99,42 @@ function onClickedEqual() {
   });
 }
 
+function setFirstInputAndOperator(operation, firstInput, operator) {
+  if (operation.innerText !== "=") {
+    state.operation = operator;
+    firstInput = state.tempInput;
+  }
+
+  return firstInput;
+}
+
 function onClickedOperation() {
   const operations = document.getElementsByClassName("operation");
-  let firstInput = state.firstInput;
-  let secondInput = "";
+  let prevResult = state.firstInput;
   onClickedDigit();
 
   for (let operation of operations) {
     operation.addEventListener("click", () => {
       let operator = operation.innerText;
-      if (firstInput === "" || state.error) {
-        firstInput = updateFirstInputAndOperator(
-          operation,
-          firstInput,
-          operator
-        );
-        state.firstInput = firstInput;
+
+      if (prevResult === "" || state.error) {
+        // 첫번 째 연산이거나 AC눌렀을 때
+        prevResult = setFirstInputAndOperator(operation, prevResult, operator);
+        state.firstInput = prevResult;
       }
 
       if (operator !== "=" && operator !== "") {
+        // operator가 사칙연산자일 때
         state.operation = operator;
         if (state.error) {
+          // 오류 났을 때
           state.firstInput = state.tempInput;
           state.error = false;
         }
       }
 
       onClickedDigit();
-      secondInput = state.tempInput;
-      state.secondInput = secondInput;
+      state.secondInput = state.tempInput;
     });
   }
 
