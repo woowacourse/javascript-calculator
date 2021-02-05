@@ -7,23 +7,19 @@ const state = {
 };
 
 function checkInputLength(input) {
-  let checkLength = false;
-
   if (input.length < 3) {
-    checkLength = true;
+    return true;
   }
 
-  return checkLength;
+  return false;
 }
 
 function isRightInput(input) {
-  let rightInput = false;
-
   if (input[0] !== "0" && checkInputLength(input)) {
-    rightInput = true;
+    return true;
   }
 
-  return rightInput;
+  return false;
 }
 
 function setTotalText(result) {
@@ -56,15 +52,13 @@ function resetState() {
 }
 
 function isDivideError() {
-  let isDivideError = false;
-
   if (state.operation === "/" && state.secondInput === "0") {
-    isDivideError = true;
     resetState();
     state.error = true;
+    return true;
   }
 
-  return isDivideError;
+  return false;
 }
 
 function calculateResult() {
