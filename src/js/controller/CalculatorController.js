@@ -17,12 +17,20 @@ export default class CalculatorController {
   #initEvent() {
     this.#$digits.addEventListener('click', this.#handleClickValue);
     this.#$operations.addEventListener('click', event => {
-      if (event.target.innerText !== '=') this.#handleClickValue(event);
+      if (event.target.innerText !== '=') {
+        this.#handleClickValue(event);
+      } else {
+        this.#handleClickResult();
+      }
     });
   }
 
   #handleClickValue = ({ target }) => {
     const value = target.innerText;
-    this.#model.appendFomula(value);
+    this.#model.changeFomula(value);
   };
+
+  #handleClickResult() {
+    this.#model.calculate();
+  }
 }
