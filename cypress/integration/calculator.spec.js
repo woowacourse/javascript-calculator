@@ -7,6 +7,11 @@ describe('계산 기능', () => {
     cy.get(`#total`).should('have.text', '0');
   });
 
+  it('계산기 숫자나 연산자 버튼을 누르면 결과화면에 표시된다.', () => {
+    cy.get('.digit').contains('1').click();
+    cy.get(`#total`).should('have.text', '01');
+  });
+
   it('맨 앞자리수가 0일 때 0을 누르면 변화가 없다.', () => {});
 
   it('숫자는 한번에 최대 3자리 수까지 입력 가능하다.', () => {
