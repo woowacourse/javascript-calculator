@@ -12,17 +12,23 @@ export default class CalculatorModel {
   }
 
   calculate() {
-    const parsedElements = this.#parseFomula();
-    this.#fomula = this.#getCalculatedResult(parsedElements);
+    try {
+      const parsedElements = this.#parseFomula();
+      this.#fomula = this.#getCalculatedResult(parsedElements);
+    } catch (error) {
+      this.#fomula = `SYNTAX ERROR`;
+      alert(error);
+    }
     this.#currentState = 'result';
     this.#view.renderTotal();
   }
 
   #parseFomula() {
-    const [operand1, operand2] = this.#fomula
+    const [operand1, operand2, ...surpluses] = this.#fomula
       .split(/[-+\/X]/)
       .map(operand => parseInt(operand));
     const operator = this.#fomula.match(/[-+\/X]/)[0];
+    if (surpluses.length > 0) throw new Error('TOO MANY OPERATERS');
 
     return { operand1, operand2, operator };
   }
