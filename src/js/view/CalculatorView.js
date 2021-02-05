@@ -1,15 +1,30 @@
+import CalculatorController from '../controller/CalculatorController.js';
+import CalculatorModel from '../model/CalculatorModel.js';
 export default class CalculatorView {
-  #$app;
+  #model;
+  #$target;
+  #$total;
 
-  constructor() {
-    this.#$app = document.querySelector('#app');
+  constructor($target) {
+    this.#$target = $target;
+    this.#model = new CalculatorModel(this);
     this.render();
+    this.initDOMElement();
+    new CalculatorController(this.#model);
+  }
+
+  initDOMElement() {
+    this.#$total = document.querySelector('#total');
+  }
+
+  renderTotal() {
+    this.#$total.innerText = this.#model.fomula;
   }
 
   render() {
-    this.#$app.innerHTML = `
+    this.#$target.innerHTML = `
       <div class="calculator">
-        <h1 id="total">0</h1>
+        <h1 id="total">${this.#model.fomula}</h1>
         <div class="digits flex">
           <button class="digit" data-key="9">9</button>
           <button class="digit" data-key="8">8</button>

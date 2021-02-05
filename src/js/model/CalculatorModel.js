@@ -2,8 +2,13 @@ export default class CalculatorModel {
   #firstOperand;
   #SecondOperand;
   #operator;
+  #fomula;
+  #view;
 
-  constructor() {}
+  constructor(view) {
+    this.#fomula = '0';
+    this.#view = view;
+  }
 
   calculate(formula) {
     try {
@@ -13,5 +18,15 @@ export default class CalculatorModel {
       //에러 처리
     }
     //결과값 리턴
+    this.#view.render();
+  }
+
+  get fomula() {
+    return this.#fomula;
+  }
+
+  appendFomula(value) {
+    this.#fomula += value;
+    this.#view.renderTotal();
   }
 }
