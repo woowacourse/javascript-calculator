@@ -1,7 +1,7 @@
 export default function Calculator() {
   this.$total = document.querySelector('#total');
   this.totalNumber = 0;
-  this.numbers = [];
+  this.numbers = [0];
   this.numberIndex = 0;
   this.operation = '';
 
@@ -34,7 +34,7 @@ export default function Calculator() {
     if (e.target.textContent === '=') {
       const result = this.operate();
 
-      this.setState({ nextOperation: '=', nextNumbers: [], nextNumberIndex: 0, nextTotalNumber: result });
+      this.setState({ nextOperation: '=', nextNumbers: [0], nextNumberIndex: 0, nextTotalNumber: result });
     } else {
       this.setState({ nextOperation: e.target.textContent, nextNumberIndex: this.numberIndex + 1 });
     }
@@ -43,13 +43,13 @@ export default function Calculator() {
   this.operate = () => {
     switch (this.operation) {
       case '+':
-        return this.numbers.reduce((result, num) => result + Number(num), 0);
+        return this.numbers.reduce((result, num) => result + num);
 
       case '-':
-        return this.numbers.reduce((result, num) => result - Number(num));
+        return this.numbers.reduce((result, num) => result - num);
 
       case 'X':
-        return this.numbers.reduce((result, num) => result * Number(num));
+        return this.numbers.reduce((result, num) => result * num);
 
       case '/':
         if (Number(this.numbers[1]) === 0) {

@@ -1,4 +1,4 @@
-describe('click event', () => {
+describe('계산기 테스트', () => {
   beforeEach(() => {
     cy.visit('http://localhost:5500/');
   });
@@ -137,5 +137,14 @@ describe('click event', () => {
     cy.get('.operation').contains('=').click();
 
     cy.get('#total').should('have.text', '22');
+  });
+
+  it('연산자 버튼을 먼저 입력하여 계산 실행', () => {
+    cy.get('.operation').contains('-').click();
+    cy.get('#total').should('have.text', '0');
+    cy.get('.digit').contains('1').click();
+    cy.get('#total').should('have.text', '1');
+    cy.get('.operation').contains('=').click();
+    cy.get('#total').should('have.text', '-1');
   });
 });
