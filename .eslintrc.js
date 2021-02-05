@@ -5,8 +5,10 @@ module.exports = {
   },
   extends: ['airbnb-base'],
   parserOptions: {
-    ecmaVersion: 12,
+    ecmaVersion: 2015,
     sourceType: 'module',
   },
-  rules: {},
+  rules: {
+    'no-console': 'off',
+  },
 };
