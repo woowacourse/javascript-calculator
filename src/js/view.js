@@ -19,9 +19,7 @@ class CalculatorView {
     const operationBtns = document.querySelectorAll(".operation");
     operationBtns.forEach(operationBtn => {
       operationBtn.addEventListener("click", () => {
-        if (operationBtn.innerHTML === "X") {
-          return this.calculator.addOperator("*");
-        } else if (operationBtn.innerHTML === "=") {
+        if (operationBtn.innerHTML === "=") {
           return this.calculator.operate();
         }
 
