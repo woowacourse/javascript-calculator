@@ -43,7 +43,6 @@ describe("ui-click", () => {
   });
 
   // 유효성 검사
-
   it("숫자가 3자리 초과인지 확인한다", () => {
     cy.get(".digit").contains(1).click();
     cy.get(".digit").contains(2).click();
@@ -61,5 +60,13 @@ describe("ui-click", () => {
     cy.on("window:alert", txt => {
       expect(txt).to.equal("연산자는 두번 연속 작성할 수 없습니다.");
     });
+  });
+
+  it("0으로 나눌떄 에러 문구 출력되는지 확인한다", () => {
+    cy.get(".digit").contains(1).click();
+    cy.get(".operation").contains("/").click();
+    cy.get(".digit").contains(0).click();
+    cy.get(".operation").contains("=").click();
+    cy.get("#total").should("have.text", "error");
   });
 });
