@@ -25,4 +25,13 @@ context("e2e", () => {
     cy.get(".digit").contains("4").click();
     cy.get("#total").should("have.text", "234");
   });
+
+  it(`숫자(.digit)를 연속해서 클릭할 때 결과창에 값이 3글자 이하여야 하고, 더 추가하려고 하면 기존 출력을 유지하고 수정되지 않도록 한다.`, () => {
+    cy.get(".digit").contains("2").click();
+    cy.get(".digit").contains("3").click();
+    cy.get(".digit").contains("4").click();
+    cy.get(".digit").contains("5").click();
+    cy.get(".digit").contains("6").click();
+    cy.get("#total").should("have.text", "234");
+  });
 });
