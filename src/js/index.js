@@ -19,30 +19,33 @@ function checkInputLength(input) {
 function isRightInput(input) {
   let rightInput = false;
 
-  if (input[0] !== "0") {
+  if (input[0] !== "0" && checkInputLength(input)) {
     rightInput = true;
   }
 
   return rightInput;
 }
 
+function setTotalText(result) {
+  const total = document.getElementById("total");
+  total.innerText = result;
+}
+
 function onClickedDigit() {
-  const digits = document.getElementsByClassName("digit");
   let input = "";
 
-  for (let digit of digits) {
-    digit.addEventListener("click", () => {
-      const total = document.getElementById("total");
+  document.querySelector(".digits").addEventListener("click", (e) => {
+    const currentInputNumber = e.target.innerText;
 
-      if (isRightInput(input) && checkInputLength(input)) {
-        input += digit.innerText;
-      } else if (!isRightInput(input)) {
-        input = digit.innerText;
-      }
-      total.innerText = input;
-      state.tempInput = input;
-    });
-  }
+    if (isRightInput(input)) {
+      input += currentInputNumber;
+    } else {
+      input = currentInputNumber;
+    }
+
+    setTotalText(input);
+    state.tempInput = input;
+  });
 }
 
 function updateFirstInputAndOperator(operation, firstInput, operator) {
@@ -61,22 +64,20 @@ function resetState() {
   state.operation = "";
 }
 
-function isDivideByZeroPossible() {
-  let isDivideByZeroPossible = false;
+function isDivideError() {
+  let isDivideError = false;
 
   if (state.operation === "/" && state.secondInput === "0") {
-    isDivideByZeroPossible = true;
-
+    isDivideError = true;
     resetState();
     state.error = true;
   }
 
-  return isDivideByZeroPossible;
+  return isDivideError;
 }
 
 function onClickedEqual() {
   const operation = document.getElementsByClassName("operation")[4];
-  const total = document.getElementById("total");
   let result = "";
 
   operation.addEventListener("click", () => {
@@ -84,7 +85,7 @@ function onClickedEqual() {
       state.operation = "*";
     }
 
-    if (isDivideByZeroPossible()) {
+    if (isDivideError()) {
       result = "오류";
       resetState();
     } else if (state.operation !== "=") {
@@ -93,8 +94,7 @@ function onClickedEqual() {
       );
       state.firstInput = String(result);
     }
-
-    total.innerText = result;
+    setTotalText(result);
   });
 }
 
@@ -104,10 +104,30 @@ function onClickedOperation() {
   let secondInput = "";
   onClickedDigit();
 
+  // document.querySelector(".operations").addEventListener("click", (e) => {
+  //   let operator = e.target.innerText;
+  //   console.log(e.target.innerText, e.target);
+  //   console.log(state);
+  //   if (firstInput === "" || state.error) {
+  //     firstInput = updateFirstInputAndOperator(e.target, firstInput, operator);
+  //     state.firstInput = firstInput;
+  //   }
+
+  //   if (operator !== "=" && operator !== "") {
+  //     state.operation = operator;
+  //     if (state.error) {
+  //       state.firstInput = state.tempInput;
+  //       state.error = false;
+  //     }
+  //   }
+
+  //   onClickedDigit();
+  //   secondInput = state.tempInput;
+  //   state.secondInput = secondInput;
+  // });
   for (let operation of operations) {
     operation.addEventListener("click", () => {
       let operator = operation.innerText;
-
       if (firstInput === "" || state.error) {
         firstInput = updateFirstInputAndOperator(
           operation,
@@ -136,12 +156,11 @@ function onClickedOperation() {
 
 function modifier() {
   const modifier = document.getElementsByClassName("modifier")[0];
-  const total = document.getElementById("total");
 
   modifier.addEventListener("click", () => {
     state.error = true;
     resetState();
-    total.innerText = "0";
+    setTotalText("0");
   });
 }
 
