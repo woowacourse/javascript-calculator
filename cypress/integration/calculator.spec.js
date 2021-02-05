@@ -43,15 +43,9 @@ describe('계산 기능', () => {
     cy.get('#total').should('have.text', '0');
   });
 
-  it('숫자는 한번에 최대 3자리 수까지 입력 가능하다.', () => {
-    for (let i = 0; i < 10; i++) {
-      cy.get(`.digit[data-key="${i}"]`).click();
-    }
-    cy.get('#total').then(element => {
-      const length = element[0].innerText.length;
-      expect(length).to.equal(3);
-    });
+  it('연산자가 없으면 equal(=)이 불가능하다', () => {
+    cy.get('.digit').contains('2').click();
+    cy.get('.operations').contains('=').click();
+    cy.get('#total').should('have.text', 'SYNTAX ERROR');
   });
-
-  it('2개의 숫자에 대해 덧셈이 가능하다', () => {});
 });
