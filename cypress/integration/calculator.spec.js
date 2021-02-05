@@ -37,6 +37,12 @@ describe('계산 기능', () => {
     cy.get('#total').should('have.text', 'SYNTAX ERROR');
   });
 
+  it('AC(All Clear)버튼을 누르면 0으로 초기화 한다.', () => {
+    cy.get('.digit').contains('2').click();
+    cy.get('.modifier').click();
+    cy.get('#total').should('have.text', '0');
+  });
+
   it('숫자는 한번에 최대 3자리 수까지 입력 가능하다.', () => {
     for (let i = 0; i < 10; i++) {
       cy.get(`.digit[data-key="${i}"]`).click();
