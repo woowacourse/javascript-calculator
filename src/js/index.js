@@ -54,7 +54,7 @@ function updateFirstInputAndOperator(operation, firstInput, operator) {
   return firstInput;
 }
 
-function initState() {
+function resetState() {
   state.tempInput = "";
   state.firstInput = "";
   state.secondInput = "";
@@ -67,7 +67,7 @@ function isDivideByZeroPossible() {
   if (state.operation === "/" && state.secondInput === "0") {
     isDivideByZeroPossible = true;
 
-    initState();
+    resetState();
     state.error = true;
   }
 
@@ -86,7 +86,7 @@ function onClickedEqual() {
 
     if (isDivideByZeroPossible()) {
       result = "오류";
-      initState();
+      resetState();
     } else if (state.operation !== "=") {
       result = parseInt(
         eval(state.firstInput + state.operation + state.secondInput)
@@ -140,7 +140,7 @@ function modifier() {
 
   modifier.addEventListener("click", () => {
     state.error = true;
-    initState();
+    resetState();
     total.innerText = "0";
   });
 }
