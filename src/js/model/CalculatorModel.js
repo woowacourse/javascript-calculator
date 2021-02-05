@@ -50,4 +50,10 @@ export default class CalculatorModel {
     }
     this.#view.renderTotal();
   }
+
+  resetFomula() {
+    this.#fomula = '0';
+    this.#currentState = 'input';
+    this.#view.renderTotal();
+  }
 }
