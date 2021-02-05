@@ -36,16 +36,14 @@ class Calculator {
   operate() {
     const inputOperator = this.operator.replace(/[0-9]/g, "");
     const [num1, num2] = this.operator.split(/[X+-/]/).map(x => parseInt(x));
-    if ("+" === inputOperator) {
-      this.operator = add(num1, num2);
-    } else if ("-" === inputOperator) {
-      this.operator = minus(num1, num2);
-    } else if ("X" === inputOperator) {
-      this.operator = multiply(num1, num2);
-    } else if ("/" === inputOperator) {
-      this.operator = dropDecimalPoint(divide(num1, num2));
-    }
+    const operateList = {
+      "+": add(num1, num2),
+      "-": minus(num1, num2),
+      "X": multiply(num1, num2),
+      "/": dropDecimalPoint(divide(num1, num2)),
+    };
 
+    this.operator = operateList[inputOperator];
     this.showResult();
   }
 
