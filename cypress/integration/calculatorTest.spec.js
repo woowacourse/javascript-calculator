@@ -24,4 +24,14 @@ describe('calculator-test', () => {
     cy.get('.digit').contains('5').click();
     cy.get('#total').should('have.text', '123');
   });
+
+  it('AC를 누르면 0으로 초기화된다.', () => {
+    cy.get('.digit').contains('1').click();
+    cy.get('#total').should('have.text', '1');
+    cy.get('.digit').contains('2').click();
+    cy.get('#total').should('have.text', '12');
+
+    cy.get('.modifier').click();
+    cy.get('#total').should('have.text', '0');
+  });
 });
