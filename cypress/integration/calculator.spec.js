@@ -48,4 +48,18 @@ describe('계산 기능', () => {
     cy.get('.operations').contains('=').click();
     cy.get('#total').should('have.text', 'SYNTAX ERROR');
   });
+
+  it('숫자는 한번에 최대 3자리 수까지 입력 가능하다.', () => {
+    cy.get('.digit').contains('2').click();
+    cy.get('.digit').contains('2').click();
+    cy.get('.digit').contains('2').click();
+    cy.get('.digit').contains('2').click();
+    cy.get('.operations').contains('+').click();
+    cy.get('.digit').contains('3').click();
+    cy.get('.digit').contains('3').click();
+    cy.get('.digit').contains('3').click();
+    cy.get('.digit').contains('3').click();
+    cy.get('.operations').contains('=').click();
+    cy.get('#total').should('have.text', 'SYNTAX ERROR');
+  });
 });
