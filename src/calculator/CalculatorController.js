@@ -1,5 +1,5 @@
 import { totalBox } from '../store.js';
-import { INFINITE } from '../contants.js';
+import { INFINITE, INVALID_EXPRESSION } from '../contants.js';
 import CalculatorView from './CalculatorView.js';
 import Input from './Input.js';
 
@@ -14,10 +14,36 @@ export default class CalculatorController {
     totalBox.value = totalBox.value + inputValue;
   }
 
-  static getCalculatedValue(totalValue) {
-    const expression = totalValue.replace('X', '*');
+  static getCalculatedValue() {
+    const [leftOperand, rightOperand] = totalBox.getOperands();
+    const [operator] = totalBox.getOperators();
+    let result;
+    if (
+      rightOperand === '' ||
+      rightOperand === undefined ||
+      operator === undefined
+    ) {
+      alert(INVALID_EXPRESSION);
+      return;
+    }
+    switch (operator) {
+      case '+':
+        result = Number(leftOperand) + Number(rightOperand);
+        break;
+      case '-':
+        result = Number(leftOperand) - Number(rightOperand);
+        break;
+      case 'X':
+        result = Number(leftOperand) * Number(rightOperand);
+        break;
+      case '/':
+        result = Number(leftOperand) / Number(rightOperand);
+        break;
+      default:
+        break;
+    }
 
-    return Math.floor(eval(expression));
+    return String(result);
   }
 
   static clearTotalBox() {
@@ -26,19 +52,27 @@ export default class CalculatorController {
   }
 
   static put(inputValue) {
+    const prevTotalBoxValue = totalBox.value;
     CalculatorController.appendValue(inputValue);
-    CalculatorView.render(totalBox.value);
-  }
-  
-  static calculate() {
-    const calculatedValue = CalculatorController.getCalculatedValue(totalBox.value);
-    if (!isFinite(calculatedValue)) {
-      totalBox.value = '';      
-      CalculatorView.render(INFINITE);
+    if (totalBox.value === prevTotalBoxValue) {
+      CalculatorView.render('0');
       return;
     }
-    totalBox.value = calculatedValue;
-    CalculatorView.render(calculatedValue);
+    CalculatorView.render(totalBox.value);
   }
 
+  static calculate() {
+    const calculatedValue = CalculatorController.getCalculatedValue(
+      totalBox.value
+    );
+    if (calculatedValue) {
+      if (!isFinite(calculatedValue)) {
+        totalBox.value = '';
+        CalculatorView.render(INFINITE);
+        return;
+      }
+      totalBox.value = calculatedValue;
+      CalculatorView.render(calculatedValue);
+    }
+  }
 }
