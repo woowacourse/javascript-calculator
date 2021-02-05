@@ -18,4 +18,11 @@ context("e2e", () => {
     cy.get(".digit").contains("0").click();
     cy.get("#total").should("have.text", "0");
   });
+
+  it(`숫자(.digit)를 연속해서 클릭할 때 그 숫자가 누적되어서 결과창(#total)에 출력되어야 한다.`, () => {
+    cy.get(".digit").contains("2").click();
+    cy.get(".digit").contains("3").click();
+    cy.get(".digit").contains("4").click();
+    cy.get("#total").should("have.text", "234");
+  });
 });
