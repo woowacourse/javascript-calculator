@@ -82,4 +82,20 @@ describe('calculator-test', () => {
     cy.get('.operation').contains('=').click();
     cy.get('#total').should('have.text', '30084');
   });
+
+  it('두 수의 나눗셈이 가능하다', () => {
+    cy.get('.digit').contains('6').click();
+    cy.get('#total').should('have.text', '6');
+    cy.get('.digit').contains('5').click();
+    cy.get('#total').should('have.text', '65');
+    cy.get('.digit').contains('4').click();
+    cy.get('#total').should('have.text', '654');
+    cy.get('.operation').contains('/').click();
+    cy.get('.digit').contains('4').click();
+    cy.get('#total').should('have.text', '4');
+    cy.get('.digit').contains('6').click();
+    cy.get('#total').should('have.text', '46');
+    cy.get('.operation').contains('=').click();
+    cy.get('#total').should('have.text', '14');
+  });
 });
