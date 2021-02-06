@@ -1,6 +1,8 @@
+import { INITIAL_NUMBER } from "./constants.js";
+
 class CalculatorModel {
   constructor() {
-    this.expression = "0";
+    this.expression = INITIAL_NUMBER;
   }
 
   getExpression() {

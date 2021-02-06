@@ -1,5 +1,6 @@
 import { add, minus, multiply, divide, dropDecimalPoint } from "./operator.js";
 import { isNumberLowerThreeChar, isOperatorLowerTwoChar } from "./valid.js";
+import { INITIAL_NUMBER, ERROR_MESSAGE } from "./constants.js";
 
 import CalculatorModel from "./model.js";
 import CalculatorView from "./view.js";
@@ -14,7 +15,7 @@ class CalculatorController {
   }
 
   addInput(value) {
-    if (this.model.getExpression() === "0" && !isNaN(value)) {
+    if (this.model.getExpression() === INITIAL_NUMBER && !isNaN(value)) {
       this.model.setExpression(value);
     } else {
       this.model.setExpression(this.model.getExpression() + value);
@@ -47,7 +48,7 @@ class CalculatorController {
     };
 
     if (inputOperator === "/" && num2 === 0) {
-      this.model.setExpression("error");
+      this.model.setExpression(ERROR_MESSAGE);
     } else {
       this.model.setExpression(operateList[inputOperator]);
     }
@@ -55,7 +56,7 @@ class CalculatorController {
   }
 
   reset() {
-    this.model.setExpression("0");
+    this.model.setExpression(INITIAL_NUMBER);
     this.view.showResult(this.model.getExpression());
   }
 
