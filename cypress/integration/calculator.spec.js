@@ -85,4 +85,11 @@ describe('계산 기능', () => {
     cy.get('.operations').contains('=').click();
     cy.get('#total').should('have.text', 'SYNTAX ERROR');
   });
+
+  it('피연산자가 식에 2개 존재해야한다.', () => {
+    cy.get('.digit').contains('5').click();
+    cy.get('.operations').contains('X').click();
+    cy.get('.operations').contains('=').click();
+    cy.get('#total').should('have.text', 'SYNTAX ERROR');
+  });
 });
