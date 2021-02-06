@@ -49,5 +49,21 @@ describe('calculator-test', () => {
     cy.get('#total').should('have.text', '51');
     cy.get('.operation').contains('=').click();
     cy.get('#total').should('have.text', '1050');
-  })
+  });
+
+  it('두 수의 뺄셈이 가능하다', () => {
+    cy.get('.digit').contains('9').click();
+    cy.get('#total').should('have.text', '9');
+    cy.get('.digit').contains('9').click();
+    cy.get('#total').should('have.text', '99');
+    cy.get('.digit').contains('9').click();
+    cy.get('#total').should('have.text', '999');
+    cy.get('.operation').contains('-').click();
+    cy.get('.digit').contains('5').click();
+    cy.get('#total').should('have.text', '5');
+    cy.get('.digit').contains('1').click();
+    cy.get('#total').should('have.text', '51');
+    cy.get('.operation').contains('=').click();
+    cy.get('#total').should('have.text', '948');
+  });
 });
