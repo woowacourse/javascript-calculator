@@ -21,7 +21,7 @@ export default class Calculator {
       return this.divide(this.numbers);
     }
 
-    return -1;
+    return this.numbers[0];
   }
 
   add(numbers) {

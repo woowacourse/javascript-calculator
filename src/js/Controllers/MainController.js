@@ -38,8 +38,7 @@ export default class MainController {
         this.CalculatorView.showDigit(0);
         return alert('완성되지 않은 수식입니다.');
       }
-
-      this.CalculatorModel.setNumbers(parseInt(this.digits, 10));
+      this.CalculatorModel.setNumbers(Number(this.digits));
       this.CalculatorView.showDigit(this.CalculatorModel.getResult());
       return;
     }
