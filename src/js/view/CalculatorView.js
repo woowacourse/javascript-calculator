@@ -1,4 +1,5 @@
 import CalculatorController from '../controller/CalculatorController.js';
+import { CLASS, ID } from '../library/constants/attribute.js';
 import CalculatorModel from '../model/CalculatorModel.js';
 export default class CalculatorView {
   #model;
@@ -14,7 +15,7 @@ export default class CalculatorView {
   }
 
   initDOMElement() {
-    this.#$total = document.querySelector('#total');
+    this.#$total = document.querySelector(`#${ID.TOTAL}`);
   }
 
   renderTotal() {
@@ -24,8 +25,8 @@ export default class CalculatorView {
   render() {
     this.#$target.innerHTML = `
       <div class="calculator">
-        <h1 id="total">${this.#model.fomula}</h1>
-        <div class="digits flex">
+        <h1 id="${ID.TOTAL}">${this.#model.fomula}</h1>
+        <div class="${CLASS.DIGITS} flex">
           <button class="digit">9</button>
           <button class="digit">8</button>
           <button class="digit">7</button>
@@ -38,9 +39,9 @@ export default class CalculatorView {
           <button class="digit">0</button>
         </div>
         <div class="modifiers subgrid">
-          <button class="modifier">AC</button>
+          <button class="${CLASS.MODIFIER}">AC</button>
         </div>
-        <div class="operations subgrid">
+        <div class="${CLASS.OPERATIONS} subgrid">
           <button class="operation">/</button>
           <button class="operation">X</button>
           <button class="operation">-</button>

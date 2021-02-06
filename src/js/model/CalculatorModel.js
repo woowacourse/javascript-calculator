@@ -1,28 +1,33 @@
 import operation from '../library/utils/calculation.js';
-
+import {
+  INITIAL_FOMULA,
+  STATE,
+  MAXIMUM_OPERAND_VALUE,
+} from '../library/constants/calculator.js';
+import { MSG, SYNTAX_ERROR } from '../library/constants/error.js';
 export default class CalculatorModel {
   #fomula;
   #view;
   #currentState;
 
   constructor(view) {
-    this.#fomula = '0';
+    this.#fomula = INITIAL_FOMULA;
     this.#view = view;
-    this.#currentState = 'input';
+    this.#currentState = STATE.INPUT;
   }
 
   calculate() {
     try {
-      if (this.#currentState === 'result') {
-        throw new Error('PLEASE INPUT FOMULA');
+      if (this.#currentState === STATE.RESULT) {
+        throw new Error(MSG.INPUT_FOMULA);
       }
       const parsedElements = this.#parseFomula();
       this.#fomula = this.#getCalculatedResult(parsedElements);
     } catch (error) {
-      this.#fomula = `SYNTAX ERROR`;
+      this.#fomula = SYNTAX_ERROR;
       alert(error);
     }
-    this.#currentState = 'result';
+    this.#currentState = STATE.RESULT;
     this.#view.renderTotal();
   }
 
@@ -31,14 +36,13 @@ export default class CalculatorModel {
       .split(/[-+\/X]/)
       .map(operand => parseInt(operand));
     const operator = (this.#fomula.match(/[-+\/X]/) ?? [null])[0];
-    console.log(`op1:${typeof operand1} op2:${operand2}`);
     if (isNaN(operand1) || isNaN(operand2)) {
-      throw new Error('SHOULD HAVE 2 OPERAND');
+      throw new Error(MSG.SHOULD_HAVE_2_OPERAND);
     }
-    if (!operator) throw new Error('SHOULD HAVE 1 OPERATOR');
-    if (surpluses.length > 0) throw new Error('TOO MANY OPERATERS');
-    if (operand1 > 999 || operand2 > 999)
-      throw new Error('MAXIMUM OF OPERAND IS 999');
+    if (!operator) throw new Error(MSG.SHOULD_HAVE_1_OPERATOR);
+    if (surpluses.length > 0) throw new Error(MSG.TOO_MANY_OPERATERS);
+    if (operand1 > MAXIMUM_OPERAND_VALUE || operand2 > MAXIMUM_OPERAND_VALUE)
+      throw new Error(MSG.EXCEED_MAXIMUM_OPERAND);
 
     return { operand1, operand2, operator };
   }
@@ -52,18 +56,18 @@ export default class CalculatorModel {
   }
 
   changeFomula(value) {
-    if (this.#currentState === 'input') {
+    if (this.#currentState === STATE.INPUT) {
       this.#fomula += value;
-    } else if (this.#currentState === 'result') {
+    } else if (this.#currentState === STATE.RESULT) {
       this.#fomula = value;
-      this.#currentState = 'input';
+      this.#currentState = STATE.INPUT;
     }
     this.#view.renderTotal();
   }
 
   resetFomula() {
-    this.#fomula = '0';
-    this.#currentState = 'input';
+    this.#fomula = INITIAL_FOMULA;
+    this.#currentState = STATE.INPUT;
     this.#view.renderTotal();
   }
 }

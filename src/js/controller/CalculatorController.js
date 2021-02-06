@@ -1,3 +1,5 @@
+import { CLASS } from '../library/constants/attribute.js';
+
 export default class CalculatorController {
   #model;
   #$digits;
@@ -11,9 +13,9 @@ export default class CalculatorController {
   }
 
   #initDOMElement() {
-    this.#$digits = document.querySelector('.digits');
-    this.#$operations = document.querySelector('.operations');
-    this.#$modifier = document.querySelector('.modifier');
+    this.#$digits = document.querySelector(`.${CLASS.DIGITS}`);
+    this.#$operations = document.querySelector(`.${CLASS.OPERATIONS}`);
+    this.#$modifier = document.querySelector(`.${CLASS.MODIFIER}`);
   }
 
   #initEvent() {
