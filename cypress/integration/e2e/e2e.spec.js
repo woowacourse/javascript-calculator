@@ -127,6 +127,20 @@ context("e2e", () => {
     cy.get(".operation").contains("=").click();
     cy.get("#total").should("have.text", `9`);
   });
-});
 
-// 1 + 2 / 3 + 2 /5  + 3
+  it("0으로 나누려고 하면 alert로 경고 메시지를 출력한다.", () => {
+    const stub = cy.stub();
+    cy.on("window:alert", stub);
+    cy.get(".digit").contains("3").click();
+    cy.get(".operation").contains("/").click();
+    cy.get(".digit").contains("0").click();
+    cy.get(".operation")
+      .contains("=")
+      .click()
+      .then(() => {
+        expect(stub.getCall(0)).to.be.calledWith("0으로 나눌 수 없습니다.");
+      });
+    // cy.get("#click").click();
+    // cy.on("window:alert", () => true);
+  });
+});
