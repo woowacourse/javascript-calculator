@@ -17,16 +17,17 @@ const onDigitClick = (event) => {
   if (isStringZero(state.currentValue)) {
     total.innerText = event.target.innerText;
     state.setState("currentValue", total.innerText);
+    state.setState("typeOfLastBtn", "digit");
   } else {
     total.innerText += event.target.innerText;
     state.setState("currentValue", total.innerText);
+    state.setState("typeOfLastBtn", "digit");
   }
 };
 
 digits.forEach((digit) => digit.addEventListener("click", onDigitClick));
 
 const calculate = (op1, op2, operator) => {
-  console.log(op1, op2, operator);
   switch (operator) {
     case "divide": {
       total.innerText = parseInt(op1 / op2);
@@ -57,6 +58,10 @@ const calculate = (op1, op2, operator) => {
 
 const onOperatorClick = (event) => {
   if (event.target.innerText === "=") {
+    if (state.typeOfLastBtn === "operator") {
+      state.setState("currentValue", state.previousValue);
+    }
+
     calculate(state.previousValue, state.currentValue, state.operator);
     return;
   }
@@ -65,24 +70,28 @@ const onOperatorClick = (event) => {
       state.setState("operator", "divide");
       state.setState("previousValue", state.currentValue);
       state.setState("currentValue", "0");
+      state.setState("typeOfLastBtn", "operator");
       break;
     }
     case "X": {
       state.setState("operator", "multiple");
       state.setState("previousValue", state.currentValue);
       state.setState("currentValue", "0");
+      state.setState("typeOfLastBtn", "operator");
       break;
     }
     case "+": {
       state.setState("operator", "increase");
       state.setState("previousValue", state.currentValue);
       state.setState("currentValue", "0");
+      state.setState("typeOfLastBtn", "operator");
       break;
     }
     case "-": {
       state.setState("operator", "decrease");
       state.setState("previousValue", state.currentValue);
       state.setState("currentValue", "0");
+      state.setState("typeOfLastBtn", "operator");
       break;
     }
   }
@@ -92,6 +101,7 @@ const onModifierClick = () => {
   state.setState("currentValue", "0");
   state.setState("previousValue", "0");
   state.setState("operator", "");
+  state.setState("typeOfLastBtn", "");
   total.innerText = "0";
 };
 
