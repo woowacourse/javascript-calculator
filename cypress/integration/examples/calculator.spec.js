@@ -53,12 +53,12 @@ describe("ui-click", () => {
     });
   });
 
-  it("연산자가 두번 연속 나오는지 확인한다", () => {
+  it("연산자가 두번 이상 나오는지 확인한다", () => {
     cy.get(".operation").contains("+").click();
     cy.get(".operation").contains("/").click();
 
     cy.on("window:alert", txt => {
-      expect(txt).to.equal("연산자는 두번 연속 작성할 수 없습니다.");
+      expect(txt).to.equal("연산자는 두번 이상 작성할 수 없습니다.");
     });
   });
 

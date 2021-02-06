@@ -10,8 +10,8 @@ const isNumberLowerThreeChar = expression => {
 };
 
 const isOperatorLowerTwoChar = expression => {
-  if (["X", "/", "+", "-"].includes(expression.slice(-1))) {
-    alert("연산자는 두번 연속 작성할 수 없습니다.");
+  if (isNaN(expression)) {
+    alert("연산자는 두번 이상 작성할 수 없습니다.");
 
     return false;
   }
