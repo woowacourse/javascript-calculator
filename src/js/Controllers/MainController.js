@@ -39,8 +39,8 @@ export default class MainController {
         return alert('완성되지 않은 수식입니다.');
       }
       this.CalculatorModel.setNumbers(Number(this.digits));
-      this.CalculatorView.showDigit(this.CalculatorModel.getResult());
-      return;
+      const result = this.CalculatorModel.getResult();
+      return result === Infinity ? this.CalculatorView.showDigit('오류') : this.CalculatorView.showDigit(result);
     }
 
     this.CalculatorModel.setNumbers(parseInt(this.digits, 10));
