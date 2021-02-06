@@ -18,6 +18,10 @@ export default class CalculatorModel {
     return this.operation;
   }
 
+  getNumbersLength() {
+    return this.numbers.length;
+  }
+
   getResult() {
     return new Calculator(this.numbers, this.operation).getOperation();
   }

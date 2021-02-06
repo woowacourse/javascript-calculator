@@ -33,18 +33,30 @@ export default class MainController {
   }
 
   onClickOperationHandler(operation) {
+    let number = Number(this.digits);
+    if (this.CalculatorModel.getOperation() === '-' && !this.CalculatorModel.getNumbersLength()) {
+      number *= -1;
+    }
+
     if (operation === '=') {
       if (this.digits === '' && this.CalculatorModel.getOperation() !== '') {
         this.CalculatorView.showDigit(0);
         return alert('완성되지 않은 수식입니다.');
       }
-      this.CalculatorModel.setNumbers(Number(this.digits));
+      this.CalculatorModel.setNumbers(number);
       const result = this.CalculatorModel.getResult();
       return result === Infinity ? this.CalculatorView.showDigit('오류') : this.CalculatorView.showDigit(result);
     }
 
-    this.CalculatorModel.setNumbers(parseInt(this.digits, 10));
-    this.CalculatorModel.setOperation(operation);
+    if (operation === '-') {
+      if (this.digits !== '') {
+        this.CalculatorModel.setNumbers(Number(this.digits));
+      }
+      this.CalculatorModel.setOperation(operation);
+    } else {
+      this.CalculatorModel.setOperation(operation);
+      this.CalculatorModel.setNumbers(number);
+    }
     this.digits = '';
   }
 }
