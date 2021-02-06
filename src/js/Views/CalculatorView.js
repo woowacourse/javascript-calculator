@@ -16,8 +16,7 @@ export default class CalculatorView extends View {
   }
 
   onClickDigitHandler(digit) {
-    console.log(digit);
-    this.emit('clickDigit', digit);
+    this.emit('clickDigit', parseInt(digit, 10));
   }
 
   showDigit(digit) {

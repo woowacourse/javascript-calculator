@@ -10,11 +10,12 @@ export default class MainController {
       .on('clickOperation', (e) => this.onClickOperationHandler(e.detail));
 
     this.CalculatorModel = new CalculatorModel();
-    this.digits = '';
+    this.digits = 0;
   }
 
   onClickDigitHandler(digit) {
-    if (this.digits.length < 3) {
+    if (this.digits < 100) {
+      this.digits *= 10;
       this.digits += digit;
       this.CalculatorView.showDigit(this.digits);
     }
