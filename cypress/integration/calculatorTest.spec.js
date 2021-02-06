@@ -125,4 +125,11 @@ describe('calculator-test', () => {
         expect(stub.getCall(0)).to.be.calledWith('완성되지 않은 수식입니다.');
       });
   });
+
+  it('사칙연산을 선택하지 않으면 처음에 입력한 숫자를 표시한다.', () => {
+    cy.get('.digit').contains('9').click();
+    cy.get('#total').should('have.text', '9');
+    cy.get('.operation').contains('=').click();
+    cy.get('#total').should('have.text', '9');
+  })
 });
