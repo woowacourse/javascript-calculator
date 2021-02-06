@@ -29,7 +29,6 @@ export default class Calculator {
   }
 
   minus(numbers) {
-    console.log(numbers);
     return numbers.reduce((a, b) => a - b);
   }
 
