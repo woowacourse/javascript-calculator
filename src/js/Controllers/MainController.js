@@ -9,7 +9,7 @@ export default class MainController {
       .on('clickAC', () => this.onClickACHandler())
       .on('clickOperation', (e) => this.onClickOperationHandler(e.detail));
 
-    this.CalculatorModel = new CalculatorModel();
+    this.CalculatorModel = new CalculatorModel().init();
     this.digits = '';
   }
 
@@ -30,6 +30,8 @@ export default class MainController {
 
   onClickACHandler() {
     this.CalculatorView.showDigit('0');
+    this.digits = '';
+    this.CalculatorModel.init();
   }
 
   onClickOperationHandler(operation) {

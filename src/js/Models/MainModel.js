@@ -1,9 +1,10 @@
 import Calculator from './Calculator.js';
 
 export default class CalculatorModel {
-  constructor() {
+  init() {
     this.numbers = [];
     this.operation = '';
+    return this;
   }
 
   setNumbers(num) {
