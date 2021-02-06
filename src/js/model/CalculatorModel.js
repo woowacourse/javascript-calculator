@@ -13,6 +13,9 @@ export default class CalculatorModel {
 
   calculate() {
     try {
+      if (this.#currentState === 'result') {
+        throw new Error('PLEASE INPUT FOMULA');
+      }
       const parsedElements = this.#parseFomula();
       this.#fomula = this.#getCalculatedResult(parsedElements);
     } catch (error) {
