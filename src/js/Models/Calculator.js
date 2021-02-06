@@ -9,10 +9,19 @@ export default class Calculator {
       return this.add(this.numbers);
     }
 
+    if (this.op === '-') {
+      return this.minus(this.numbers);
+    }
+
     return -1;
   }
 
   add(numbers) {
     return numbers.reduce((a, b) => a + b, 0);
+  }
+
+  minus(numbers) {
+    console.log(numbers);
+    return numbers.reduce((a, b) => a - b);
   }
 }

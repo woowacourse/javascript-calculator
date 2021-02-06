@@ -28,6 +28,7 @@ export default class MainController {
     if (operation === '=') {
       this.CalculatorModel.setNumbers(parseInt(this.digits, 10));
       this.CalculatorView.showDigit(this.CalculatorModel.getResult());
+      return;
     }
 
     this.CalculatorModel.setNumbers(parseInt(this.digits, 10));
