@@ -1,4 +1,5 @@
 import Calculator from './Calculator.js';
+import { ERROR_MESSAGE } from '../Utils/Constant.js';
 
 export default class CalculatorModel {
   init() {
@@ -29,6 +30,6 @@ export default class CalculatorModel {
   }
 
   getResult() {
-    return this.result === Infinity ? '오류' : this.result;
+    return this.result === Infinity ? ERROR_MESSAGE.INVALID_RESULT : this.result;
   }
 }

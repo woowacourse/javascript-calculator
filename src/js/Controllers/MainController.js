@@ -1,6 +1,9 @@
 import CalculatorView from '../Views/CalculatorView.js';
 import CalculatorModel from '../Models/CalculatorModel.js';
 import Validator from '../Utils/Validator.js';
+import {
+  INITIAL_VALUE, MAX_DIGIT_NUMBER, DECIMAL_BASE, EQUAL_SIGN, NEGATIVE_VALUE, OPERATION,
+} from '../Utils/Constant.js';
 
 export default class MainController {
   constructor() {
@@ -21,21 +24,21 @@ export default class MainController {
 
   onClickDigitHandler(digit) {
     if (this.digits === '') {
-      this.digits = 0;
+      this.digits = INITIAL_VALUE;
     }
     this.setDigits(digit);
   }
 
   setDigits(digit) {
-    if (this.digits < 100) {
-      this.digits *= 10;
+    if (this.digits < MAX_DIGIT_NUMBER) {
+      this.digits *= DECIMAL_BASE;
       this.digits += digit;
       this.calculatorView.showDigit(this.digits);
     }
   }
 
   onClickACHandler() {
-    this.calculatorView.showDigit('0');
+    this.calculatorView.showDigit(INITIAL_VALUE);
     this.initCalculator();
   }
 
@@ -46,7 +49,7 @@ export default class MainController {
 
   doEqualOperation(number) {
     if (!this.validator.isValidExpression(this.digits, this.calculatorModel.getOperation())) {
-      return this.calculatorView.showDigit(0);
+      return this.calculatorView.showDigit(INITIAL_VALUE);
     }
 
     this.calculatorModel.setNumbers(number);
@@ -57,17 +60,18 @@ export default class MainController {
 
   onClickOperationHandler(operation) {
     let number = Number(this.digits);
-    if (this.calculatorModel.getOperation() === '-' && !this.calculatorModel.getNumbersLength()) {
-      number *= -1;
+    if (this.calculatorModel.getOperation() === OPERATION.SUBTRACT
+      && !this.calculatorModel.getNumbersLength()) {
+      number *= NEGATIVE_VALUE;
     }
 
-    if (operation === '=') {
+    if (operation === EQUAL_SIGN) {
       this.doEqualOperation(number);
     }
 
     this.calculatorModel.setOperation(operation);
 
-    if (operation === '-' && this.digits === '') {
+    if (operation === OPERATION.SUBTRACT && this.digits === '') {
       return;
     }
 

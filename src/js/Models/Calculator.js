@@ -1,3 +1,5 @@
+import { OPERATION } from '../Utils/Constant.js';
+
 export default class Calculator {
   constructor(numbers, op) {
     this.numbers = numbers;
@@ -5,19 +7,19 @@ export default class Calculator {
   }
 
   getOperation() {
-    if (this.op === '+') {
+    if (this.op === OPERATION.ADD) {
       return this.add(this.numbers);
     }
 
-    if (this.op === '-') {
+    if (this.op === OPERATION.SUBTRACT) {
       return this.minus(this.numbers);
     }
 
-    if (this.op === 'X') {
+    if (this.op === OPERATION.MUTIPLY) {
       return this.multiply(this.numbers);
     }
 
-    if (this.op === '/') {
+    if (this.op === OPERATION.DIVIDE) {
       return this.divide(this.numbers);
     }
 
