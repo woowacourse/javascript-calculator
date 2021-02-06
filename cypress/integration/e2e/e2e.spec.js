@@ -62,4 +62,15 @@ context("e2e", () => {
       cy.get(".modifier").click();
     }
   });
+
+  it(`올클리어(.modifier)를 누르면 결과창(#total)의 값이 "0"이 된다.`, () => {
+    cy.get(".digit").contains("2").click();
+    cy.get(".modifier").click();
+    cy.get("#total").should("have.text", `0`);
+    cy.get(".digit").contains("5").click();
+    cy.get(".operation").contains("+").click();
+    cy.get(".digit").contains("9").click();
+    cy.get(".modifier").click();
+    cy.get("#total").should("have.text", `0`);
+  });
 });
