@@ -52,7 +52,7 @@ export default class MainController {
 
     if (operation === '-') {
       if (this.digits !== '') {
-        this.CalculatorModel.setNumbers(Number(this.digits));
+        this.CalculatorModel.setNumbers(number);
       }
       this.CalculatorModel.setOperation(operation);
     } else {
