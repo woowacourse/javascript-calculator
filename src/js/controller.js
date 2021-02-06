@@ -1,14 +1,15 @@
 import { add, minus, multiply, divide, dropDecimalPoint } from "./operator.js";
 import { isNumberLowerThreeChar, isOperatorLowerTwoChar } from "./valid.js";
 
+import CalculatorView from "./view.js";
+
 class Calculator {
   constructor() {
+    this.calculatorView = new CalculatorView();
     this.operator = "0";
-  }
-
-  showResult() {
-    const resultInput = document.querySelector("#total");
-    resultInput.innerHTML = this.operator;
+    this.handleNumber();
+    this.handleOperator();
+    this.handleReset();
   }
 
   addInput(value) {
@@ -22,14 +23,14 @@ class Calculator {
   addNumber(num) {
     if (isNumberLowerThreeChar(this.operator)) {
       this.addInput(num);
-      this.showResult();
+      this.calculatorView.showResult(this.operator);
     }
   }
 
   addOperator(operator) {
     if (isOperatorLowerTwoChar(this.operator)) {
       this.addInput(operator);
-      this.showResult();
+      this.calculatorView.showResult(this.operator);
     }
   }
 
@@ -48,12 +49,37 @@ class Calculator {
     } else {
       this.operator = operateList[inputOperator];
     }
-    this.showResult();
+    this.calculatorView.showResult(this.operator);
   }
 
   reset() {
     this.operator = "0";
-    this.showResult();
+    this.calculatorView.showResult(this.operator);
+  }
+
+  handleNumber() {
+    const digitBtns = document.querySelector(".digits");
+    digitBtns.addEventListener("click", e => {
+      this.addNumber(e.target.innerHTML);
+    });
+  }
+
+  handleOperator() {
+    const operationBtns = document.querySelector(".operations");
+    operationBtns.addEventListener("click", e => {
+      if (e.target.innerHTML === "=") {
+        return this.operate();
+      }
+
+      return this.addOperator(e.target.innerHTML);
+    });
+  }
+
+  handleReset() {
+    const modifierBtn = document.querySelector(".modifier");
+    modifierBtn.addEventListener("click", () => {
+      this.reset();
+    });
   }
 }
 
