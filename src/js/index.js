@@ -1,9 +1,12 @@
 import State from "./state.js";
+import HtmlManager from "./htmlManager.js";
 
 const state = new State();
 
 const digits = document.querySelectorAll(".digit");
 const total = document.getElementById("total");
+const operators = document.querySelectorAll(".operation");
+const modifier = document.querySelector(".modifier");
 
 const isStringZero = (a) => a === "0";
 const isThree = (a) => a === 3;
@@ -11,7 +14,7 @@ const isThree = (a) => a === 3;
 const onDigitClick = (event) => {
   if (isThree(state.currentValue.length)) return;
 
-  if (isStringZero(total.innerText)) {
+  if (isStringZero(state.currentValue)) {
     total.innerText = event.target.innerText;
     state.setState("currentValue", total.innerText);
   } else {
@@ -22,8 +25,37 @@ const onDigitClick = (event) => {
 
 digits.forEach((digit) => digit.addEventListener("click", onDigitClick));
 
+const calculate = (op1, op2, operator) => {
+  console.log(op1, op2, operator);
+  switch (operator) {
+    case "divide": {
+      total.innerText = parseInt(op1 / op2);
+      state.setState("currentValue", total.innerText);
+      break;
+    }
+    case "multiple": {
+      total.innerText = op1 * op2;
+      state.setState("currentValue", total.innerText);
+      break;
+    }
+    case "increase": {
+      total.innerText = parseInt(op1) + parseInt(op2);
+      state.setState("currentValue", total.innerText);
+      break;
+    }
+    case "decrease": {
+      total.innerText = op1 - op2;
+      state.setState("currentValue", total.innerText);
+      break;
+    }
+  }
+};
+
 const onOperatorClick = (event) => {
-  // if(event.target.innerText ==='=') {}
+  if (event.target.innerText === "=") {
+    calculate(state.previousValue, state.currentValue, state.operator);
+    return;
+  }
   switch (event.target.innerText) {
     case "/": {
       state.setState("operator", "divide");
@@ -51,3 +83,13 @@ const onOperatorClick = (event) => {
     }
   }
 };
+
+const onModifierClick = () => {
+  state.setState("currentValue", "0");
+  state.setState("previousValue", "0");
+  state.setState("operator", "");
+  total.innerText = "0";
+};
+
+HtmlManager.addClickEventHandler(operators, onOperatorClick);
+HtmlManager.addClickEventHandler(modifier, onModifierClick);
