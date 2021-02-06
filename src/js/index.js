@@ -30,21 +30,25 @@ const calculate = (op1, op2, operator) => {
   switch (operator) {
     case "divide": {
       total.innerText = parseInt(op1 / op2);
+      state.setState("previousValue", state.currentValue);
       state.setState("currentValue", total.innerText);
       break;
     }
     case "multiple": {
-      total.innerText = op1 * op2;
+      total.innerText = parseInt(op1) * parseInt(op2);
+      state.setState("previousValue", state.currentValue);
       state.setState("currentValue", total.innerText);
       break;
     }
     case "increase": {
       total.innerText = parseInt(op1) + parseInt(op2);
+      state.setState("previousValue", state.currentValue);
       state.setState("currentValue", total.innerText);
       break;
     }
     case "decrease": {
-      total.innerText = op1 - op2;
+      total.innerText = parseInt(op1) - parseInt(op2);
+      state.setState("previousValue", state.currentValue);
       state.setState("currentValue", total.innerText);
       break;
     }
