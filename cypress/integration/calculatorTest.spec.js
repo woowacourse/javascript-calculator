@@ -131,5 +131,15 @@ describe('calculator-test', () => {
     cy.get('#total').should('have.text', '9');
     cy.get('.operation').contains('=').click();
     cy.get('#total').should('have.text', '9');
-  })
+  });
+
+  it('두 수의 나눗셈에서 0으로 나눌 경우 결과에 \'오류\'를 출력한다.', () => {
+    cy.get('.digit').contains('6').click();
+    cy.get('#total').should('have.text', '6');
+    cy.get('.operation').contains('/').click();
+    cy.get('.digit').contains('0').click();
+    cy.get('#total').should('have.text', '0');
+    cy.get('.operation').contains('=').click();
+    cy.get('#total').should('have.text', '오류');
+  });
 });
