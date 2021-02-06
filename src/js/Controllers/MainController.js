@@ -1,5 +1,5 @@
 import CalculatorView from '../Views/CalculatorView.js';
-import CalculatorModel from '../Models/MainModel.js';
+import CalculatorModel from '../Models/CalculatorModel.js';
 import Validator from '../Utils/Validator.js';
 
 export default class MainController {
