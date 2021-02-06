@@ -98,4 +98,17 @@ describe('calculator-test', () => {
     cy.get('.operation').contains('=').click();
     cy.get('#total').should('have.text', '14');
   });
+
+  it('기존 total이 0일 때, 입력되는 0은 반영하지 않는다.', () => {
+    cy.get('.digit').contains('0').click();
+    cy.get('#total').should('have.text', '0');
+    cy.get('.digit').contains('0').click();
+    cy.get('#total').should('have.text', '0');
+    cy.get('.digit').contains('1').click();
+    cy.get('#total').should('have.text', '1');
+    cy.get('.digit').contains('2').click();
+    cy.get('#total').should('have.text', '12');
+    cy.get('.digit').contains('0').click();
+    cy.get('#total').should('have.text', '120');
+  });
 });
