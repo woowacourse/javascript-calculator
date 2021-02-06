@@ -111,4 +111,18 @@ describe('calculator-test', () => {
     cy.get('.digit').contains('0').click();
     cy.get('#total').should('have.text', '120');
   });
+
+  it('완성되지 않은 수식은 alert(완성되지 않은 수식입니다)로 경고하기.', () => {
+    const stub = cy.stub();
+
+    cy.get('.digit').contains('9').click();
+    cy.get('#total').should('have.text', '9');
+    cy.get('.operation').contains('X').click();
+    cy.on('window:alert', stub);
+    cy
+      .get('.operation').contains('=').click()
+      .then(() => {
+        expect(stub.getCall(0)).to.be.calledWith('완성되지 않은 수식입니다.');
+      });
+  });
 });
