@@ -4,19 +4,19 @@ import Validator from '../Utils/Validator.js';
 
 export default class MainController {
   constructor() {
-    this.CalculatorView = new CalculatorView(document.querySelector('#app'))
+    this.calculatorView = new CalculatorView(document.querySelector('#app'))
       .on('clickDigit', (e) => this.onClickDigitHandler(e.detail))
       .on('clickAC', () => this.onClickACHandler())
       .on('clickOperation', (e) => this.onClickOperationHandler(e.detail));
 
-    this.CalculatorModel = new CalculatorModel();
+    this.calculatorModel = new CalculatorModel();
     this.validator = new Validator();
     this.initCalculator();
   }
 
   initCalculator() {
     this.digits = '';
-    this.CalculatorModel.init();
+    this.calculatorModel.init();
   }
 
   onClickDigitHandler(digit) {
@@ -30,34 +30,34 @@ export default class MainController {
     if (this.digits < 100) {
       this.digits *= 10;
       this.digits += digit;
-      this.CalculatorView.showDigit(this.digits);
+      this.calculatorView.showDigit(this.digits);
     }
   }
 
   onClickACHandler() {
-    this.CalculatorView.showDigit('0');
+    this.calculatorView.showDigit('0');
     this.initCalculator();
   }
 
   showResult() {
-    const result = this.CalculatorModel.getResult();
-    return this.CalculatorView.showDigit(result);
+    const result = this.calculatorModel.getResult();
+    return this.calculatorView.showDigit(result);
   }
 
   doEqualOperation(number) {
-    if (!this.validator.isValidExpression(this.digits, this.CalculatorModel.getOperation())) {
-      return this.CalculatorView.showDigit(0);
+    if (!this.validator.isValidExpression(this.digits, this.calculatorModel.getOperation())) {
+      return this.calculatorView.showDigit(0);
     }
 
-    this.CalculatorModel.setNumbers(number);
-    this.CalculatorModel.setResult();
+    this.calculatorModel.setNumbers(number);
+    this.calculatorModel.setResult();
     this.showResult();
     this.initCalculator();
   }
 
   onClickOperationHandler(operation) {
     let number = Number(this.digits);
-    if (this.CalculatorModel.getOperation() === '-' && !this.CalculatorModel.getNumbersLength()) {
+    if (this.calculatorModel.getOperation() === '-' && !this.calculatorModel.getNumbersLength()) {
       number *= -1;
     }
 
@@ -65,13 +65,13 @@ export default class MainController {
       this.doEqualOperation(number);
     }
 
-    this.CalculatorModel.setOperation(operation);
+    this.calculatorModel.setOperation(operation);
 
     if (operation === '-' && this.digits === '') {
       return;
     }
 
-    this.CalculatorModel.setNumbers(number);
+    this.calculatorModel.setNumbers(number);
     this.digits = '';
   }
 }
