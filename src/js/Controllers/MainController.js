@@ -46,6 +46,8 @@ export default class MainController {
       }
       this.CalculatorModel.setNumbers(number);
       const result = this.CalculatorModel.getResult();
+      this.digits = '';
+      this.CalculatorModel.init();
       return result === Infinity ? this.CalculatorView.showDigit('오류') : this.CalculatorView.showDigit(result);
     }
 
