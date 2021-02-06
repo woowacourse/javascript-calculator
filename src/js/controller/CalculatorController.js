@@ -22,7 +22,7 @@ export default class CalculatorController {
     this.#$digits.addEventListener('click', this.#handleClickValue);
     this.#$operations.addEventListener('click', this.#handleClickOperations);
     this.#$modifier.addEventListener('click', () => {
-      this.#model.resetFomula();
+      this.#model.resetFormula();
     });
   }
 
@@ -36,7 +36,7 @@ export default class CalculatorController {
 
   #handleClickValue = ({ target }) => {
     const value = target.innerText;
-    this.#model.changeFomula(value);
+    this.#model.changeFormula(value);
   };
 
   #handleClickResult() {

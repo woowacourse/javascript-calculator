@@ -19,13 +19,13 @@ export default class CalculatorView {
   }
 
   renderTotal() {
-    this.#$total.innerText = this.#model.fomula;
+    this.#$total.innerText = this.#model.formula;
   }
 
   render() {
     this.#$target.innerHTML = `
       <div class="calculator">
-        <h1 id="${ID.TOTAL}">${this.#model.fomula}</h1>
+        <h1 id="${ID.TOTAL}">${this.#model.formula}</h1>
         <div class="${CLASS.DIGITS} flex">
           <button class="digit">9</button>
           <button class="digit">8</button>
