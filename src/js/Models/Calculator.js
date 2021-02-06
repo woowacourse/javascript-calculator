@@ -1,0 +1,18 @@
+export default class Calculator {
+  constructor(numbers, op) {
+    this.numbers = numbers;
+    this.op = op;
+  }
+
+  getOperation() {
+    if (this.op === '+') {
+      return this.add(this.numbers);
+    }
+
+    return -1;
+  }
+
+  add(numbers) {
+    return numbers.reduce((a, b) => a + b, 0);
+  }
+}

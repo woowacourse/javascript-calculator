@@ -5,6 +5,7 @@ export default class CalculatorView extends View {
     this.init($element);
     this.bindDigitClickEvent();
     this.bindACClickEvent();
+    this.bindOperationClickEvent();
     return this;
   }
 
@@ -31,5 +32,17 @@ export default class CalculatorView extends View {
 
   onClickACHandler() {
     this.emit('clickAC');
+  }
+
+  bindOperationClickEvent() {
+    Array.from(this.$element.querySelectorAll('.operation')).forEach((operation) => {
+      operation.addEventListener('click', () => {
+        this.onClickOperationHandler(operation.innerText);
+      });
+    });
+  }
+
+  onClickOperationHandler(operation) {
+    this.emit('clickOperation', operation);
   }
 }
