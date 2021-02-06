@@ -83,4 +83,18 @@ context("e2e", () => {
     cy.get(".operation").contains("=").click();
     cy.get("#total").should("have.text", `14`);
   });
+
+  it(`등호를 눌러 나온 결과값을 이용해 연산을 해야 한다.`, () => {
+    cy.get(".digit").contains("2").click();
+    cy.get(".operation").contains("+").click();
+    cy.get(".digit").contains("5").click();
+    cy.get(".operation").contains("=").click();
+    cy.get(".operation").contains("X").click();
+    cy.get(".digit").contains("3").click();
+    cy.get(".operation").contains("=").click();
+    cy.get(".operation").contains("-").click();
+    cy.get(".digit").contains("1").click();
+    cy.get(".operation").contains("=").click();
+    cy.get("#total").should("have.text", `20`);
+  });
 });
