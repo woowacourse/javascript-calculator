@@ -13,6 +13,10 @@ export default class Calculator {
       return this.minus(this.numbers);
     }
 
+    if (this.op === 'X') {
+      return this.multiply(this.numbers);
+    }
+
     return -1;
   }
 
@@ -23,5 +27,9 @@ export default class Calculator {
   minus(numbers) {
     console.log(numbers);
     return numbers.reduce((a, b) => a - b);
+  }
+
+  multiply(numbers) {
+    return numbers.reduce((a, b) => (a * b));
   }
 }
