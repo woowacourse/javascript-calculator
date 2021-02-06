@@ -17,6 +17,10 @@ export default class Calculator {
       return this.multiply(this.numbers);
     }
 
+    if (this.op === '/') {
+      return this.divide(this.numbers);
+    }
+
     return -1;
   }
 
@@ -31,5 +35,9 @@ export default class Calculator {
 
   multiply(numbers) {
     return numbers.reduce((a, b) => (a * b));
+  }
+
+  divide(numbers) {
+    return numbers.reduce((a, b) => Math.floor(a / b));
   }
 }
