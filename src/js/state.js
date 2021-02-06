@@ -3,6 +3,7 @@ class State {
     this.previousValue = "0";
     this.currentValue = "0";
     this.operator = "";
+    this.typeOfLastBtn = "";
   }
 
   setState(name, value) {
