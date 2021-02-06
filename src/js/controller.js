@@ -1,42 +1,44 @@
 import { add, minus, multiply, divide, dropDecimalPoint } from "./operator.js";
 import { isNumberLowerThreeChar, isOperatorLowerTwoChar } from "./valid.js";
 
+import CalculatorModel from "./model.js";
 import CalculatorView from "./view.js";
 
-class Calculator {
+class CalculatorController {
   constructor() {
-    this.calculatorView = new CalculatorView();
-    this.operator = "0";
+    this.model = new CalculatorModel();
+    this.view = new CalculatorView();
     this.handleNumber();
     this.handleOperator();
     this.handleReset();
   }
 
   addInput(value) {
-    if (this.operator === "0" && !isNaN(value)) {
-      this.operator = value;
+    if (this.model.getExpression() === "0" && !isNaN(value)) {
+      this.model.setExpression(value);
     } else {
-      this.operator += value;
+      this.model.setExpression(this.model.getExpression() + value);
     }
   }
 
   addNumber(num) {
-    if (isNumberLowerThreeChar(this.operator)) {
+    if (isNumberLowerThreeChar(this.model.getExpression())) {
       this.addInput(num);
-      this.calculatorView.showResult(this.operator);
+      this.view.showResult(this.model.getExpression());
     }
   }
 
   addOperator(operator) {
-    if (isOperatorLowerTwoChar(this.operator)) {
+    if (isOperatorLowerTwoChar(this.model.getExpression())) {
       this.addInput(operator);
-      this.calculatorView.showResult(this.operator);
+      this.view.showResult(this.model.getExpression());
     }
   }
 
   operate() {
-    const inputOperator = this.operator.replace(/[0-9]/g, "");
-    const [num1, num2] = this.operator.split(/[X+-/]/).map(x => parseInt(x));
+    const expression = this.model.getExpression();
+    const inputOperator = expression.replace(/[0-9]/g, "");
+    const [num1, num2] = expression.split(/[X+-/]/).map(x => parseInt(x));
     const operateList = {
       "+": add(num1, num2),
       "-": minus(num1, num2),
@@ -45,16 +47,16 @@ class Calculator {
     };
 
     if (inputOperator === "/" && num2 === 0) {
-      this.operator = "error";
+      this.model.setExpression("error");
     } else {
-      this.operator = operateList[inputOperator];
+      this.model.setExpression(operateList[inputOperator]);
     }
-    this.calculatorView.showResult(this.operator);
+    this.view.showResult(this.model.getExpression());
   }
 
   reset() {
-    this.operator = "0";
-    this.calculatorView.showResult(this.operator);
+    this.model.setExpression("0");
+    this.view.showResult(this.model.getExpression());
   }
 
   handleNumber() {
@@ -83,4 +85,4 @@ class Calculator {
   }
 }
 
-export default Calculator;
+export default CalculatorController;

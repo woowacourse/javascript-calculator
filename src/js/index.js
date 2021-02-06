@@ -1,4 +1,4 @@
-import Calculator from "./controller.js";
+import Calculator from "./calculator.js";
 
 const init = () => {
   new Calculator();
