@@ -73,4 +73,14 @@ context("e2e", () => {
     cy.get(".modifier").click();
     cy.get("#total").should("have.text", `0`);
   });
+
+  it(`올클리어(.modifier)를 누르면 초기 상태로 돌아가고, 다음 연산을 수행할 수 있다.`, () => {
+    cy.get(".digit").contains("2").click();
+    cy.get(".modifier").click();
+    cy.get(".digit").contains("5").click();
+    cy.get(".operation").contains("+").click();
+    cy.get(".digit").contains("9").click();
+    cy.get(".operation").contains("=").click();
+    cy.get("#total").should("have.text", `14`);
+  });
 });
