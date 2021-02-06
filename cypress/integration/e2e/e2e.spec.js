@@ -97,4 +97,13 @@ context("e2e", () => {
     cy.get(".operation").contains("=").click();
     cy.get("#total").should("have.text", `20`);
   });
+
+  it(`계산 결과를 표현할 때 소수점 이하는 버림한다.`, () => {
+    cy.get(".digit").contains("1").click();
+    cy.get(".digit").contains("0").click();
+    cy.get(".operation").contains("/").click();
+    cy.get(".digit").contains("3").click();
+    cy.get(".operation").contains("=").click();
+    cy.get("#total").should("have.text", `3`);
+  });
 });
