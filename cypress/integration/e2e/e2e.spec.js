@@ -113,4 +113,20 @@ context("e2e", () => {
     cy.get(".operation").contains("=").click();
     cy.get("#total").should("have.text", `18`);
   });
+
+  it(`'='을 연속해서 누르면, 결과창(#total)에 있는 값을 op1, 최초로 '='을 눌렀을 때의 op2를 op2로 써서 연산한다.`, () => {
+    cy.get(".digit").contains("1").click();
+    cy.get(".operation").contains("+").click();
+    cy.get(".digit").contains("2").click();
+    cy.get(".operation").contains("=").click();
+    cy.get("#total").should("have.text", `3`);
+    cy.get(".operation").contains("=").click();
+    cy.get("#total").should("have.text", `5`);
+    cy.get(".operation").contains("=").click();
+    cy.get("#total").should("have.text", `7`);
+    cy.get(".operation").contains("=").click();
+    cy.get("#total").should("have.text", `9`);
+  });
 });
+
+// 1 + 2 / 3 + 2 /5  + 3
