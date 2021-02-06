@@ -1,5 +1,6 @@
 import CalculatorView from '../Views/CalculatorView.js';
 import CalculatorModel from '../Models/MainModel.js';
+import Validator from '../Utils/Validator.js';
 
 export default class MainController {
   constructor() {
@@ -9,6 +10,7 @@ export default class MainController {
       .on('clickOperation', (e) => this.onClickOperationHandler(e.detail));
 
     this.CalculatorModel = new CalculatorModel();
+    this.validator = new Validator();
     this.initCalculator();
   }
 
@@ -37,6 +39,22 @@ export default class MainController {
     this.initCalculator();
   }
 
+  showResult() {
+    const result = this.CalculatorModel.getResult();
+    return this.CalculatorView.showDigit(result);
+  }
+
+  doEqualOperation(number) {
+    if (!this.validator.isValidExpression(this.digits, this.CalculatorModel.getOperation())) {
+      return this.CalculatorView.showDigit(0);
+    }
+
+    this.CalculatorModel.setNumbers(number);
+    this.CalculatorModel.setResult();
+    this.showResult();
+    this.initCalculator();
+  }
+
   onClickOperationHandler(operation) {
     let number = Number(this.digits);
     if (this.CalculatorModel.getOperation() === '-' && !this.CalculatorModel.getNumbersLength()) {
@@ -44,25 +62,16 @@ export default class MainController {
     }
 
     if (operation === '=') {
-      if (this.digits === '' && this.CalculatorModel.getOperation() !== '') {
-        this.CalculatorView.showDigit(0);
-        return alert('완성되지 않은 수식입니다.');
-      }
-      this.CalculatorModel.setNumbers(number);
-      const result = this.CalculatorModel.getResult();
-      this.initCalculator();
-      return result === Infinity ? this.CalculatorView.showDigit('오류') : this.CalculatorView.showDigit(result);
+      this.doEqualOperation(number);
     }
 
-    if (operation === '-') {
-      if (this.digits !== '') {
-        this.CalculatorModel.setNumbers(number);
-      }
-      this.CalculatorModel.setOperation(operation);
-    } else {
-      this.CalculatorModel.setOperation(operation);
-      this.CalculatorModel.setNumbers(number);
+    this.CalculatorModel.setOperation(operation);
+
+    if (operation === '-' && this.digits === '') {
+      return;
     }
+
+    this.CalculatorModel.setNumbers(number);
     this.digits = '';
   }
 }

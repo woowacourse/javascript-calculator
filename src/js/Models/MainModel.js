@@ -4,6 +4,7 @@ export default class CalculatorModel {
   init() {
     this.numbers = [];
     this.operation = '';
+    this.result = '';
     return this;
   }
 
@@ -15,6 +16,10 @@ export default class CalculatorModel {
     this.operation = operation;
   }
 
+  setResult() {
+    this.result = new Calculator(this.numbers, this.operation).getOperation();
+  }
+
   getOperation() {
     return this.operation;
   }
@@ -24,6 +29,6 @@ export default class CalculatorModel {
   }
 
   getResult() {
-    return new Calculator(this.numbers, this.operation).getOperation();
+    return this.result === Infinity ? '오류' : this.result;
   }
 }
