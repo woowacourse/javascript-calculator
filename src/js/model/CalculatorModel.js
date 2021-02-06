@@ -31,7 +31,10 @@ export default class CalculatorModel {
       .split(/[-+\/X]/)
       .map(operand => parseInt(operand));
     const operator = (this.#fomula.match(/[-+\/X]/) ?? [null])[0];
-    if (!operand1 || !operand2) throw new Error('SHOULD HAVE 2 OPERAND');
+    console.log(`op1:${typeof operand1} op2:${operand2}`);
+    if (isNaN(operand1) || isNaN(operand2)) {
+      throw new Error('SHOULD HAVE 2 OPERAND');
+    }
     if (!operator) throw new Error('SHOULD HAVE 1 OPERATOR');
     if (surpluses.length > 0) throw new Error('TOO MANY OPERATERS');
     if (operand1 > 999 || operand2 > 999)

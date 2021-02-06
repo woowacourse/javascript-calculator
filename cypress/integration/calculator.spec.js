@@ -92,4 +92,12 @@ describe('계산 기능', () => {
     cy.get('.operations').contains('=').click();
     cy.get('#total').should('have.text', 'SYNTAX ERROR');
   });
+
+  it('0으로 나누면 Infinity를 출력한다.', () => {
+    cy.get('.digit').contains('4').click();
+    cy.get('.operations').contains('/').click();
+    cy.get('.digit').contains('0').click();
+    cy.get('.operations').contains('=').click();
+    cy.get('#total').should('have.text', 'Infinity');
+  });
 });
