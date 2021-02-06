@@ -8,8 +8,13 @@ export default class MainController {
       .on('clickAC', () => this.onClickACHandler())
       .on('clickOperation', (e) => this.onClickOperationHandler(e.detail));
 
-    this.CalculatorModel = new CalculatorModel().init();
+    this.CalculatorModel = new CalculatorModel();
+    this.initCalculator();
+  }
+
+  initCalculator() {
     this.digits = '';
+    this.CalculatorModel.init();
   }
 
   onClickDigitHandler(digit) {
@@ -29,8 +34,7 @@ export default class MainController {
 
   onClickACHandler() {
     this.CalculatorView.showDigit('0');
-    this.digits = '';
-    this.CalculatorModel.init();
+    this.initCalculator();
   }
 
   onClickOperationHandler(operation) {
@@ -46,8 +50,7 @@ export default class MainController {
       }
       this.CalculatorModel.setNumbers(number);
       const result = this.CalculatorModel.getResult();
-      this.digits = '';
-      this.CalculatorModel.init();
+      this.initCalculator();
       return result === Infinity ? this.CalculatorView.showDigit('오류') : this.CalculatorView.showDigit(result);
     }
 
