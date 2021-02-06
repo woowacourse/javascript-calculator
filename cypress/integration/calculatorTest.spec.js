@@ -25,16 +25,6 @@ describe('calculator-test', () => {
     cy.get('#total').should('have.text', '123');
   });
 
-  it('AC를 누르면 0으로 초기화된다.', () => {
-    cy.get('.digit').contains('1').click();
-    cy.get('#total').should('have.text', '1');
-    cy.get('.digit').contains('2').click();
-    cy.get('#total').should('have.text', '12');
-
-    cy.get('.modifier').click();
-    cy.get('#total').should('have.text', '0');
-  });
-
   it('두 수의 덧셈이 가능하다', () => {
     cy.get('.digit').contains('9').click();
     cy.get('#total').should('have.text', '9');
@@ -151,5 +141,31 @@ describe('calculator-test', () => {
     cy.get('#total').should('have.text', '9');
     cy.get('.operation').contains('=').click();
     cy.get('#total').should('have.text', '-9');
+  });
+
+  it('AC를 누르면 0으로 초기화된다.', () => {
+    cy.get('.digit').contains('1').click();
+    cy.get('#total').should('have.text', '1');
+    cy.get('.digit').contains('2').click();
+    cy.get('#total').should('have.text', '12');
+
+    cy.get('.modifier').click();
+    cy.get('#total').should('have.text', '0');
+
+    // AC 눌러 0으로 초기화 한 후, 뺄셈 계산
+    cy.get('.operation').contains('-').click();
+    cy.get('.digit').contains('9').click();
+    cy.get('#total').should('have.text', '9');
+    cy.get('.digit').contains('9').click();
+    cy.get('#total').should('have.text', '99');
+    cy.get('.digit').contains('9').click();
+    cy.get('#total').should('have.text', '999');
+    cy.get('.operation').contains('-').click();
+    cy.get('.digit').contains('5').click();
+    cy.get('#total').should('have.text', '5');
+    cy.get('.digit').contains('1').click();
+    cy.get('#total').should('have.text', '51');
+    cy.get('.operation').contains('=').click();
+    cy.get('#total').should('have.text', '-1050');
   });
 });
