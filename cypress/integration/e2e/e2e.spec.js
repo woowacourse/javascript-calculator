@@ -106,4 +106,11 @@ context("e2e", () => {
     cy.get(".operation").contains("=").click();
     cy.get("#total").should("have.text", `3`);
   });
+
+  it(`'='를 제외한 연산자(.operation)를 누르자 마자 '='를 누르면 op1, op2가 결과창의 값이 되고, 연산자는 직전에 눌렀던 연산자가 되어 연산한다.`, () => {
+    cy.get(".digit").contains("9").click();
+    cy.get(".operation").contains("+").click();
+    cy.get(".operation").contains("=").click();
+    cy.get("#total").should("have.text", `18`);
+  });
 });
