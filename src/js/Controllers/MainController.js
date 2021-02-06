@@ -10,10 +10,17 @@ export default class MainController {
       .on('clickOperation', (e) => this.onClickOperationHandler(e.detail));
 
     this.CalculatorModel = new CalculatorModel();
-    this.digits = 0;
+    this.digits = '';
   }
 
   onClickDigitHandler(digit) {
+    if (this.digits === '') {
+      this.digits = 0;
+    }
+    this.setDigits(digit);
+  }
+
+  setDigits(digit) {
     if (this.digits < 100) {
       this.digits *= 10;
       this.digits += digit;
@@ -27,6 +34,11 @@ export default class MainController {
 
   onClickOperationHandler(operation) {
     if (operation === '=') {
+      if (this.digits === '' && this.CalculatorModel.getOperation() !== '') {
+        this.CalculatorView.showDigit(0);
+        return alert('완성되지 않은 수식입니다.');
+      }
+
       this.CalculatorModel.setNumbers(parseInt(this.digits, 10));
       this.CalculatorView.showDigit(this.CalculatorModel.getResult());
       return;

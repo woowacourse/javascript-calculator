@@ -14,6 +14,10 @@ export default class CalculatorModel {
     this.operation = operation;
   }
 
+  getOperation() {
+    return this.operation;
+  }
+
   getResult() {
     return new Calculator(this.numbers, this.operation).getOperation();
   }
