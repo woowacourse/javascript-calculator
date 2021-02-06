@@ -31,25 +31,29 @@ const calculate = (op1, op2, operator) => {
   switch (operator) {
     case "divide": {
       total.innerText = parseInt(op1 / op2);
-      state.setState("previousValue", state.currentValue);
+      state.typeOfLastBtn !== "=" &&
+        state.setState("previousValue", state.currentValue);
       state.setState("currentValue", total.innerText);
       break;
     }
     case "multiple": {
       total.innerText = parseInt(op1) * parseInt(op2);
-      state.setState("previousValue", state.currentValue);
+      state.typeOfLastBtn !== "=" &&
+        state.setState("previousValue", state.currentValue);
       state.setState("currentValue", total.innerText);
       break;
     }
     case "increase": {
       total.innerText = parseInt(op1) + parseInt(op2);
-      state.setState("previousValue", state.currentValue);
+      state.typeOfLastBtn !== "=" &&
+        state.setState("previousValue", state.currentValue);
       state.setState("currentValue", total.innerText);
       break;
     }
     case "decrease": {
       total.innerText = parseInt(op1) - parseInt(op2);
-      state.setState("previousValue", state.currentValue);
+      state.typeOfLastBtn !== "=" &&
+        state.setState("previousValue", state.currentValue);
       state.setState("currentValue", total.innerText);
       break;
     }
@@ -58,11 +62,10 @@ const calculate = (op1, op2, operator) => {
 
 const onOperatorClick = (event) => {
   if (event.target.innerText === "=") {
-    if (state.typeOfLastBtn === "operator") {
+    if (state.typeOfLastBtn === "operator")
       state.setState("currentValue", state.previousValue);
-    }
-
     calculate(state.previousValue, state.currentValue, state.operator);
+    state.setState("typeOfLastBtn", "=");
     return;
   }
   switch (event.target.innerText) {
