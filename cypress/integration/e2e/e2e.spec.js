@@ -43,7 +43,7 @@ context("e2e", () => {
     cy.get("#total").should("have.text", "234");
   });
 
-  it("아무 숫자(.digit)도 누르지 않고 '='를 제외한 연산자(.operation)을 클릭하고 숫자(.digit)를 클릭하고, '='를 클릭하면 결과창(#total)이 연산을 수행한 결과값이 되야 한다.", () => {
+  it("결과창에 0이 있는 상태에서 연산자(.operation)를 클릭하면, 0에 연산을 수행한 결과가 결과창(#total)에 나와야 한다.", () => {
     cy.get(".operation").contains("+").click();
     cy.get(".digit").contains("2").click();
     cy.get(".operation").contains("=").click();
