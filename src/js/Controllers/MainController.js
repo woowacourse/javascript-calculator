@@ -2,9 +2,8 @@ import CalculatorView from '../Views/CalculatorView.js';
 import CalculatorModel from '../Models/MainModel.js';
 
 export default class MainController {
-  init() {
-    this.CalculatorView = new CalculatorView()
-      .setup(document.querySelector('#app'))
+  constructor() {
+    this.CalculatorView = new CalculatorView(document.querySelector('#app'))
       .on('clickDigit', (e) => this.onClickDigitHandler(e.detail))
       .on('clickAC', () => this.onClickACHandler())
       .on('clickOperation', (e) => this.onClickOperationHandler(e.detail));

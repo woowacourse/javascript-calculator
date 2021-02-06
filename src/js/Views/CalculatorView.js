@@ -1,12 +1,12 @@
 import View from './View.js';
 
 export default class CalculatorView extends View {
-  setup($element) {
+  constructor($element) {
+    super();
     this.init($element);
     this.bindDigitClickEvent();
     this.bindACClickEvent();
     this.bindOperationClickEvent();
-    return this;
   }
 
   bindDigitClickEvent() {
