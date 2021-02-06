@@ -54,9 +54,10 @@ class CalculatorController {
       "-": minus(num1, num2),
       "X": multiply(num1, num2),
       "/": dropDecimalPoint(divide(num1, num2)),
+      "": num1,
     };
 
-    if (inputOperator === "/" && num2 === 0) {
+    if ((inputOperator && !num2) || (inputOperator === "/" && num2 === 0)) {
       this.model.setExpression(ERROR_MESSAGE);
     } else {
       this.model.setExpression(operateList[inputOperator]);

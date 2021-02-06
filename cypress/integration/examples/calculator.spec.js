@@ -69,4 +69,17 @@ describe("ui-click", () => {
     cy.get(".operation").contains("=").click();
     cy.get("#total").should("have.text", "error");
   });
+
+  it("숫자 하나만 누르고 연산시 해당 숫자가 출력되는지 확인한다", () => {
+    cy.get(".digit").contains(5).click();
+    cy.get(".operation").contains("=").click();
+    cy.get("#total").should("have.text", 5);
+  });
+
+  it("숫자 하나와 연산자 하나만 누르고 연산지 에러 문구 출력되는지 확인한다", () => {
+    cy.get(".digit").contains(4).click();
+    cy.get(".operation").contains("X").click();
+    cy.get(".operation").contains("=").click();
+    cy.get("#total").should("have.text", "error");
+  });
 });
