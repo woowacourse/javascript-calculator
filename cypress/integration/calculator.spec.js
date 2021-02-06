@@ -76,4 +76,13 @@ describe('계산 기능', () => {
     cy.get('.operations').contains('=').click();
     cy.get('#total').should('have.text', '2');
   });
+
+  it('equal(=)을 연속으로 누를 수 없다.', () => {
+    cy.get('.digit').contains('3').click();
+    cy.get('.operations').contains('X').click();
+    cy.get('.digit').contains('4').click();
+    cy.get('.operations').contains('=').click();
+    cy.get('.operations').contains('=').click();
+    cy.get('#total').should('have.text', 'SYNTAX ERROR');
+  });
 });
