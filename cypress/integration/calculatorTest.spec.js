@@ -142,4 +142,14 @@ describe('calculator-test', () => {
     cy.get('.operation').contains('=').click();
     cy.get('#total').should('have.text', '오류');
   });
+
+  it('첫번째 숫자로 음수를 입력할 수 있다.', () => {
+    cy.get('.operation').contains('-').click();
+    cy.get('.digit').contains('0').click();
+    cy.get('#total').should('have.text', '0');
+    cy.get('.digit').contains('9').click();
+    cy.get('#total').should('have.text', '9');
+    cy.get('.operation').contains('=').click();
+    cy.get('#total').should('have.text', '-9');
+  });
 });
