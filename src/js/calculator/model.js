@@ -1,4 +1,4 @@
-import { INITIAL_NUMBER } from "./constants.js";
+import { INITIAL_NUMBER } from "../utils/constants.js";
 
 class CalculatorModel {
   constructor() {

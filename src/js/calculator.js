@@ -1,4 +1,4 @@
-import CalculatorController from "./controller.js";
+import CalculatorController from "./calculator/controller.js";
 class Calculator {
   constructor() {
     new CalculatorController();

@@ -1,6 +1,15 @@
-import { add, minus, multiply, divide, dropDecimalPoint } from "./operator.js";
-import { isNumberLowerThreeChar, isOperatorLowerTwoChar } from "./valid.js";
-import { INITIAL_NUMBER, ERROR_MESSAGE } from "./constants.js";
+import {
+  add,
+  minus,
+  multiply,
+  divide,
+  dropDecimalPoint,
+} from "../utils/operator.js";
+import {
+  isNumberLowerThreeChar,
+  isOperatorLowerTwoChar,
+} from "../utils/valid.js";
+import { INITIAL_NUMBER, ERROR_MESSAGE } from "../utils/constants.js";
 
 import CalculatorModel from "./model.js";
 import CalculatorView from "./view.js";
