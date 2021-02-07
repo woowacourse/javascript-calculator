@@ -23,25 +23,29 @@ function isRightInput(input) {
 }
 
 function setTotalText(result) {
+  console.log(result);
   const total = document.getElementById("total");
   total.innerText = result;
 }
 
 function onClickedDigit() {
   let input = "";
-
   document.querySelector(".digits").addEventListener("click", (e) => {
     const currentInputNumber = e.target.innerText;
 
     if (isRightInput(input)) {
       input += currentInputNumber;
+      if (state.error) {
+        input = currentInputNumber;
+        state.error = false;
+      }
     } else {
       input = currentInputNumber;
     }
-
     setTotalText(input);
     state.tempInput = input;
   });
+  input = "";
 }
 
 function resetState() {
@@ -79,19 +83,23 @@ function calculateResult() {
 }
 
 function onClickedEqual() {
-  const operation = document.getElementsByClassName("operation")[4];
   let result = "";
 
-  operation.addEventListener("click", () => {
-    if (isDivideError()) {
-      result = "오류";
-      resetState();
-    } else {
-      result = calculateResult();
-    }
-    state.firstInput = String(result);
-    setTotalText(result);
-  });
+  if (isDivideError()) {
+    result = "오류";
+    resetState();
+  } else {
+    result = calculateResult();
+  }
+
+  state.firstInput = String(result);
+
+  if (result > 999999) {
+    result = "범위초과";
+    state.error = true;
+    resetState();
+  }
+  setTotalText(result);
 }
 
 function setFirstOperator(operation, operator) {
@@ -109,37 +117,36 @@ function setFirstInput(operation, prevResult) {
 }
 
 function onClickedOperation() {
-  const operations = document.getElementsByClassName("operation");
-  let prevResult = state.firstInput;
   onClickedDigit();
+  document.querySelector(".operations").addEventListener("click", (e) => {
+    const operator = e.target.innerText;
+    let prevResult = state.firstInput;
 
-  for (let operation of operations) {
-    operation.addEventListener("click", () => {
-      let operator = operation.innerText;
-
-      if (prevResult === "" || state.error) {
-        // 첫번 째 연산이거나 AC눌렀을 때
-        setFirstOperator(operation, operator);
-        prevResult = setFirstInput(operation, prevResult);
-        state.firstInput = prevResult;
-      }
-
-      if (operator !== "=" && operator !== "") {
-        // operator가 사칙연산자일 때
+    if (prevResult === "" || state.error) {
+      if (operator !== "=") {
         state.operation = operator;
+        state.firstInput = state.tempInput;
+        onClickedDigit();
+
         if (state.error) {
-          // 오류 났을 때
-          state.firstInput = state.tempInput;
           state.error = false;
         }
+      } else {
+        state.secondInput = state.tempInput;
+        onClickedEqual();
       }
+    }
 
-      onClickedDigit();
-      state.secondInput = state.tempInput;
-    });
-  }
-
-  onClickedEqual();
+    if (prevResult !== "") {
+      if (operator !== "=") {
+        state.operation = operator;
+        onClickedDigit();
+      } else {
+        state.secondInput = state.tempInput;
+        onClickedEqual();
+      }
+    }
+  });
 }
 
 function onClickedModifier() {
@@ -148,6 +155,7 @@ function onClickedModifier() {
   modifier.addEventListener("click", () => {
     state.error = true;
     resetState();
+
     setTotalText("0");
   });
 }
