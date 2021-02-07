@@ -15,6 +15,15 @@ const onDigitClick = (event) => {
   if (isThree(state.currentValue.length)) return;
 
   if (state.isError) state.setState("isError", false);
+
+  if (state.typeOfLastBtn === "=") {
+    total.innerText = event.target.innerText;
+    state.setState("previousValue", "0");
+    state.setState("currentValue", event.target.innerText);
+    state.setState("typeOfLastBtn", "digit");
+    return;
+  }
+
   if (isStringZero(state.currentValue)) {
     total.innerText = event.target.innerText;
     state.setState("currentValue", total.innerText);
@@ -63,8 +72,7 @@ const calculate = (op1, op2, operator) => {
 const onOperatorClick = (event) => {
   if (state.isError) return;
   if (event.target.innerText === "=") {
-    if (state.typeOfLastBtn === "operator")
-      state.setState("currentValue", state.previousValue);
+    if (state.typeOfLastBtn === "operator") state.setState("currentValue", state.previousValue);
     calculate(state.previousValue, state.currentValue, state.operator);
     state.setState("typeOfLastBtn", "=");
     return;
@@ -114,6 +122,3 @@ const onModifierClick = () => {
 
 HtmlManager.addClickEventHandler(operators, onOperatorClick);
 HtmlManager.addClickEventHandler(modifier, onModifierClick);
-
-window.onclick = () =>
-  console.log({ prev: state.previousValue, curr: state.currentValue });
