@@ -164,10 +164,5 @@ context("e2e", () => {
     cy.get("#total").should("have.text", `오류`);
     cy.get(".operation").contains("=").click();
     cy.get("#total").should("have.text", `오류`);
-    cy.get(".digit").contains("3").click();
-    cy.get(".operation").contains("-").click();
-    cy.get(".digit").contains("4").click();
-    cy.get(".operation").contains("=").click();
-    cy.get("#total").should("have.text", `-1`);
   });
 });
