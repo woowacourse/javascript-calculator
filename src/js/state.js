@@ -4,6 +4,7 @@ class State {
     this.currentValue = "0";
     this.operator = "";
     this.typeOfLastBtn = "";
+    this.isError = false;
   }
 
   setState(name, value) {
