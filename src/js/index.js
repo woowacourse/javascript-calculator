@@ -14,6 +14,7 @@ const isThree = (a) => a === 3;
 const onDigitClick = (event) => {
   if (isThree(state.currentValue.length)) return;
 
+  if (state.isError) state.setState("isError", false);
   if (isStringZero(state.currentValue)) {
     total.innerText = event.target.innerText;
     state.setState("currentValue", total.innerText);
@@ -30,33 +31,37 @@ digits.forEach((digit) => digit.addEventListener("click", onDigitClick));
 const calculate = (op1, op2, operator) => {
   switch (operator) {
     case "divide": {
-      // if (state.currentValue === "0") alert("0으로 나눌 수 없습니다.");
       if (state.currentValue === "0") {
         total.innerText = "오류";
         alert("0으로 나눌 수 없습니다.");
+        state.setState("isError", true);
         break;
       } else {
         total.innerText = parseInt(op1 / op2);
-        state.typeOfLastBtn !== "=" && state.setState("previousValue", state.currentValue);
+        state.typeOfLastBtn !== "=" &&
+          state.setState("previousValue", state.currentValue);
         state.setState("currentValue", total.innerText);
         break;
       }
     }
     case "multiple": {
       total.innerText = parseInt(op1) * parseInt(op2);
-      state.typeOfLastBtn !== "=" && state.setState("previousValue", state.currentValue);
+      state.typeOfLastBtn !== "=" &&
+        state.setState("previousValue", state.currentValue);
       state.setState("currentValue", total.innerText);
       break;
     }
     case "increase": {
       total.innerText = parseInt(op1) + parseInt(op2);
-      state.typeOfLastBtn !== "=" && state.setState("previousValue", state.currentValue);
+      state.typeOfLastBtn !== "=" &&
+        state.setState("previousValue", state.currentValue);
       state.setState("currentValue", total.innerText);
       break;
     }
     case "decrease": {
       total.innerText = parseInt(op1) - parseInt(op2);
-      state.typeOfLastBtn !== "=" && state.setState("previousValue", state.currentValue);
+      state.typeOfLastBtn !== "=" &&
+        state.setState("previousValue", state.currentValue);
       state.setState("currentValue", total.innerText);
       break;
     }
@@ -64,8 +69,10 @@ const calculate = (op1, op2, operator) => {
 };
 
 const onOperatorClick = (event) => {
+  if (state.isError) return;
   if (event.target.innerText === "=") {
-    if (state.typeOfLastBtn === "operator") state.setState("currentValue", state.previousValue);
+    if (state.typeOfLastBtn === "operator")
+      state.setState("currentValue", state.previousValue);
     calculate(state.previousValue, state.currentValue, state.operator);
     state.setState("typeOfLastBtn", "=");
     return;
@@ -108,6 +115,7 @@ const onModifierClick = () => {
   state.setState("operator", "");
   state.setState("typeOfLastBtn", "");
   total.innerText = "0";
+  if (state.isError) state.setState("isError", false);
 };
 
 HtmlManager.addClickEventHandler(operators, onOperatorClick);
