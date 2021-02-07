@@ -4,6 +4,7 @@ const state = {
   secondInput: "",
   operation: "",
   error: false,
+  equalClicked: false,
 };
 
 function checkInputLength(input) {
@@ -23,29 +24,24 @@ function isRightInput(input) {
 }
 
 function setTotalText(result) {
-  console.log(result);
   const total = document.getElementById("total");
   total.innerText = result;
 }
 
 function onClickedDigit() {
-  let input = "";
   document.querySelector(".digits").addEventListener("click", (e) => {
     const currentInputNumber = e.target.innerText;
-
-    if (isRightInput(input)) {
-      input += currentInputNumber;
-      if (state.error) {
-        input = currentInputNumber;
-        state.error = false;
-      }
-    } else {
-      input = currentInputNumber;
+    if (state.equalClicked) {
+      resetState();
+      state.equalClicked = false;
     }
-    setTotalText(input);
-    state.tempInput = input;
+    if (isRightInput(state.tempInput)) {
+      state.tempInput += currentInputNumber;
+    } else {
+      state.tempInput = currentInputNumber;
+    }
+    setTotalText(state.tempInput);
   });
-  input = "";
 }
 
 function resetState() {
@@ -90,9 +86,8 @@ function onClickedEqual() {
     resetState();
   } else {
     result = calculateResult();
+    state.firstInput = String(result);
   }
-
-  state.firstInput = String(result);
 
   if (result > 999999) {
     result = "범위초과";
@@ -100,52 +95,38 @@ function onClickedEqual() {
     resetState();
   }
   setTotalText(result);
-}
-
-function setFirstOperator(operation, operator) {
-  if (operation.innerText !== "=") {
-    state.operation = operator;
-  }
-}
-
-function setFirstInput(operation, prevResult) {
-  if (operation.innerText !== "=") {
-    prevResult = state.tempInput;
-  }
-
-  return prevResult;
+  state.equalClicked = true;
 }
 
 function onClickedOperation() {
-  onClickedDigit();
   document.querySelector(".operations").addEventListener("click", (e) => {
     const operator = e.target.innerText;
     let prevResult = state.firstInput;
 
     if (prevResult === "" || state.error) {
-      if (operator !== "=") {
+      if (operator !== "=" || operator !== "") {
         state.operation = operator;
         state.firstInput = state.tempInput;
-        onClickedDigit();
-
-        if (state.error) {
-          state.error = false;
-        }
+        state.equalClicked = false;
       } else {
         state.secondInput = state.tempInput;
         onClickedEqual();
+      }
+      if (state.error) {
+        state.error = false;
       }
     }
 
     if (prevResult !== "") {
       if (operator !== "=") {
         state.operation = operator;
-        onClickedDigit();
+        state.equalClicked = false;
       } else {
         state.secondInput = state.tempInput;
         onClickedEqual();
       }
     }
+    state.tempInput = "";
   });
 }
 
@@ -155,10 +136,10 @@ function onClickedModifier() {
   modifier.addEventListener("click", () => {
     state.error = true;
     resetState();
-
     setTotalText("0");
   });
 }
 
+new onClickedDigit();
 new onClickedModifier();
 new onClickedOperation();
