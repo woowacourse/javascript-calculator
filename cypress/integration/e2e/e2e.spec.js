@@ -165,4 +165,25 @@ context("e2e", () => {
     cy.get(".operation").contains("=").click();
     cy.get("#total").should("have.text", `오류`);
   });
+
+  it("'오류'가 출력된 상태에서 숫자를 클릭하면 결과창에 그 숫자가 출력되고, 그 숫자로 연산이 가능하다.", () => {
+    const stub = cy.stub();
+    cy.on("window:alert", stub);
+    cy.get(".digit").contains("3").click();
+    cy.get(".operation").contains("/").click();
+    cy.get(".digit").contains("0").click();
+    cy.get(".operation")
+      .contains("=")
+      .click()
+      .then(() => {
+        expect(stub.getCall(0)).to.be.calledWith("0으로 나눌 수 없습니다.");
+      });
+    cy.get("#total").should("have.text", `오류`);
+    cy.get(".digit").contains("3").click();
+    cy.get("#total").should("have.text", `3`);
+    cy.get(".operation").contains("-").click();
+    cy.get(".digit").contains("1").click();
+    cy.get(".operation").contains("=").click();
+    cy.get("#total").should("have.text", `2`);
+  });
 });
