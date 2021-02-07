@@ -128,7 +128,7 @@ context("e2e", () => {
     cy.get("#total").should("have.text", `9`);
   });
 
-  it("0으로 나누려고 하면 alert로 경고 메시지를 출력한다.", () => {
+  it("0으로 나누려고 하면 alert로 경고 메시지를 출력하고, 결과창에는 '오류'를 출력한다.", () => {
     const stub = cy.stub();
     cy.on("window:alert", stub);
     cy.get(".digit").contains("3").click();
@@ -140,7 +140,6 @@ context("e2e", () => {
       .then(() => {
         expect(stub.getCall(0)).to.be.calledWith("0으로 나눌 수 없습니다.");
       });
-    // cy.get("#click").click();
-    // cy.on("window:alert", () => true);
+    cy.get("#total").should("have.text", `오류`);
   });
 });
