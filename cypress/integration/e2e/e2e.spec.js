@@ -186,4 +186,28 @@ context("e2e", () => {
     cy.get(".operation").contains("=").click();
     cy.get("#total").should("have.text", `2`);
   });
+
+  it("'오류'가 출력된 상태에서 올클리어(.modifier)를 누르면 초기 상태로 돌아가고, 다음 연산을 수행할 수 있다.", () => {
+    const stub = cy.stub();
+    cy.on("window:alert", stub);
+    cy.get(".digit").contains("3").click();
+    cy.get(".operation").contains("/").click();
+    cy.get(".digit").contains("0").click();
+    cy.get(".operation")
+      .contains("=")
+      .click()
+      .then(() => {
+        expect(stub.getCall(0)).to.be.calledWith("0으로 나눌 수 없습니다.");
+      });
+    cy.get("#total").should("have.text", `오류`);
+    cy.get(".modifier").click();
+    cy.get("#total").should("have.text", `0`);
+    cy.get(".digit").contains("7").click();
+    cy.get(".digit").contains("7").click();
+    cy.get(".operation").contains("/").click();
+    cy.get(".digit").contains("1").click();
+    cy.get(".digit").contains("1").click();
+    cy.get(".operation").contains("=").click();
+    cy.get("#total").should("have.text", `7`);
+  });
 });
