@@ -55,6 +55,7 @@ function isDivideError() {
   if (state.operation === "/" && state.secondInput === "0") {
     resetState();
     state.error = true;
+
     return true;
   }
 
@@ -93,13 +94,18 @@ function onClickedEqual() {
   });
 }
 
-function setFirstInputAndOperator(operation, firstInput, operator) {
+function setFirstOperator(operation, operator) {
   if (operation.innerText !== "=") {
     state.operation = operator;
-    firstInput = state.tempInput;
+  }
+}
+
+function setFirstInput(operation, prevResult) {
+  if (operation.innerText !== "=") {
+    prevResult = state.tempInput;
   }
 
-  return firstInput;
+  return prevResult;
 }
 
 function onClickedOperation() {
@@ -113,7 +119,8 @@ function onClickedOperation() {
 
       if (prevResult === "" || state.error) {
         // 첫번 째 연산이거나 AC눌렀을 때
-        prevResult = setFirstInputAndOperator(operation, prevResult, operator);
+        setFirstOperator(operation, operator);
+        prevResult = setFirstInput(operation, prevResult);
         state.firstInput = prevResult;
       }
 
