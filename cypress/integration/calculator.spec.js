@@ -1,8 +1,11 @@
-function testCalculate(num1, op, num2, result) {
+import { MAX_LENGTH_ALERT } from '../../src/js/constants/index.js';
+
+function testCalculate(num1, op, num2, expectedResult) {
   cy.get('.digit').contains(num1).click();
   cy.get('.operation').contains(op).click();
   cy.get('.digit').contains(num2).click();
   cy.get('.operation').contains('=').click();
+  cy.get('#total').should('have.text', expectedResult);
 }
 
 describe('Calculator test', () => {
@@ -31,6 +34,9 @@ describe('Calculator test', () => {
       cy.get('.digit').contains(`${i}`).click();
     }
     cy.get('#total').should('have.text', '123');
+    cy.on('window:alert', message => {
+      expect(message).to.equal(MAX_LENGTH_ALERT);
+    });
   });
 
   it('Can add number.', () => {
