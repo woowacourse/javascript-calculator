@@ -38,31 +38,23 @@ const calculate = (op1, op2, operator) => {
         break;
       } else {
         total.innerText = parseInt(op1 / op2);
-        state.typeOfLastBtn !== "=" &&
-          state.setState("previousValue", state.currentValue);
-        state.setState("currentValue", total.innerText);
+        state.setState("previousValue", total.innerText);
         break;
       }
     }
     case "multiple": {
       total.innerText = parseInt(op1) * parseInt(op2);
-      state.typeOfLastBtn !== "=" &&
-        state.setState("previousValue", state.currentValue);
-      state.setState("currentValue", total.innerText);
+      state.setState("previousValue", total.innerText);
       break;
     }
     case "increase": {
       total.innerText = parseInt(op1) + parseInt(op2);
-      state.typeOfLastBtn !== "=" &&
-        state.setState("previousValue", state.currentValue);
-      state.setState("currentValue", total.innerText);
+      state.setState("previousValue", total.innerText);
       break;
     }
     case "decrease": {
       total.innerText = parseInt(op1) - parseInt(op2);
-      state.typeOfLastBtn !== "=" &&
-        state.setState("previousValue", state.currentValue);
-      state.setState("currentValue", total.innerText);
+      state.setState("previousValue", total.innerText);
       break;
     }
   }
@@ -76,6 +68,8 @@ const onOperatorClick = (event) => {
     calculate(state.previousValue, state.currentValue, state.operator);
     state.setState("typeOfLastBtn", "=");
     return;
+  } else if (state.typeOfLastBtn === "=") {
+    state.setState("currentValue", state.previousValue);
   }
   switch (event.target.innerText) {
     case "/": {
@@ -120,3 +114,6 @@ const onModifierClick = () => {
 
 HtmlManager.addClickEventHandler(operators, onOperatorClick);
 HtmlManager.addClickEventHandler(modifier, onModifierClick);
+
+window.onclick = () =>
+  console.log({ prev: state.previousValue, curr: state.currentValue });
