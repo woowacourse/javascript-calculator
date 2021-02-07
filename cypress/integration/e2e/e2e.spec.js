@@ -142,4 +142,32 @@ context("e2e", () => {
       });
     cy.get("#total").should("have.text", `오류`);
   });
+
+  it("'오류'가 출력된 상태에서 숫자, 올클리어 이외의 버튼을 클릭하면 내부적으로 아무런 동작이 되지 않도록 한다.", () => {
+    const stub = cy.stub();
+    cy.on("window:alert", stub);
+    cy.get(".digit").contains("3").click();
+    cy.get(".operation").contains("/").click();
+    cy.get(".digit").contains("0").click();
+    cy.get(".operation")
+      .contains("=")
+      .click()
+      .then(() => {
+        expect(stub.getCall(0)).to.be.calledWith("0으로 나눌 수 없습니다.");
+      });
+    cy.get("#total").should("have.text", `오류`);
+    cy.get(".operation").contains("/").click();
+    cy.get("#total").should("have.text", `오류`);
+    cy.get(".operation").contains("-").click();
+    cy.get(".operation").contains("+").click();
+    cy.get(".operation").contains("X").click();
+    cy.get("#total").should("have.text", `오류`);
+    cy.get(".operation").contains("=").click();
+    cy.get("#total").should("have.text", `오류`);
+    cy.get(".digit").contains("3").click();
+    cy.get(".operation").contains("-").click();
+    cy.get(".digit").contains("4").click();
+    cy.get(".operation").contains("=").click();
+    cy.get("#total").should("have.text", `-1`);
+  });
 });
