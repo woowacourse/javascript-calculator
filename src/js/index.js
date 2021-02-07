@@ -30,8 +30,12 @@ digits.forEach((digit) => digit.addEventListener("click", onDigitClick));
 const calculate = (op1, op2, operator) => {
   switch (operator) {
     case "divide": {
-      if (state.currentValue === "0") alert("0으로 나눌 수 없습니다.");
-      else {
+      // if (state.currentValue === "0") alert("0으로 나눌 수 없습니다.");
+      if (state.currentValue === "0") {
+        total.innerText = "오류";
+        alert("0으로 나눌 수 없습니다.");
+        break;
+      } else {
         total.innerText = parseInt(op1 / op2);
         state.typeOfLastBtn !== "=" && state.setState("previousValue", state.currentValue);
         state.setState("currentValue", total.innerText);
