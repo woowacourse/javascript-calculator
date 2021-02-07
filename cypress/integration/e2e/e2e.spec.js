@@ -126,6 +126,50 @@ context("e2e", () => {
     cy.get("#total").should("have.text", `7`);
     cy.get(".operation").contains("=").click();
     cy.get("#total").should("have.text", `9`);
+
+    cy.get(".modifier").click();
+
+    cy.get(".digit").contains("9").click();
+    cy.get(".operation").contains("-").click();
+    cy.get(".digit").contains("2").click();
+    cy.get(".operation").contains("=").click();
+    cy.get("#total").should("have.text", `7`);
+    cy.get(".operation").contains("=").click();
+    cy.get("#total").should("have.text", `5`);
+    cy.get(".operation").contains("=").click();
+    cy.get("#total").should("have.text", `3`);
+    cy.get(".operation").contains("=").click();
+    cy.get("#total").should("have.text", `1`);
+
+    cy.get(".modifier").click();
+
+    cy.get(".digit").contains("2").click();
+    cy.get(".operation").contains("X").click();
+    cy.get(".digit").contains("3").click();
+    cy.get(".operation").contains("=").click();
+    cy.get("#total").should("have.text", `6`);
+    cy.get(".operation").contains("=").click();
+    cy.get("#total").should("have.text", `18`);
+    cy.get(".operation").contains("=").click();
+    cy.get("#total").should("have.text", `54`);
+    cy.get(".operation").contains("=").click();
+    cy.get("#total").should("have.text", `162`);
+
+    cy.get(".modifier").click();
+
+    cy.get(".digit").contains("1").click();
+    cy.get(".digit").contains("2").click();
+    cy.get(".digit").contains("8").click();
+    cy.get(".operation").contains("/").click();
+    cy.get(".digit").contains("2").click();
+    cy.get(".operation").contains("=").click();
+    cy.get("#total").should("have.text", `64`);
+    cy.get(".operation").contains("=").click();
+    cy.get("#total").should("have.text", `32`);
+    cy.get(".operation").contains("=").click();
+    cy.get("#total").should("have.text", `16`);
+    cy.get(".operation").contains("=").click();
+    cy.get("#total").should("have.text", `8`);
   });
 
   it("0으로 나누려고 하면 alert로 경고 메시지를 출력하고, 결과창에는 '오류'를 출력한다.", () => {
