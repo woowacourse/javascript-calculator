@@ -26,13 +26,23 @@ context("e2e", () => {
     cy.get("#total").should("have.text", "234");
   });
 
-  it(`숫자(.digit)를 연속해서 클릭할 때 결과창에 값이 3글자 이하여야 하고, 더 추가하려고 하면 기존 출력을 유지하고 수정되지 않도록 한다.`, () => {
+  it(`숫자(.digit)를 연속해서 클릭할 때 결과창에 값이 3자리수 이하여야 하고, 더 추가하려고 하면 기존 출력을 유지하고 수정되지 않도록 한다.`, () => {
     cy.get(".digit").contains("2").click();
     cy.get(".digit").contains("3").click();
     cy.get(".digit").contains("4").click();
     cy.get(".digit").contains("5").click();
     cy.get(".digit").contains("6").click();
     cy.get("#total").should("have.text", "234");
+
+    cy.get(".modifier").click();
+
+    cy.get(".digit").contains("2").click();
+    cy.get("operation").contains("-").click();
+    cy.get(".digit").contains("3").click();
+    cy.get(".digit").contains("1").click();
+    cy.get(".digit").contains("1").click();
+    cy.get(".operation").contains("=").click();
+    cy.get("#total").should("have.text", "-309");
   });
 
   it("'='를 제외한 연산자(.operation)을 눌렀을 때 결과창이 변하지 않아야 한다.", () => {
