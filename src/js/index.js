@@ -78,6 +78,14 @@ function calculateResult() {
   return result;
 }
 
+function setResultLimit(result) {
+  if (result > 999999) {
+    result = "범위초과";
+    state.error = true;
+    resetState();
+  }
+}
+
 function onClickedEqual() {
   let result = "";
 
@@ -89,13 +97,37 @@ function onClickedEqual() {
     state.firstInput = String(result);
   }
 
-  if (result > 999999) {
-    result = "범위초과";
-    state.error = true;
-    resetState();
-  }
+  setResultLimit(result);
   setTotalText(result);
   state.equalClicked = true;
+}
+
+function whenStateIsInitialized(prevResult, operator) {
+  if (prevResult === "" || state.error) {
+    if (operator !== "=" || operator !== "") {
+      state.operation = operator;
+      state.firstInput = state.tempInput;
+      state.equalClicked = false;
+    } else {
+      state.secondInput = state.tempInput;
+      onClickedEqual();
+    }
+    if (state.error) {
+      state.error = false;
+    }
+  }
+}
+
+function whenStateIsNotInitialized(prevResult, operator) {
+  if (prevResult !== "") {
+    if (operator !== "=") {
+      state.operation = operator;
+      state.equalClicked = false;
+    } else {
+      state.secondInput = state.tempInput;
+      onClickedEqual();
+    }
+  }
 }
 
 function onClickedOperation() {
@@ -103,29 +135,9 @@ function onClickedOperation() {
     const operator = e.target.innerText;
     let prevResult = state.firstInput;
 
-    if (prevResult === "" || state.error) {
-      if (operator !== "=" || operator !== "") {
-        state.operation = operator;
-        state.firstInput = state.tempInput;
-        state.equalClicked = false;
-      } else {
-        state.secondInput = state.tempInput;
-        onClickedEqual();
-      }
-      if (state.error) {
-        state.error = false;
-      }
-    }
+    whenStateIsInitialized(prevResult, operator);
+    whenStateIsNotInitialized(prevResult, operator);
 
-    if (prevResult !== "") {
-      if (operator !== "=") {
-        state.operation = operator;
-        state.equalClicked = false;
-      } else {
-        state.secondInput = state.tempInput;
-        onClickedEqual();
-      }
-    }
     state.tempInput = "";
   });
 }
