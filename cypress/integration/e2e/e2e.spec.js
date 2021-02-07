@@ -37,7 +37,7 @@ context("e2e", () => {
     cy.get(".modifier").click();
 
     cy.get(".digit").contains("2").click();
-    cy.get("operation").contains("-").click();
+    cy.get(".operation").contains("-").click();
     cy.get(".digit").contains("3").click();
     cy.get(".digit").contains("1").click();
     cy.get(".digit").contains("1").click();
@@ -263,5 +263,19 @@ context("e2e", () => {
     cy.get(".digit").contains("1").click();
     cy.get(".operation").contains("=").click();
     cy.get("#total").should("have.text", `7`);
+  });
+
+  it("'='을 누른 후에 숫자를 누르면 기존의 연산 결과에 누적되지 않고 새로운 숫자로 입력된다.", () => {
+    cy.get(".digit").contains("1").click();
+    cy.get(".operation").contains("+").click();
+    cy.get(".digit").contains("2").click();
+    cy.get(".operation").contains("=").click();
+    cy.get("#total").should("have.text", `3`);
+    cy.get(".digit").contains("9").click();
+    cy.get("#total").should("have.text", `9`);
+    cy.get(".operation").contains("X").click();
+    cy.get(".digit").contains("2").click();
+    cy.get(".operation").contains("=").click();
+    cy.get("#total").should("have.text", `18`);
   });
 });
