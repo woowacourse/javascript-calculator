@@ -58,23 +58,27 @@ export default class MainController {
     this.initCalculator();
   }
 
-  onClickOperationHandler(operation) {
-    let number = Number(this.digits);
+  setSign(number) {
     if (this.calculatorModel.getOperation() === OPERATION.SUBTRACT
       && !this.calculatorModel.getNumbersLength()) {
-      number *= NEGATIVE_VALUE;
+      return number * NEGATIVE_VALUE;
     }
+    return number;
+  }
 
+  isNegativeSign(operation) {
+    return operation === OPERATION.SUBTRACT && this.digits === '';
+  }
+
+  onClickOperationHandler(operation) {
+    const number = this.setSign(Number(this.digits));
     if (operation === EQUAL_SIGN) {
       this.doEqualOperation(number);
     }
-
     this.calculatorModel.setOperation(operation);
-
-    if (operation === OPERATION.SUBTRACT && this.digits === '') {
+    if (this.isNegativeSign(operation)) {
       return;
     }
-
     this.calculatorModel.setNumbers(number);
     this.digits = '';
   }
