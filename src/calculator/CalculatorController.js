@@ -14,18 +14,26 @@ export default class CalculatorController {
     totalBox.value = totalBox.value + inputValue;
   }
 
-  static getCalculatedValue() {
-    const [leftOperand, rightOperand] = totalBox.getOperands();
-    const [operator] = totalBox.getOperators();
-    let result;
+  static isExpressionValid(rightOperand, operator) {
     if (
       rightOperand === '' ||
       rightOperand === undefined ||
       operator === undefined
     ) {
       alert(INVALID_EXPRESSION);
-      return;
+      return false;
     }
+
+    return true;
+  }
+
+  static getCalculatedValue() {
+    const [leftOperand, rightOperand] = totalBox.getOperands();
+    const [operator] = totalBox.getOperators();
+    let result;
+
+    if (!CalculatorController.isExpressionValid(rightOperand, operator)) return;
+    
     switch (operator) {
       case '+':
         result = Number(leftOperand) + Number(rightOperand);
@@ -38,6 +46,9 @@ export default class CalculatorController {
         break;
       case '/':
         result = Number(leftOperand) / Number(rightOperand);
+        if(isFinite(result)) {
+          result = Math.floor(result);
+        }
         break;
       default:
         break;
@@ -54,10 +65,7 @@ export default class CalculatorController {
   static put(inputValue) {
     const prevTotalBoxValue = totalBox.value;
     CalculatorController.appendValue(inputValue);
-    if (totalBox.value === prevTotalBoxValue) {
-      CalculatorView.render('0');
-      return;
-    }
+    if (totalBox.value === prevTotalBoxValue) return;
     CalculatorView.render(totalBox.value);
   }
 
