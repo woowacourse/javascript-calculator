@@ -10,9 +10,8 @@ export default class CalculatorView extends View {
   }
 
   bindDigitClickEvent() {
-    Array.from(this.$element.querySelectorAll('.digit')).forEach((digit) => {
-      digit.addEventListener('click', () => this.onClickDigitHandler(digit.innerText));
-    });
+    Array.from(this.$element.querySelectorAll('.digit'))
+      .map((digit) => digit.addEventListener('click', () => this.onClickDigitHandler(digit.innerText)));
   }
 
   onClickDigitHandler(digit) {
@@ -34,11 +33,10 @@ export default class CalculatorView extends View {
   }
 
   bindOperationClickEvent() {
-    Array.from(this.$element.querySelectorAll('.operation')).forEach((operation) => {
-      operation.addEventListener('click', () => {
+    Array.from(this.$element.querySelectorAll('.operation'))
+      .map((operation) => operation.addEventListener('click', () => {
         this.onClickOperationHandler(operation.innerText);
-      });
-    });
+      }));
   }
 
   onClickOperationHandler(operation) {
