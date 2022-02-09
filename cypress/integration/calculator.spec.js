@@ -67,7 +67,7 @@ it("자리 수가 3보다 큰 수를 입력할 경우 alert를 보여준다.", (
     });
 });
 
-it("숫자는 2개 입력되고 연산자가 입력되면 alert를 보여준다.", () => {
+it("숫자가 3개 이상 입력되면 alert를 보여준다.", () => {
   cy.visit("index.html");
 
   const alertStub = cy.stub();
@@ -76,8 +76,10 @@ it("숫자는 2개 입력되고 연산자가 입력되면 alert를 보여준다.
   cy.get(".digit").contains(3).click();
   cy.get(".operation").contains("+").click();
   cy.get(".digit").contains(4).click();
+  cy.get(".operation").contains("+").click();
+  cy.get(".digit").contains(4).click();
   cy.get(".operation")
-    .contains("-")
+    .contains("=")
     .click()
     .then(() => {
       expect(alertStub).to.be.called;
