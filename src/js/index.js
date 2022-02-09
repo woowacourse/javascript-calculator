@@ -27,6 +27,24 @@ class Calculator {
       });
     });
   }
+
+  resultEvent() {
+    $(".operations > .operation:last-child").addEventListener("click", (e) => {
+      this.number2 = Number($("#total").innerText);
+      if (this.operator === "+") {
+        $("#total").innerHTML = this.number1 + this.number2;
+      }
+      if (this.operator === "-") {
+        $("#total").innerHTML = this.number1 - this.number2;
+      }
+      if (this.operator === "X") {
+        $("#total").innerHTML = this.number1 * this.number2;
+      }
+      if (this.operator === "/") {
+        $("#total").innerHTML = Math.floor(this.number1 / this.number2);
+      }
+    });
+  }
 }
 
 new Calculator();
