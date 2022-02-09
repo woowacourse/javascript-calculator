@@ -1,6 +1,3 @@
-// - [ ] 숫자는 한번에 최대 3자리 수까지 입력 가능하다.
-// - [ ] 계산 결과를 표현할 때 소수점 이하는 버림한다.
-
 class Calculator {
   constructor() {
     this.firstDigit = "";
@@ -22,6 +19,7 @@ class Calculator {
     this.firstDigit = parseInt(this.firstDigit, 10);
     this.secondDigit = parseInt(this.secondDigit, 10);
   }
+
   bindEvents() {
     this.digits.forEach(digitButton => {
       digitButton.addEventListener("click", e => {
@@ -53,6 +51,10 @@ class Calculator {
           this.calculateMath();
           this.renderTotal(this.result);
           this.reset();
+          return;
+        }
+        // 2+3   +5
+        if (!this.checkMoreThanTwoNumber()) {
           return;
         }
         this.operation = e.target.textContent;
@@ -111,6 +113,14 @@ class Calculator {
     const num = parseInt(number, 10);
     if (num >= 1000) {
       alert("2자리 수 이하 수만 입력해주세요.");
+      return false;
+    }
+    return true;
+  }
+
+  checkMoreThanTwoNumber() {
+    if (this.firstDigit && this.secondDigit && this.operation) {
+      alert("2개 이하의 수만 입력해주세요.");
       return false;
     }
     return true;
