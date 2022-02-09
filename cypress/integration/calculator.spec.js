@@ -1,7 +1,6 @@
 it("2개의 숫자에 대해 덧셈이 가능하다.", () => {
   cy.visit("index.html");
 
-  // 2 + 9 = 11
   cy.get(".digit").contains(2).click();
   cy.get(".operation").contains("+").click();
   cy.get(".digit").contains(9).click();
@@ -12,7 +11,6 @@ it("2개의 숫자에 대해 덧셈이 가능하다.", () => {
 it("2개의 숫자에 대해 뺄셈이 가능하다.", () => {
   cy.visit("index.html");
 
-  // 7 - 2 = 5
   cy.get(".digit").contains(7).click();
   cy.get(".operation").contains("-").click();
   cy.get(".digit").contains(2).click();
@@ -23,7 +21,6 @@ it("2개의 숫자에 대해 뺄셈이 가능하다.", () => {
 it("2개의 숫자에 대해 곱셈이 가능하다.", () => {
   cy.visit("index.html");
 
-  // 2 * 9 = 18
   cy.get(".digit").contains(2).click();
   cy.get(".operation").contains("X").click();
   cy.get(".digit").contains(9).click();
@@ -34,8 +31,7 @@ it("2개의 숫자에 대해 곱셈이 가능하다.", () => {
 it("2개의 숫자에 대해 나눗셈이 가능하다.", () => {
   cy.visit("index.html");
 
-  // 5 / 2 = 2
-  cy.get(".digit").contains(5).click();
+  cy.get(".digit").contains(4).click();
   cy.get(".operation").contains("/").click();
   cy.get(".digit").contains(2).click();
   cy.get(".operation").contains("=").click();
@@ -86,7 +82,6 @@ it("숫자가 3개 이상 입력되면 alert를 보여준다.", () => {
     });
 });
 
-// 계산 결과를 표현할 때 소수점 이하는 버림한다.
 it("계산 결과를 표현할 때 소수점 이하는 버림한다.", () => {
   cy.visit("index.html");
 
