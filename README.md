@@ -14,6 +14,7 @@
 </p>
 
 ## 🔥 Projects!
+
 <p align="middle">
   <img width="300" src="src/images/calculator_ui.png">
 </p>
@@ -30,6 +31,12 @@
 
 <br/>
 
+## 예외사항
+
+- [ ] 2개의 숫자가 입력된 이후, AC와 = 버튼이외의 버튼이 클릭되면 경고
+- [ ] 4자리 숫자 이상의 숫자가 입력되면 경고
+- [ ] 0으로 나누는 경우 경고
+
 ## 📊 테스트 요구사항
 
 **기능 요구사항에 제시된 7개의 항목에 대해 테스트 케이스를 만든다.**
@@ -37,19 +44,23 @@
 <br/>
 
 ## 📄 참고 사항
-* 숫자 입력은 **클릭**으로만 가능하다.
+
+- 숫자 입력은 **클릭**으로만 가능하다.
 
 <br/>
 
 ## 👏 Contributing
-만약 미션 수행 중에 개선사항이 보인다면, 언제든 자유롭게 PR을 보내주세요. 
+
+만약 미션 수행 중에 개선사항이 보인다면, 언제든 자유롭게 PR을 보내주세요.
 
 <br/>
 
 ## 🐞 Bug Report
+
 버그를 발견한다면, [Issues](https://github.com/woowacourse/javascript-calculator/issues) 에 등록 후 @eastjun에게 dm을 보내주세요.
 
 <br/>
 
 ## 📝 License
+
 This project is [MIT](https://github.com/woowacourse/javascript-calculator/blob/master/LICENSE) licensed.
