@@ -46,3 +46,10 @@ operation.forEach((item) => {
         }
     })
 })
+
+modifier.addEventListener('click', () => {
+    prevNumber = [];
+    nextNumber = [];
+    operand = '';
+    calculator.displayCalculateResult(0);
+})
