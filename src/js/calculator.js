@@ -1,10 +1,11 @@
 import { EXCEPTION } from './constants.js';
- 
+import { totalText } from './elements.js';
+
 export default class Calculator {
   add(num1, num2) {
     return num1 + num2;
   }
-  
+
   substract(num1, num2) {
     return num1 - num2;
   }
@@ -19,5 +20,9 @@ export default class Calculator {
     }
 
     return Math.floor(num1 / num2);
+  }
+
+  AC() {
+    totalText.innerHTML = 0;
   }
 }
