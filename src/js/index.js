@@ -58,7 +58,7 @@ class Calculator {
           return;
         }
         this.operation = e.target.textContent;
-        this.total.innerHTML += this.operation;
+        this.renderTotal(this.firstDigit + this.operation);
       });
     });
 
