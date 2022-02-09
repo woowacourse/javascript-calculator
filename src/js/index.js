@@ -46,6 +46,13 @@ class Calculator {
     this.$totalNumber.innerText += this.operator;
   };
 
+  clickModifierButton = (e) => {
+    this.$totalNumber.innerText = '0';
+    this.firstNumber = 0;
+    this.secondNumber = 0;
+    this.operator = '=';
+  };
+
   nextCalculate(result) {
     this.firstNumber = result;
     this.secondNumber = 0;
