@@ -30,4 +30,8 @@ export const RULES = Object.freeze({
   MAX_OPERAND_NUMBER: 2,
   INITIAL_VALUE: '',
   ZERO_NUMBER: 0,
+  NOTHING: null,
 });
+
+export const FIRST_INDEX = 0;
+export const SECOND_INDEX = 1;

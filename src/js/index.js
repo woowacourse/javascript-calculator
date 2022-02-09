@@ -1,15 +1,24 @@
-import { ID, CLASS, ERROR_MESSAGES, OPERATORS, RULES } from './constant/index.js';
+import {
+  ID,
+  CLASS,
+  ERROR_MESSAGES,
+  OPERATORS,
+  RULES,
+  FIRST_INDEX,
+  SECOND_INDEX,
+} from './constant/index.js';
+import { counter } from './util/index.js';
+import { convertToNumber, isExceedOperandLength, isNotEnterTwoNumbers } from './util/index.js';
 
 class Calculator {
   constructor() {
     this.init();
-    this.operands = new Array(RULES.MAX_OPERAND_NUMBER).fill(RULES.INITIAL_VALUE);
-    this.operator = null;
   }
 
   init() {
     this.initDOM();
     this.initEventListner();
+    this.resetCalculator();
   }
 
   initDOM() {
@@ -22,35 +31,25 @@ class Calculator {
   initEventListner() {
     this.$digits.addEventListener('click', (e) => {
       if (e.target.classList.contains(CLASS.DIGIT)) {
-        const number = e.target.innerText;
         const [firstOperand, secondOperand] = this.operands;
+        const number = e.target.innerText;
 
-        if (this.operator === null) {
-          // 첫 번째 피연산자 입력
-          // 길이 체크하기
-          if (firstOperand.length === RULES.MAX_OPERAND_LENGTH) {
-            alert(ERROR_MESSAGES.EXCEED_THREE_LENGTH);
+        if (this.getOperator() === RULES.NOTHING) {
+          if (isExceedOperandLength(firstOperand)) {
             return;
           }
 
-          // 숫자를 이어붙인다.
-          this.operands[0] += number;
-          this.$total.innerText = this.operands[0];
-
+          this.setOperand(FIRST_INDEX, this.getOperand(FIRST_INDEX) + number);
+          this.displayResultScreen(this.getOperand(FIRST_INDEX));
           return;
         }
 
-        // 두 번째 피연산자 입력
-        // 길이 체크하기
-        if (secondOperand.length === RULES.MAX_OPERAND_LENGTH) {
-          alert(ERROR_MESSAGES.EXCEED_THREE_LENGTH);
+        if (isExceedOperandLength(secondOperand)) {
           return;
         }
 
-        // 숫자를 이어붙인다.
-        this.operands[1] += number;
-        this.$total.innerText = this.operands[1];
-
+        this.setOperand(SECOND_INDEX, this.getOperand(SECOND_INDEX) + number);
+        this.displayResultScreen(this.getOperand(SECOND_INDEX));
         return;
       }
     });
@@ -60,75 +59,73 @@ class Calculator {
         const [firstOperand, secondOperand] = this.operands;
 
         if (e.target.innerText === OPERATORS.EQUAL) {
-          //추후 구현
-          //피연산자 연산자 멤버변수를 초기화한다.
-
-          if (firstOperand === RULES.INITIAL_VALUE || secondOperand === RULES.INITIAL_VALUE) {
-            alert(ERROR_MESSAGES.ENTER_TWO_NUMBERS);
+          if (isNotEnterTwoNumbers(firstOperand, secondOperand)) {
             return;
           }
 
-          //결과값을 렌더링한다.
+          this.caculate(convertToNumber(firstOperand), convertToNumber(secondOperand));
+          this.resetCalculator();
 
-          switch (this.operator) {
-            case OPERATORS.ADD:
-              this.$total.innerText = Number(firstOperand) + Number(secondOperand);
-              break;
-            case OPERATORS.SUBSTRACT:
-              this.$total.innerText = Number(firstOperand) - Number(secondOperand);
-              break;
-            case OPERATORS.DIVIDE:
-              // 소수 점 없애는 작업
-              // 두번째 피연산자가 0인경우 예외처리
-              if (Number(secondOperand) === RULES.ZERO_NUMBER) {
-                alert(ERROR_MESSAGES.DIVIDED_NOT_ZERO);
-                this.operands[1] = RULES.INITIAL_VALUE;
-                return;
-              }
-              this.$total.innerText = Math.floor(Number(firstOperand) / Number(secondOperand));
-              break;
-            case OPERATORS.MULTIPLY:
-              this.$total.innerText = Number(firstOperand) * Number(secondOperand);
-              break;
-            default:
-          }
-
-          const result = this.$total.innerText;
-          this.operands = [result, ''];
-          this.operator = null;
-
+          const calculatedValue = this.$total.innerText;
+          this.setOperand(FIRST_INDEX, calculatedValue);
           return;
         }
 
-        // operator 멤버 변수 체크
-        if (this.operator !== null) {
+        if (this.getOperator() !== RULES.NOTHING) {
           alert(ERROR_MESSAGES.EXIST_OPERAND);
           return;
         }
 
-        // operator는 있는데, 첫번째 operand가 없을때
-        if (this.operands[0] === RULES.INITIAL_VALUE) {
+        if (this.getOperand(FIRST_INDEX) === RULES.INITIAL_VALUE) {
           alert(ERROR_MESSAGES.ENTER_TWO_NUMBERS);
           return;
         }
 
-        this.operator = e.target.innerText;
-        this.$total.innerText = this.operator;
+        this.setOperator(e.target.innerText);
+        this.displayResultScreen(this.getOperator());
       }
     });
 
-    //초기화
     this.$modifier.addEventListener('click', (e) => {
-      this.$total.innerText = RULES.ZERO_NUMBER;
-      this.operator = null;
-      this.operands = new Array(RULES.MAX_OPERAND_NUMBER).fill(RULES.INITIAL_VALUE);
+      this.displayResultScreen(RULES.ZERO_NUMBER);
+      this.resetCalculator();
     });
   }
-}
 
-function resetValue(value1, value2) {
-  this.operator = null;
-  this.operands = new Array(RULES.MAX_OPERAND_NUMBER).fill(RULES.INITIAL_VALUE);
+  resetCalculator() {
+    this.setOperator(RULES.NOTHING);
+    this.operands = new Array(RULES.MAX_OPERAND_NUMBER).fill(RULES.INITIAL_VALUE);
+  }
+
+  caculate(firstOperand, secondOperand) {
+    const result = counter[this.getOperator()](
+      firstOperand,
+      secondOperand,
+      this.setOperand(SECOND_INDEX, RULES.INITIAL_VALUE)
+    );
+
+    this.displayResultScreen(result);
+  }
+
+  getOperand(index) {
+    return this.operands[index];
+  }
+
+  setOperand(index, value) {
+    this.operands[index] = value;
+  }
+
+  getOperator() {
+    return this.operator;
+  }
+
+  setOperator(value) {
+    this.operator = value;
+  }
+
+  displayResultScreen(result) {
+    this.$total.innerText = result;
+  }
 }
 
 new Calculator();
