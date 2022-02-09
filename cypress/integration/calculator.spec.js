@@ -34,3 +34,10 @@ it("2개의 숫자에 대해 나눗셈이 가능하다.", () => {
   cy.get(".operation").contains("=").click();
   cy.get("#total").should("have.text", "3");
 });
+
+it("AC(All Clear)버튼을 누르면 0으로 초기화 한다..", () => {
+  cy.visit("index.html");
+  cy.get(".digit").contains(9).click();
+  cy.get(".modifier").contains("AC").click();
+  cy.get("#total").should("have.text", "0");
+});
