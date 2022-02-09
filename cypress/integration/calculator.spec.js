@@ -87,3 +87,12 @@ it("숫자가 3개 이상 입력되면 alert를 보여준다.", () => {
 });
 
 // 계산 결과를 표현할 때 소수점 이하는 버림한다.
+it("계산 결과를 표현할 때 소수점 이하는 버림한다.", () => {
+  cy.visit("index.html");
+
+  cy.get(".digit").contains(5).click();
+  cy.get(".operation").contains("/").click();
+  cy.get(".digit").contains(2).click();
+  cy.get(".operation").contains("=").click();
+  cy.get("#total").should("have.text", "2");
+});
