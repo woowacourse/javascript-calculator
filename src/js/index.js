@@ -1,21 +1,21 @@
-// import { handleClick, handleClickDigits, handleClickOperations, handleClickModifier } from "./clickEvent.js";
 import { $ } from "./dom.js"
+import { MAX_NUM_LENGTH, ZERO_CHAR, PLUS, MINUS, MULTIPLY, DIVIDE } from './constants.js'
 
 class Calculator{
     constructor(){
         this.$state = {
             currentOperation: undefined,
-            numbers: ['0','0']
+            numbers: [ZERO_CHAR, ZERO_CHAR]
         }
         this.$app = document.querySelector('#app');
         this.$total = document.querySelector('#total');
         this.$digits = document.querySelectorAll('.digit');
         this.$operations = document.querySelectorAll('.operation');
         this.$modifier = document.querySelector('.modifier');
+        this.mounted()
     }
 
     mounted(){
-        console.log(this.$digits)
         this.$digits.forEach(e => e.addEventListener('click', this.handleClickDigits.bind(this)))
         this.$operations.forEach(e => e.addEventListener('click', this.handleClickOperations.bind(this)))
         this.$modifier.addEventListener('click', this.handleClickModifier.bind(this));
@@ -24,56 +24,24 @@ class Calculator{
     handleClickDigits(e) {
         let index = 0
         if(this.$state.currentOperation){
-            console.log('index:', index)
             index = 1
-
-            const currentNumber = this.$state.numbers[index]
-            if(currentNumber.length >= 3){
-                console.log('------error')
-                return
-            }
-
-            if(currentNumber === '0'){
-                this.$state.numbers[index] = e.target.innerHTML 
-                // $("#total").innerHTML = e.target.innerHTML
-                $("#total").innerHTML += this.$state.numbers[index]
-                return
-            }
-
-            console.log(this.$state.numbers[index])
-            this.$state.numbers[index] += e.target.innerHTML 
-            $("#total").innerHTML += e.target.innerHTML 
-            return 
         }
-
-        //num1
-        console.log('num1, this.$state.currentOperation: ', this.$state.currentOperation)
-
         const currentNumber = this.$state.numbers[index]
-        if(currentNumber.length >= 3){
-            console.log('------error')
+        if(currentNumber.length >= MAX_NUM_LENGTH){
+            window.alert('숫자는 한번에 최대 3자리 수까지 입력 가능합니다.')
             return
         }
-
-        if(currentNumber === '0'){
-            this.$state.numbers[0] = e.target.innerHTML 
+        if(currentNumber === ZERO_CHAR){
+            this.$state.numbers[index] = e.target.innerHTML 
             $("#total").innerHTML = e.target.innerHTML
             return
         }
-
         this.$state.numbers[index] += e.target.innerHTML 
         $("#total").innerHTML = this.$state.numbers[index]
     }
     
     handleClickOperations(e) {
-        console.log("handleOper", e.target.innerHTML);
-
-        if(e.target.innerHTML === '='){
-            console.log('-----= result click')
-            console.log(this.$state.numbers[0],this.$state.numbers[1],this.$state.currentOperation)
-        
-        // 숫자, 기호 받아서 연산하는 함수
-
+        if(e.target.innerHTML === '='){            
             this.checkOperator(
                 this.toIntNumber(this.$state.numbers[0]),
                 this.toIntNumber(this.$state.numbers[1]),
@@ -81,7 +49,6 @@ class Calculator{
             )
             return 
         }
-
         this.$state.currentOperation = e.target.innerHTML
         $("#total").innerHTML += this.$state.currentOperation
 
@@ -89,21 +56,18 @@ class Calculator{
 
     handleClickModifier(e) {
         this.clearResult()
-
     }
 
     clearResult() {
-        console.log('clear')
-        $("#total").innerHTML = '0';
+        $("#total").innerHTML = ZERO_CHAR;
         this.$state.currentOperation = undefined;
-        this.$state.numbers =['0','0'];
+        this.$state.numbers =[ZERO_CHAR, ZERO_CHAR];
     }
 
     setResult(result) {
-        console.log('setResult', result)
         $("#total").innerHTML = result;
         this.$state.currentOperation = undefined;
-        this.$state.numbers =[result.toString(),'0'];
+        this.$state.numbers =[result.toString(),ZERO_CHAR];
     }
 
     toIntNumber(num){
@@ -111,23 +75,21 @@ class Calculator{
     }
 
     checkOperator(num1,num2,operation) {
-        console.log('---checkOperator',num1,num2,operation);
-        if (operation === '+') {
+        if (operation === PLUS) {
             return this.add(num1,num2)
         }
-        if (operation === '-') {
+        if (operation === MINUS) {
             return this.minus(num1,num2)
         }
-        if (operation === 'X') {
+        if (operation === MULTIPLY) {
             return this.multiply(num1,num2)
         }
-        if (operation === '/') {
+        if (operation === DIVIDE) {
             return this.divide(num1,num2)
         }
     }
 
     add(num1,num2) {
-        console.log('add',num1, num2)
         const result = num1 + num2
         this.setResult(result)
         return this.$total.innerHTML = result;
@@ -147,14 +109,7 @@ class Calculator{
         this.setResult(result)
         return this.$total.innerHTML = result;
     }
-
-    renderResult() {
-        //
-    }
-
-
 }
 
 const calculator = new Calculator
 
-calculator.mounted()
