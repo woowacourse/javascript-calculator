@@ -73,45 +73,39 @@ class Calculator {
       this.number2 = Number($("#total").innerText);
       if (this.operator === "+") {
         $("#total").innerHTML = this.number1 + this.number2;
-        this.number1 = 0;
-        this.number2 = 0;
-        this.operator = "";
+        this.initializeValue()
       }
       if (this.operator === "-") {
         $("#total").innerHTML = this.number1 - this.number2;
-        this.number1 = 0;
-        this.number2 = 0;
-        this.operator = "";
+        this.initializeValue()
       }
       if (this.operator === "X") {
         $("#total").innerHTML = this.number1 * this.number2;
-        this.number1 = 0;
-        this.number2 = 0;
-        this.operator = "";
+        this.initializeValue()
       }
       if (this.operator === "/") {
         if (this.number2 === 0) {
           alert("0으로 나눌 수 없습니다.");
-          this.number1 = 0;
-          this.number2 = 0;
-          this.operator = "";
+          this.initializeValue()
           $("#total").innerHTML = 0;
           this.flag = true;
           return;
         }
         $("#total").innerHTML = Math.floor(this.number1 / this.number2);
-        this.number1 = 0;
-        this.number2 = 0;
-        this.operator = "";
+        this.initializeValue();
       }
     });
   }
 
+  initializeValue() {
+    this.number1 = 0;
+    this.number2 = 0;
+    this.operator = "";
+  }
+
   reset() {
     $(".modifier").addEventListener("click", () => {
-      this.number1 = 0;
-      this.number2 = 0;
-      this.operator = "";
+      this.initializeValue();
       $("#total").innerHTML = 0;
       this.flag = true;
     });
