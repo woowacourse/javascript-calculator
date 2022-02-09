@@ -1,8 +1,9 @@
 class Calculator {
     constructor() {
-        this.isStarted = false
+        this.isStarted = false;
         this.currentNumber = '';
         this.inputNumbers = [];
+        this.currentOpertor = ''
     }
 
     init = () => {
@@ -31,14 +32,18 @@ class Calculator {
 
     renderDigit = (digit) => {
         if(!this.isStarted){
-            this.isStarted =true
-            this.$totalResult.innerText = ''
+            this.isStarted =true;
+            this.$totalResult.innerText = '';
         }   
-        this.$totalResult.innerText += digit
+        this.$totalResult.innerText += digit;
     }
 
     renderOperator = (operator) => {
-        this.$totalResult.innerText += operator
+        this.$totalResult.innerText += operator;
+    }
+
+    renderResult = (result) => {
+        this.$totalResult.innerText = result;
     }
 
     isOverThreeDigit = () => {
@@ -47,12 +52,34 @@ class Calculator {
 
     clickOperatorHandler = (e) => {
         const selectedOperator = e.target.innerText;
-        // 숫자가 하나일때 = 입력 예외
-        // 연산자 클릭 시, currentNumber ''로 초기화
         this.inputNumbers.push(Number(this.currentNumber));
         this.currentNumber = "";
+        if(this.isEqualOperator(selectedOperator)){
+            this.renderResult(this.calculate());
+            return;
+        }
+        this.currentOpertor = selectedOperator;
         this.renderOperator(selectedOperator);
     }
+    
+    calculate = () => {
+        const [first,second] = this.inputNumbers;
+        switch (this.currentOpertor) {
+            case '+':
+                return first + second;
+            case 'X':
+                return first * second;
+            case '-':
+                return first - second;
+            case '/':
+                return Math.floor(first/second);
+            default:
+                return;
+        }
+    }
+
+    isEqualOperator = (operator) => operator === "=";
+
 }
 
 const calculator = new Calculator();
