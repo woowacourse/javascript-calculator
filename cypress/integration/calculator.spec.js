@@ -51,3 +51,12 @@ it("숫자는 한번에 최대 3자리 수까지 입력 가능하다.", () => {
   cy.get(".digit").contains(4).click();
   cy.on("window:alert", alertStub);
 });
+
+it("계산 결과를 표현할 때 소수점 이하는 버림한다.", () => {
+  cy.visit("index.html");
+  cy.get(".digit").contains(9).click();
+  cy.get(".operation").contains("/").click();
+  cy.get(".digit").contains(2).click();
+  cy.get(".operation").contains("=").click();
+  cy.get("#total").should("have.text", "4");
+});
