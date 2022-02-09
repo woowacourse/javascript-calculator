@@ -1,7 +1,9 @@
+import { DOM } from "../constants.js";
+
 export default class View {
   constructor() {
-    this.$app = document.querySelector("#app");
-    this.$total = document.querySelector("#total");
+    this.$app = document.querySelector(DOM.$APP);
+    this.$total = document.querySelector(DOM.$TOTAL);
   }
 
   bindEventListener(type, selector, callback) {
@@ -17,24 +19,24 @@ export default class View {
   }
 
   bindClickDigitButton(callback) {
-    this.bindEventListener("click", ".digit", (e) => {
+    this.bindEventListener("click", DOM.$DIGIT, (e) => {
       callback(Number(e.target.innerText));
     });
   }
 
   bindClickOperationButton(callback) {
-    this.bindEventListener("click", ".operation", (e) => {
+    this.bindEventListener("click", DOM.$OPERATION, (e) => {
       callback(e.target.innerText);
     });
   }
 
   bindClickACButton(callback) {
-    this.bindEventListener("click", ".modifier", (e) => {
+    this.bindEventListener("click", DOM.$MODIFIER, () => {
       callback();
     });
   }
 
-  render(str) {
-    this.$total.innerText = str;
+  render(result) {
+    this.$total.innerText = result;
   }
 }

@@ -1,3 +1,5 @@
+import { NUMBER, OPERATIONS } from "../constants.js";
+
 export default class Controller {
   constructor(view, model) {
     this.view = view;
@@ -15,7 +17,7 @@ export default class Controller {
   clickOperationButton(operation) {
     this.model.initializeDigitCount();
 
-    if (operation === "=") {
+    if (operation === OPERATIONS.EQUAL) {
       this.view.render(this.model.calculate());
       this.model.initializeUserInputString();
 
@@ -26,7 +28,7 @@ export default class Controller {
   }
 
   clickACButton() {
-    this.view.render(0);
+    this.view.render(NUMBER.INITIAL_RESULT);
     this.model.initializeUserInputString();
     this.model.initializeDigitCount();
   }

@@ -1,23 +1,24 @@
+import { NUMBER, OPERATIONS, ERROR_MESSAGES, INITIAL_VALUE } from "../constants.js";
 import Calculator from "./Calculator.js";
 
 export default class Model {
   constructor() {
     this.calculator = new Calculator();
     this.userInputString = "";
-    this.digitCount = 0;
+    this.digitCount = NUMBER.INITIAL_RESULT;
   }
 
   addUserInputString(character) {
     if (typeof character === "number") {
-      this.digitCount += 1;
+      this.digitCount += NUMBER.INCREASE_ONE;
 
-      if (this.digitCount > 3) {
-        alert("alert");
+      if (this.digitCount > NUMBER.DIGIT_COUNT_MAXIMUM) {
+        alert(ERROR_MESSAGES.MAXIMUM_DIGITS);
 
         this.initializeDigitCount();
         this.initializeUserInputString();
 
-        return "0";
+        return INITIAL_VALUE;
       }
     }
 
@@ -27,7 +28,7 @@ export default class Model {
   }
 
   initializeDigitCount() {
-    this.digitCount = 0;
+    this.digitCount = NUMBER.INITIAL_RESULT;
   }
 
   calculate() {
@@ -35,36 +36,36 @@ export default class Model {
 
     if (
       this.userInputString.split(/[\+\-X/]+/).filter((elem) => typeof Number(elem) === "number")
-        .length > 2
+        .length > NUMBER.COUNT_MAXIMUM
     ) {
-      alert("숫자는 두개까지 입력 가능합니다.");
+      alert(ERROR_MESSAGES.MAXIMUM_NUMBER_COUNT);
 
       this.initializeDigitCount();
       this.initializeUserInputString();
 
-      return "0";
+      return INITIAL_VALUE;
     }
 
-    if (this.userInputString.includes("+")) {
-      const [number1, number2] = this.userInputString.split("+");
+    if (this.userInputString.includes(OPERATIONS.PLUS)) {
+      const [number1, number2] = this.userInputString.split(OPERATIONS.PLUS);
 
       result = this.calculator.add(Number(number1), Number(number2));
     }
 
-    if (this.userInputString.includes("-")) {
-      const [number1, number2] = this.userInputString.split("-");
+    if (this.userInputString.includes(OPERATIONS.MINUS)) {
+      const [number1, number2] = this.userInputString.split(OPERATIONS.MINUS);
 
       result = this.calculator.subtract(Number(number1), Number(number2));
     }
 
-    if (this.userInputString.includes("X")) {
-      const [number1, number2] = this.userInputString.split("X");
+    if (this.userInputString.includes(OPERATIONS.MULTIPLY)) {
+      const [number1, number2] = this.userInputString.split(OPERATIONS.MULTIPLY);
 
       result = this.calculator.multiply(Number(number1), Number(number2));
     }
 
-    if (this.userInputString.includes("/")) {
-      const [number1, number2] = this.userInputString.split("/");
+    if (this.userInputString.includes(OPERATIONS.DIVIDE)) {
+      const [number1, number2] = this.userInputString.split(OPERATIONS.DIVIDE);
 
       result = this.calculator.divide(Number(number1), Number(number2));
     }
