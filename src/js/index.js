@@ -52,12 +52,16 @@ class Calculator {
 
     clickOperatorHandler = (e) => {
         const selectedOperator = e.target.innerText;
+        if(!this.isEqualOperator(selectedOperator) && this.currentOpertor){
+            alert('2개의 수만 계산 가능합니다.')
+            return;
+        }
         if(this.isDuplicatedOperator()){
             alert('중복된 연산자 입력입니다.')
-            return
+            return;
         }
         if(this.isEqualOperator(selectedOperator) && this.invalidEqualOperatorHandler()){
-            return
+            return;
         }
         this.inputNumbers.push(Number(this.currentNumber));
         this.currentNumber = "";
