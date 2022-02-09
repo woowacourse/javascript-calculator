@@ -4,7 +4,7 @@ import {
   operationButton,
   totalText,
 } from './elements.js';
-import { maxLength, EXCEPTION } from './constants.js';
+import { MAX_LENGTH, EXCEPTION } from './constants.js';
 import Calculator from './calculator.js';
 
 export class User {
@@ -30,7 +30,7 @@ export class User {
       digitButton[index].addEventListener('click', () => {
         if (!this.operator) {
           // 첫 번째 숫자 입력
-          if (this.num1.length > maxLength) {
+          if (this.num1.length > MAX_LENGTH) {
             return alert(EXCEPTION.OUT_OF_RANGE);
           }
           this.num1 += digitButton[index].innerText;
@@ -41,7 +41,7 @@ export class User {
           }
         } else {
           // 두 번째 숫자 입력
-          if (this.num2.length > maxLength) {
+          if (this.num2.length > MAX_LENGTH) {
             return alert(EXCEPTION.OUT_OF_RANGE);
           }
           this.num2 += digitButton[index].innerText;
@@ -97,7 +97,7 @@ export class User {
           this.num1 &&
           !this.operator
         ) {
-          if (this.num1.length > maxLength) {
+          if (this.num1.length > MAX_LENGTH) {
             return alert(EXCEPTION.OUT_OF_RANGE);
           }
 
