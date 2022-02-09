@@ -18,6 +18,10 @@ class Calculator {
     this.bindEvents();
   }
 
+  convertToInteger() {
+    this.firstDigit = parseInt(this.firstDigit, 10);
+    this.secondDigit = parseInt(this.secondDigit, 10);
+  }
   bindEvents() {
     this.digits.forEach(digitButton => {
       digitButton.addEventListener("click", e => {
@@ -45,6 +49,7 @@ class Calculator {
       digitButton.addEventListener("click", e => {
         e.preventDefault();
         if (e.target.textContent === "=") {
+          this.convertToInteger();
           this.calculateMath();
           this.renderTotal(this.result);
           this.reset();
@@ -82,24 +87,24 @@ class Calculator {
   calculateMath() {
     switch (this.operation) {
       case "+":
-        this.result =
-          parseInt(this.firstDigit, 10) + parseInt(this.secondDigit, 10);
+        this.result = this.firstDigit + this.secondDigit;
         break;
       case "-":
-        this.result =
-          parseInt(this.firstDigit, 10) - parseInt(this.secondDigit, 10);
+        this.result = this.firstDigit - this.secondDigit;
         break;
       case "X":
-        this.result =
-          parseInt(this.firstDigit, 10) * parseInt(this.secondDigit, 10);
+        this.result = this.firstDigit * this.secondDigit;
         break;
       case "/":
-        this.result =
-          parseInt(this.firstDigit, 10) / parseInt(this.secondDigit, 10);
+        this.result = this.firstDigit / this.secondDigit;
         break;
       default:
         break;
     }
+  }
+
+  roundOffDigit(number) {
+    return parseInt(number);
   }
 
   validateDigit(number) {
