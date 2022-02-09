@@ -13,55 +13,78 @@ class Calculator {
   }
 
   attachEvents() {
-    this.$digits.addEventListener('click', (event) => {
-      const clickedNumber = event.target.innerText;
+    this.$digits.addEventListener('click', this.handleDigit.bind(this));
+    this.$operations.addEventListener('click', this.handleOperator.bind(this));
+  }
 
-      if (this.$total.innerText === '0') {
-        this.$total.innerText = clickedNumber;
+  handleDigit(event) {
+    const clickedDigit = event.target.innerText;
 
-        return;
+    if (this.$total.innerText === '0') {
+      this.$total.innerText = clickedDigit;
+
+      return;
+    }
+
+    this.$total.innerText += clickedDigit;
+  }
+
+  handleOperator(event) {
+    const clickedOperator = event.target.innerText;
+
+    this.renderTotal(clickedOperator);
+  }
+
+  renderTotal(clickedOperator) {
+    if (!this.isEqual(clickedOperator)) {
+      this.$total.innerText += clickedOperator;
+
+      return;
+    }
+
+    const currentInputArray = this.$total.innerText.split('');
+
+    this.$total.innerText = this.calc(this.preprocess(currentInputArray));
+  }
+
+  preprocess(currentInputArray) {
+    const numberStack = [];
+    const operatorStack = [];
+    let tempNumber = '';
+
+    for (let i = 0; i < currentInputArray.length; i += 1) {
+      if (this.isDigit(currentInputArray[i])) {
+        tempNumber += currentInputArray[i];
+
+        continue;
       }
+      numberStack.push(Number(tempNumber));
+      tempNumber = '';
+      operatorStack.push(currentInputArray[i]);
+    }
+    numberStack.push(Number(tempNumber));
 
-      this.$total.innerText += clickedNumber;
+    return [numberStack, operatorStack];
+  }
+
+  isDigit(element) {
+    return element >= '0' && element <= '9';
+  }
+
+  isEqual(clickedOperator) {
+    return clickedOperator === '=';
+  }
+
+  calc([numberStack, operatorStack]) {
+    let result = 0;
+
+    operatorStack.forEach((operator) => {
+      if (operator === '+') {
+        result += this.add(numberStack.shift(), numberStack.shift());
+      }
     });
 
-    this.$operations.addEventListener('click', (event) => {
-      const clickedOperator = event.target.innerText;
-
-      if (clickedOperator !== '=') {
-        this.$total.innerText += clickedOperator;
-
-        return;
-      }
-
-      const currentInput = this.$total.innerText;
-      const currentInputArray = currentInput.split('');
-      const numberStack = [];
-      const operatorStack = [];
-      let temp = '';
-
-      for (let i = 0; i < currentInputArray.length; i += 1) {
-        if (currentInputArray[i] >= '0' && currentInputArray[i] <= '9') {
-          temp += currentInputArray[i];
-        } else {
-          numberStack.push(Number(temp));
-          temp = '';
-          operatorStack.push(currentInputArray[i]);
-        }
-      }
-
-      numberStack.push(Number(temp));
-
-      let result = 0;
-
-      operatorStack.forEach((operator) => {
-        if (operator === '+') {
-          result += this.add(numberStack.shift(), numberStack.shift());
-        }
-      });
-
-      this.$total.innerText = result;
-    });
+    return result;
   }
 
   add(leftNumber, rightNumber) {
