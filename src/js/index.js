@@ -7,10 +7,33 @@
 // 숫자는 2개까지만 입력할 수 있다.
 // 계산 결과를 표현할 때 소수점 이하는 버림한다.
 
+const $ = (selector) => document.querySelector(selector);
 class Calculator {
   constructor() {
+    this.numbers = ['', ''];
+    this.offset = 0;
+    this.operator = '';
+    this.initNumberClickEvent();
+  }
 
+  print() {
+    $('#total').innerText = this.numbers[0] + this.operator + this.numbers[1];
+  }
+
+  initNumberClickEvent() {
+    $('.digits').addEventListener('click', (e) => {
+      if (e.target === e.currentTarget) {
+          return;
+      }
+      if (this.numbers[this.offset].length >= 3) return;
+
+      this.numbers[this.offset] += e.target.dataset.value;
+      this.print();
+    })
   }
 
 
+  
 }
+
+const calculator = new Calculator();
