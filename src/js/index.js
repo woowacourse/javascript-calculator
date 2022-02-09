@@ -1,49 +1,90 @@
-let firstDigit = "";
-let secondDigit = "";
-let operation = "";
-const total = document.querySelector("#total");
+// - [ ] AC(All Clear)버튼을 누르면 0으로 초기화 한다.
+// - [ ] 숫자는 한번에 최대 3자리 수까지 입력 가능하다.
+// - [ ] 계산 결과를 표현할 때 소수점 이하는 버림한다.
 
-const validateInput = (firstDigit, secondDigit, operation) => {
-  if (firstDigit !== "" && secondDigit !== "" && operation !== "") {
-    return true;
+class Calculator {
+  constructor() {
+    this.firstDigit = "";
+    this.secondDigit = "";
+    this.operation = "";
+    this.result = 0;
+    this.init();
   }
-  return false;
-};
 
-const calculateMath = (firstDigit, secondDigit, operation) => {
-  if (validateInput(firstDigit, secondDigit, operation)) {
-    switch (operation) {
+  init() {
+    this.total = document.getElementById("total");
+    this.digits = document.querySelectorAll(".digit");
+    this.operations = document.querySelectorAll(".operation");
+    this.bindEvents();
+  }
+
+  bindEvents() {
+    this.digits.forEach(digitButton => {
+      digitButton.addEventListener("click", e => {
+        e.preventDefault();
+        // 첫번째 수 입력
+        if (!this.operation) {
+          this.firstDigit += e.target.textContent;
+          this.total.innerHTML = this.firstDigit;
+        }
+
+        // 두번째 수 입력
+        if (this.firstDigit && this.operation) {
+          this.secondDigit += e.target.textContent;
+          this.total.innerHTML =
+            this.firstDigit + this.operation + this.secondDigit;
+        }
+
+        // total.innerHTML = firstDigit + operation + secondDigit;
+      });
+    });
+
+    this.operations.forEach(digitButton => {
+      digitButton.addEventListener("click", e => {
+        e.preventDefault();
+        if (e.target.textContent === "=") {
+          this.calculateMath();
+          this.total.innerHTML = this.result;
+          this.firstDigit = "";
+          this.secondDigit = "";
+          this.operation = "";
+          return;
+        }
+        this.operation = e.target.textContent;
+        this.total.innerHTML += this.operation;
+      });
+    });
+  }
+
+  //   validateInput(firstDigit, secondDigit, operation){
+  //     if (firstDigit !== "" && secondDigit !== "" && operation !== "") {
+  //       return true;
+  //     }
+  //     return false;
+  //   };
+
+  calculateMath() {
+    switch (this.operation) {
       case "+":
-        return firstDigit + secondDigit;
+        this.result =
+          parseInt(this.firstDigit, 10) + parseInt(this.secondDigit, 10);
+        break;
       case "-":
-        return firstDigit - secondDigit;
+        this.result =
+          parseInt(this.firstDigit, 10) - parseInt(this.secondDigit, 10);
+        break;
       case "X":
-        return firstDigit * secondDigit;
+        this.result =
+          parseInt(this.firstDigit, 10) * parseInt(this.secondDigit, 10);
+        break;
       case "/":
-        return firstDigit / secondDigit;
+        this.result =
+          parseInt(this.firstDigit, 10) / parseInt(this.secondDigit, 10);
+        break;
       default:
         break;
     }
   }
-  return 0;
-};
+}
 
-const digits = document.querySelectorAll(".digit");
-digits.forEach(digitButton => {
-  digitButton.addEventListener("click", e => {
-    e.preventDefault();
-    // 첫번째 수 입력
-    if (!operation) {
-      firstDigit += e.target.textContent;
-      total.innerHTML = firstDigit;
-    }
-
-    // 두번째 수 입력
-    if (firstDigit && operation) {
-      secondDigit += e.target.textContent;
-      total.innerHTML = secondDigit;
-    }
-
-    // total.innerHTML = firstDigit + operation + secondDigit;
-  });
-});
+const calculator = new Calculator();
