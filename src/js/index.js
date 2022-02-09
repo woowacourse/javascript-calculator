@@ -108,6 +108,13 @@ class Calculator {
         }
       }
     });
+
+    //초기화
+    this.$modifier.addEventListener('click', (e) => {
+      this.$total.innerText = 0;
+      this.operator = null;
+      this.operands = ['', ''];
+    });
   }
 }
 
