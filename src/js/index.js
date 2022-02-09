@@ -1,11 +1,9 @@
 import {
   DOM,
   ERROR_MESSAGE,
-  ONE_THOUSAND,
   TYPE,
   OPERATION,
   ONE_HUNDRED,
-  ZERO,
 } from "./lib/constants.js";
 
 class Calculator {
@@ -34,6 +32,7 @@ class Calculator {
       this.onCalculatorClick.bind(this)
     );
   }
+
   onCalculatorClick(e) {
     const {
       target: { className: targetClassName, textContent: targetTextContent },
@@ -63,6 +62,7 @@ class Calculator {
       alert(error);
     }
   }
+
   isDigitClick({ targetClassName }) {
     return targetClassName === DOM.DIGIT_CLASS_NAME;
   }
@@ -108,6 +108,7 @@ class Calculator {
     }
     throw Error(ERROR_MESSAGE.NUMBER_SIZE_ERROR);
   }
+
   createOperator(operatorStr) {
     this.currentOperator = operatorStr;
   }
