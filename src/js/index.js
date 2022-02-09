@@ -124,17 +124,25 @@ class Calculator {
   calculate() {
     try {
       if (this.currentOperator === OPERATION.ADD) {
-        this.add(this.firstOperand, this.secondOperand);
+        this.firstOperand = this.add(this.firstOperand, this.secondOperand);
       }
       if (this.currentOperator === OPERATION.SUBTRACT) {
-        this.subtract(this.firstOperand, this.secondOperand);
+        this.firstOperand = this.subtract(
+          this.firstOperand,
+          this.secondOperand
+        );
       }
       if (this.currentOperator === OPERATION.MULTIPLY) {
-        this.multiply(this.firstOperand, this.secondOperand);
+        this.firstOperand = this.multiply(
+          this.firstOperand,
+          this.secondOperand
+        );
       }
       if (this.currentOperator === OPERATION.DIVIDE) {
-        this.divide(this.firstOperand, this.secondOperand);
+        this.firstOperand = this.divide(this.firstOperand, this.secondOperand);
       }
+      this.secondOperand = null;
+      this.currentOperator = null;
     } catch (error) {
       alert(error);
     }

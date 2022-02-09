@@ -14,7 +14,7 @@ export const TYPE = Object.freeze({
 export const OPERATION = Object.freeze({
   ADD: "+",
   SUBTRACT: "-",
-  MULTIPLY: "*",
+  MULTIPLY: "X",
   DIVIDE: "/",
   EQUAL: "=",
 });
