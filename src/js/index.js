@@ -170,7 +170,7 @@ class Calculator {
   divide(number1, number2) {
     this.checkParameter(number1, number2);
     this.checkDenominator(number2);
-    return number1 / number2;
+    return Math.floor(number1 / number2);
   }
 }
 
