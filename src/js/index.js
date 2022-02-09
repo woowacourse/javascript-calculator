@@ -23,8 +23,6 @@ class Calculator {
       }
 
       this.$total.innerText += clickedNumber;
-
-      return;
     });
 
     this.$operations.addEventListener('click', (event) => {
@@ -38,8 +36,8 @@ class Calculator {
 
       const currentInput = this.$total.innerText;
       const currentInputArray = currentInput.split('');
-      let numberStack = [];
-      let operatorStack = [];
+      const numberStack = [];
+      const operatorStack = [];
       let temp = '';
 
       for (let i = 0; i < currentInputArray.length; i += 1) {
