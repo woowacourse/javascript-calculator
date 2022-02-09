@@ -24,7 +24,9 @@ class Calculator {
             case '-':
                 this.displayCalculateResult(this.minus(num1, num2));
                 break;
-            
+            case 'X':
+                this.displayCalculateResult(this.multiply(num1, num2));
+                break;
         }
     }
 
@@ -35,7 +37,7 @@ class Calculator {
         return num1 - num2;
     }
     multiply(num1, num2){
-        return num1 * num2;
+        return num1 * num2;  
     }
 }
     
