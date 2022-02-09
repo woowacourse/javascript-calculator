@@ -4,8 +4,8 @@ class Calculator {
   constructor() {
     this.configureButton();
     this.$totalNumber = $('#total');
-    this.firstNumber = 0;
-    this.secondNumber = 0;
+    this.firstNumber = '0';
+    this.secondNumber = '0';
     this.operator = '=';
   }
 
@@ -21,12 +21,17 @@ class Calculator {
   clickNumberButton = (e) => {
     console.log(e.target.innerText);
     if (this.operator === '=') {
+      if (this.firstNumber === '0') {
+        this.firstNumber = e.target.innerText;
+        this.$totalNumber.innerText = e.target.innerText;
+        return;
+      }
       this.firstNumber += e.target.innerText;
-      this.$totalNumber.innerText = this.firstNumber;
+      this.$totalNumber.innerText += e.target.innerText;
       return;
     }
-    this.secondNumber = e.target.innerText;
-    this.$totalNumber.innerText += this.secondNumber;
+    this.secondNumber += e.target.innerText;
+    this.$totalNumber.innerText += e.target.innerText;
   };
 
   clickOperationButton = (e) => {
@@ -48,14 +53,14 @@ class Calculator {
 
   clickModifierButton = (e) => {
     this.$totalNumber.innerText = '0';
-    this.firstNumber = 0;
-    this.secondNumber = 0;
+    this.firstNumber = '0';
+    this.secondNumber = '0';
     this.operator = '=';
   };
 
   nextCalculate(result) {
     this.firstNumber = result;
-    this.secondNumber = 0;
+    this.secondNumber = '0';
   }
 
   // 숫자 누를때마다 바로 결과값으로 보이게.
