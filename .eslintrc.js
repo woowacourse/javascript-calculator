@@ -2,7 +2,11 @@ module.exports = {
   env: {
     browser: true,
   },
-  extends: ["airbnb-base", "plugin:prettier/recommended"],
+  extends: [
+    "airbnb-base",
+    "plugin:prettier/recommended",
+    "plugin:cypress/recommended",
+  ],
   parserOptions: {
     ecmaVersion: 13,
     sourceType: "module",
