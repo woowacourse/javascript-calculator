@@ -46,6 +46,11 @@ class Calculator {
     this.$totalNumber.innerText += this.operator;
   };
 
+  nextCalculate(result) {
+    this.firstNumber = result;
+    this.secondNumber = 0;
+  }
+
   // 숫자 누를때마다 바로 결과값으로 보이게.
 
   calculate(firstNumber, secondNumber, operator) {
