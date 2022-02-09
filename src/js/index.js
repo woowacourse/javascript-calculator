@@ -113,9 +113,9 @@ class Calculator {
     invalidEqualOperatorHandler = () => {
         if(!this.currentOpertor || this.inputNumbers.length < VALID_INPUT_NUMBERS_LENGTH){
             alert(alertMessage.WRONG_EQUAL_INPUT)
-            return true
+            return true;
         }
-        return false
+        return false;
     }
     
     isDuplicatedOperator = () => {
