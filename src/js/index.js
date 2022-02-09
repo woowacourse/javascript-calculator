@@ -50,6 +50,11 @@ class Calculator {
         this.operator = "";
       }
       if (this.operator === "/") {
+        if (this.number2 === 0) {
+          alert("0으로 나눌 수 없습니다.");
+          this.reset();
+          return;
+        }
         $("#total").innerHTML = Math.floor(this.number1 / this.number2);
         this.number1 = 0;
         this.number2 = 0;
