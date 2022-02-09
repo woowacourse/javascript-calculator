@@ -49,6 +49,7 @@ class Calculator {
 
         if (targetClassName === DOM.OPERATION_CLASS_NAME) {
           // 결과 표시 함수
+          this.calculate();
           return;
         }
 
@@ -117,6 +118,25 @@ class Calculator {
   checkDenominator(number) {
     if (this.isNumberZero(number)) {
       throw Error(ERROR_MESSAGE.DENOMINATOR_ERROR);
+    }
+  }
+
+  calculate() {
+    try {
+      if (this.currentOperator === OPERATION.ADD) {
+        this.add(this.firstOperand, this.secondOperand);
+      }
+      if (this.currentOperator === OPERATION.SUBTRACT) {
+        this.subtract(this.firstOperand, this.secondOperand);
+      }
+      if (this.currentOperator === OPERATION.MULTIPLY) {
+        this.multiply(this.firstOperand, this.secondOperand);
+      }
+      if (this.currentOperator === OPERATION.DIVIDE) {
+        this.divide(this.firstOperand, this.secondOperand);
+      }
+    } catch (error) {
+      alert(error);
     }
   }
 
