@@ -1,81 +1,67 @@
-describe('My First Test', () => {
+describe('Calculator Test', () => {
     it('두 수를 더할 수 있어야 한다.', () => {
       cy.visit('index.html');
       
-      // 2 + 9 테스트
-      // 2 버튼을 누른다
       cy.get('.digit').contains(2).click();
-
-      // 플러스 버튼을 누른다
       cy.get('.operation').contains('+').click();
-
-      // 9 버튼을 누른다
       cy.get('.digit').contains(9).click();
-
-      // = 버튼을 누른다
       cy.get('.operation').contains("=").click();
-
-      // 11이 나오는지 확인한다
       cy.get('#total').should('have.text', '11');
     });
 
     it('두 수를 뺄 수 있어야 한다.', () => {
       cy.visit('index.html');
       
-      // 2 - 9 테스트
-      // 2 버튼을 누른다
       cy.get('.digit').contains(2).click();
-
-      // 플러스 버튼을 누른다
       cy.get('.operation').contains('-').click();
-
-      // 9 버튼을 누른다
       cy.get('.digit').contains(9).click();
-
-      // = 버튼을 누른다
       cy.get('.operation').contains("=").click();
-
-      // -7이 나오는지 확인한다
       cy.get('#total').should('have.text', '-7');
     });
 
     it('두 수를 곱할 수 있어야 한다.', () => {
       cy.visit('index.html');
       
-      // 2 * 9 테스트
-      // 2 버튼을 누른다
       cy.get('.digit').contains(2).click();
-
-      // x 버튼을 누른다
       cy.get('.operation').contains('X').click();
-
-      // 9 버튼을 누른다
       cy.get('.digit').contains(9).click();
-
-      // = 버튼을 누른다
       cy.get('.operation').contains("=").click();
-
-      // 18이 나오는지 확인한다
       cy.get('#total').should('have.text', '18');
     });
 
     it('두 수를 나눌 수 있어야 한다.', () => {
       cy.visit('index.html');
       
-      // 9 / 3 테스트
-      // 9 버튼을 누른다
       cy.get('.digit').contains(9).click();
-
-      // 나눗셈 버튼을 누른다
       cy.get('.operation').contains('/').click();
-
-      // 3 버튼을 누른다
       cy.get('.digit').contains(3).click();
-
-      // = 버튼을 누른다
       cy.get('.operation').contains("=").click();
+    });
 
-      // 3이 나오는지 확인한다
-      cy.get('#total').should('have.text', '3');
+    it('AC(All Clear)버튼을 누르면 0으로 초기화 한다.', () => {
+      cy.visit('index.html');
+
+      cy.get('.modifier').contains('AC').click();
+      cy.get('#total').should('have.text', '0');
+    });
+
+    it('숫자는 한번에 최대 3자리 수까지 입력 가능하다.', () => {
+      cy.visit('index.html');
+
+      cy.get('.digit').contains(1).click();
+      cy.get('.digit').contains(2).click();
+      cy.get('.digit').contains(3).click();
+      cy.get('.digit').contains(4).click();
+      cy.get('#total').should('have.text', '123');
+    });
+
+    it('계산 결과를 표현할 때 소수점 이하는 버림한다.', () => {
+      cy.visit('index.html');
+
+      cy.get('.digit').contains(8).click();
+      cy.get('.operation').contains('/').click();
+      cy.get('.digit').contains(3).click();
+      cy.get('.operation').contains("=").click();
+      cy.get('#total').should('have.text', '2');
     });
 });
