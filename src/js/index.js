@@ -52,6 +52,13 @@ class Calculator {
 
     clickOperatorHandler = (e) => {
         const selectedOperator = e.target.innerText;
+        if(this.isDuplicatedOperator()){
+            alert('중복된 연산자 입력입니다.')
+            return
+        }
+        if(this.isEqualOperator(selectedOperator) && this.invalidEqualOperatorHandler()){
+            return
+        }
         this.inputNumbers.push(Number(this.currentNumber));
         this.currentNumber = "";
         if(this.isEqualOperator(selectedOperator)){
@@ -79,6 +86,18 @@ class Calculator {
     }
 
     isEqualOperator = (operator) => operator === "=";
+
+    invalidEqualOperatorHandler = () => {
+        if(!this.currentOpertor || this.inputNumbers.length < 1){
+            alert('잘못된 = 연산자 입력입니다.')
+            return true
+        }
+        return false
+    }
+    
+    isDuplicatedOperator = () => {
+        return this.$totalResult.innerText[this.$totalResult.innerText.length - 1].match("[-X/+]");
+    }
 
 }
 
