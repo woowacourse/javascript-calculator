@@ -52,15 +52,7 @@ class Calculator {
 
     clickOperatorHandler = (e) => {
         const selectedOperator = e.target.innerText;
-        if(!this.isEqualOperator(selectedOperator) && this.currentOpertor){
-            alert('2개의 수만 계산 가능합니다.')
-            return;
-        }
-        if(this.isDuplicatedOperator()){
-            alert('중복된 연산자 입력입니다.')
-            return;
-        }
-        if(this.isEqualOperator(selectedOperator) && this.invalidEqualOperatorHandler()){
+        if(!this.checkValidOperatorInput(selectedOperator)){
             return;
         }
         this.inputNumbers.push(Number(this.currentNumber));
@@ -71,6 +63,21 @@ class Calculator {
         }
         this.currentOpertor = selectedOperator;
         this.renderOperator(selectedOperator);
+    }
+
+    checkValidOperatorInput = (operator) => {
+        if(!this.isEqualOperator(operator) && this.currentOpertor){
+            alert('2개의 수만 계산 가능합니다.');
+            return false;
+        }
+        if(this.isDuplicatedOperator()){
+            alert('중복된 연산자 입력입니다.');
+            return false;
+        }
+        if(this.isEqualOperator(operator) && this.invalidEqualOperatorHandler()){
+            return false;
+        }
+        return true;
     }
     
     calculate = () => {
