@@ -21,11 +21,21 @@ class Calculator {
             case '+':
                 this.displayCalculateResult(this.add(num1, num2));
                 break;
+            case '-':
+                this.displayCalculateResult(this.minus(num1, num2));
+                break;
+            
         }
     }
 
     add(num1, num2) {
         return num1 + num2;
+    }
+    minus(num1, num2){
+        return num1 - num2;
+    }
+    multiply(num1, num2){
+        return num1 * num2;
     }
 }
     

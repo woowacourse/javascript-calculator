@@ -10,8 +10,16 @@ it('덧셈에 대한 테스트 케이스' , () => {
 	cy.get('#total').should('have.text', '7');
 });
 
-//- [ ] 2개의 숫자에 대해 뺄셈이 가능하다.
-
+//- [x] 2개의 숫자에 대해 뺄셈이 가능하다.
+it('뺄셈에 대한 테스트 케이스' , () => {
+	cy.visit('index.html');
+	cy.get('.digit').contains(8).click();
+	cy.get('.operation').contains('-').click();
+	cy.get('.digit').contains(9).click();
+	cy.get('.operation').contains('=').click();
+	
+	cy.get('#total').should('have.text', '-1');
+});
 
 //- [ ] 2개의 숫자에 대해 곱셈이 가능하다.
 //- [ ] 2개의 숫자에 대해 나눗셈이 가능하다.
