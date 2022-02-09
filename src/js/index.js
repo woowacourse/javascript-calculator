@@ -1,4 +1,5 @@
 import { $, $$ } from "./dom.js";
+import {CONSTANTS} from "./constants.js"
 
 class Calculator {
   constructor() {
@@ -13,7 +14,7 @@ class Calculator {
   }
 
   isValidLength() { 
-    return String($("#total").innerText).length >= 3;
+    return String($("#total").innerText).length >= CONSTANTS.MAX_LENGTH;
   }
 
   numberEvent() {
