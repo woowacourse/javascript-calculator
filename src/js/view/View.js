@@ -18,7 +18,7 @@ export default class View {
 
   bindClickDigitButton(callback) {
     this.bindEventListener("click", ".digit", (e) => {
-      callback(e.target.innerText);
+      callback(Number(e.target.innerText));
     });
   }
 

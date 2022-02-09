@@ -4,12 +4,28 @@ export default class Model {
   constructor() {
     this.calculator = new Calculator();
     this.userInputString = "";
+    this.digitCount = 0;
   }
 
   addUserInputString(character) {
+    if (typeof character === "number") {
+      this.digitCount += 1;
+      console.log(this.digitCount);
+      if (this.digitCount > 3) {
+        alert("alert");
+        this.initializeDigitCount();
+        this.initializeUserInputString();
+        return "0";
+      }
+    }
+
     this.userInputString += character;
 
     return this.userInputString;
+  }
+
+  initializeDigitCount() {
+    this.digitCount = 0;
   }
 
   calculate() {

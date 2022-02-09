@@ -13,6 +13,8 @@ export default class Controller {
   }
 
   clickOperationButton(operation) {
+    this.model.initializeDigitCount();
+
     if (operation === "=") {
       this.view.render(this.model.calculate());
       this.model.initializeUserInputString();
@@ -26,5 +28,6 @@ export default class Controller {
   clickACButton() {
     this.view.render(0);
     this.model.initializeUserInputString();
+    this.model.initializeDigitCount();
   }
 }
