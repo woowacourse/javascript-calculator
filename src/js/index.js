@@ -10,11 +10,13 @@ class Calculator {
     this.$total = $('#total');
     this.$digits = $('.digits');
     this.$operations = $('.operations');
+    this.$modifier = $('.modifier');
   }
 
   attachEvents() {
     this.$digits.addEventListener('click', this.handleDigit.bind(this));
     this.$operations.addEventListener('click', this.handleOperator.bind(this));
+    this.$modifier.addEventListener('click', this.handleModifier.bind(this));
   }
 
   handleDigit(event) {
@@ -33,6 +35,10 @@ class Calculator {
     const clickedOperator = event.target.innerText;
 
     this.renderTotal(clickedOperator);
+  }
+
+  handleModifier() {
+    this.$total.innerText = '0';
   }
 
   renderTotal(clickedOperator) {
