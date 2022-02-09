@@ -1,6 +1,6 @@
 import { ERROR_MESSAGES } from "./constants.js";
 
-class Calculator {
+export default class Calculator {
   constructor() {}
 
   // 2개의 숫자에 대해 덧셈이 가능하다.
