@@ -1,100 +1,65 @@
+import { validateNumberLength, calculate, isStartZero } from "./utils.js";
+
 class Calculator {
     constructor() {
         this.left = '';
         this.right = '';
         this.operator = '';
-        this.result = 0;
         this.onClickButtons();
     }
     
     onClickButtons() {
         document.querySelector(".calculator").addEventListener('click',(event) => {
             const eventClassName = event.target.className;
-            let result = document.querySelector("#total");
             if (eventClassName === 'modifier') {
-                this.left = '';
-                this.right = '';
-                this.operator = '';
-                this.result = '';
-                result.innerHTML = 0;
-                return;
+                return this.initCalculator(document.querySelector("#total"))
             }
             if (eventClassName === 'digit') {
-                const number = event.target.innerHTML;
-               
+               return this.digitHandler(event.target.innerHTML)
             }
             if (eventClassName === 'operation') {
-                const operator = event.target.innerHTML;
-                if (!this.left) return alert('숫자부터 입력해주세요.');
-                if(operator === '='){
-                    const operators = {
-                        '+': () => this.add(+this.left, +this.right),
-                        '-': () => this.sub(+this.left, +this.right),
-                        'X': () => this.mul(+this.left, +this.right),
-                        '/' : () => this.div(+this.left, +this.right),
-                    }
-                    this.result = operators[this.operator]();
-                    result.innerHTML = this.result;
-                    this.left = this.result;
-                    this.right = '';
-                    this.operator = '';
-                    return;
-                }
-                else{
-                    if(!this.operator){
-                        this.operator = operator;
-                        result.innerHTML+=this.operator;
-                        return;
-                    }
-                    return alert('연속된 연산자는 입력이 불가능합니다')
-                }   
+                return this.operationHandler(event.target.innerHTML);
             }
         })
     }
     
     digitHandler(number) {
+        const total = document.querySelector("#total");
         if (!this.operator) {
-            if (this.left.length < 3) {
-                if(this.left.length === 0) {
-                    if(number==='0') return alert('0으로 시작되는 숫자는 불가능')
-                }
-                this.left += number;
-                result.innerHTML = this.left;
-                return;
-            }
-            return alert('3자리 숫자까지만 입력 가능합니다.');
+            console.log(this.operator, this.left)
+            if(!validateNumberLength(this.left))  return alert('3자리 숫자까지만 입력 가능합니다.');
+            this.left += number;
+            total.innerHTML = this.left;
+            if(isStartZero(this.left, number)) return alert('0으로 시작되는 숫자는 불가능') 
+            return;
         }
-
-            if (this.right.length < 3) {
-                this.right += number;
-                result.innerHTML+=this.right;
-                return;
-            }
-            return alert('3자리 숫자까지만 입력 가능합니다.');
-    }
-    
-    validateNumber(number){
-        return typeof number === 'number'
+        if(!validateNumberLength(this.right))  return alert('3자리 숫자까지만 입력 가능합니다.');
+        if (isStartZero(this.left, number)) return alert('0으로 시작되는 숫자는 불가능');
+        this.right += number;
+        total.innerHTML+= number;
     }
 
-    isValidateInput(left, right) {
-        return this.validateNumber(left) && this.validateNumber(right)
+    operationHandler(operator) {
+        const total = document.querySelector("#total");
+        if (!this.left) return alert('숫자를 먼저 입력해주세요1.'); // +8 // =
+        if(!this.operator){
+            this.operator = operator;
+            total.innerHTML+=this.operator;
+            return;
+        }
+        if(operator !== '=') return alert('올바르지 않은 식입니다.2') // 8++
+        if(!this.right) return alert('올바르지 않은 식입니다3.') // 8+=  // 8=
+        this.left = String(calculate[this.operator](+this.left,+this.right));
+        total.innerHTML = this.left;
+        this.right = '';
+        this.operator = '';     
     }
 
-    add(left, right) {
-        if (this.isValidateInput(left, right)) return left + right;
-    }
-
-    sub(left, right) {
-        if (this.isValidateInput(left, right)) return left - right;
-    }
-
-    mul(left, right) {
-        if (this.isValidateInput(left, right)) return left * right;
-    }
-
-    div(left, right) {
-        if (this.isValidateInput(left, right)) return Math.floor(left / right);
+    initCalculator(total){
+        this.left = '';
+        this.right = '';
+        this.operator = '';
+        total.innerHTML = 0;
     }
 }
 
