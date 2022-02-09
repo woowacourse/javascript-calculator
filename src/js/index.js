@@ -10,16 +10,17 @@ import {
 
 class Calculator {
   constructor() {
-    // 이벤트 핸들러를 붙일 돔 요소를 가져온다.
     this.clearCalculator();
     this.initDOM();
     this.initHandler();
   }
+
   clearCalculator() {
     this.firstOperand = 0;
     this.secondOperand = null;
     this.currentOperator = null;
   }
+
   initDOM() {
     this.calculatorElement = document.querySelector(
       `.${DOM.CALCULATOR_CLASS_NAME}`
@@ -28,42 +29,61 @@ class Calculator {
   }
 
   initHandler() {
-    // 핸들러 함수를 정의하고
-    // 여기서 핸들러를 바인딩
-    this.clickEventListener = (e) => {
-      const {
-        target: { className: targetClassName, textContent: targetTextContent },
-      } = e;
-      try {
-        if (targetClassName === DOM.DIGIT_CLASS_NAME) {
-          this.addToOperand(targetTextContent);
-        }
-        if (
-          targetClassName === DOM.OPERATION_CLASS_NAME &&
-          targetTextContent !== OPERATION.EQUAL &&
-          !this.secondOperand
-        ) {
-          this.createOperator(targetTextContent);
-        }
+    this.calculatorElement.addEventListener(
+      "click",
+      this.onCalculatorClick.bind(this)
+    );
+  }
+  onCalculatorClick(e) {
+    const {
+      target: { className: targetClassName, textContent: targetTextContent },
+    } = e;
+    this.triggerCalculatorAction({
+      targetClassName,
+      targetTextContent,
+    });
+  }
 
-        if (
-          targetClassName === DOM.OPERATION_CLASS_NAME &&
-          targetTextContent === OPERATION.EQUAL
-        ) {
-          // 결과 표시 함수
-          this.calculate();
-        }
-
-        if (targetClassName === DOM.MODIFIER_CLASS_NAME) {
-          this.clearCalculator();
-        }
-        // 데이터가 변했으므로, 뷰가 변경된다.
-        this.rerender();
-      } catch (error) {
-        alert(error);
+  triggerCalculatorAction({ targetClassName, targetTextContent }) {
+    try {
+      if (this.isDigitClick({ targetClassName })) {
+        this.addToOperand(targetTextContent);
       }
-    };
-    this.calculatorElement.addEventListener("click", this.clickEventListener);
+      if (this.isValidOperatorClick({ targetClassName, targetTextContent })) {
+        this.createOperator(targetTextContent);
+      }
+      if (this.isEqualClick({ targetClassName, targetTextContent })) {
+        this.calculate();
+      }
+      if (this.isModifierClick({ targetClassName })) {
+        this.clearCalculator();
+      }
+      this.rerender();
+    } catch (error) {
+      alert(error);
+    }
+  }
+  isDigitClick({ targetClassName }) {
+    return targetClassName === DOM.DIGIT_CLASS_NAME;
+  }
+
+  isValidOperatorClick({ targetClassName, targetTextContent }) {
+    return (
+      targetClassName === DOM.OPERATION_CLASS_NAME &&
+      targetTextContent !== OPERATION.EQUAL &&
+      !this.secondOperand
+    );
+  }
+
+  isEqualClick({ targetClassName, targetTextContent }) {
+    return (
+      targetClassName === DOM.OPERATION_CLASS_NAME &&
+      targetTextContent === OPERATION.EQUAL
+    );
+  }
+
+  isModifierClick({ targetClassName }) {
+    return targetClassName === DOM.MODIFIER_CLASS_NAME;
   }
 
   rerender() {
@@ -71,24 +91,21 @@ class Calculator {
       this.currentOperator ? this.currentOperator : ""
     }${this.secondOperand ? this.secondOperand : ""}`;
   }
+  // 피연산자를 생성, 수정한다
   addToOperand(numberStr) {
-    // 여기서 4자리 수가 되면 에러
     if (
       this.currentOperator &&
       this.isDigitOkay(this.secondOperand, ONE_HUNDRED)
     ) {
-      // 두번째 피연산자
       this.secondOperand = this.secondOperand
         ? Number(this.secondOperand + numberStr)
         : Number(numberStr);
       return;
     }
-    //첫번째 피연산자
     if (this.isDigitOkay(this.firstOperand, ONE_HUNDRED)) {
       this.firstOperand = Number(this.firstOperand + numberStr);
       return;
     }
-
     throw Error(ERROR_MESSAGE.NUMBER_SIZE_ERROR);
   }
   createOperator(operatorStr) {
@@ -128,26 +145,22 @@ class Calculator {
 
   calculate() {
     try {
+      let result;
+      const operands = [this.firstOperand, this.secondOperand];
       if (this.currentOperator === OPERATION.ADD) {
-        this.firstOperand = this.add(this.firstOperand, this.secondOperand);
+        result = this.add(...operands);
       }
       if (this.currentOperator === OPERATION.SUBTRACT) {
-        this.firstOperand = this.subtract(
-          this.firstOperand,
-          this.secondOperand
-        );
+        result = this.subtract(...operands);
       }
       if (this.currentOperator === OPERATION.MULTIPLY) {
-        this.firstOperand = this.multiply(
-          this.firstOperand,
-          this.secondOperand
-        );
+        result = this.multiply(...operands);
       }
       if (this.currentOperator === OPERATION.DIVIDE) {
-        this.firstOperand = this.divide(this.firstOperand, this.secondOperand);
+        result = this.divide(...operands);
       }
-      this.secondOperand = null;
-      this.currentOperator = null;
+      this.clearCalculator();
+      this.firstOperand = result;
     } catch (error) {
       alert(error);
     }
