@@ -5,11 +5,10 @@ import {
   totalText,
 } from './elements.js';
 import { MAX_LENGTH, EXCEPTION } from './constants.js';
-import Calculator from './calculator.js';
 
 export class User {
-  constructor() {
-    this.calculator = new Calculator();
+  constructor(calculator) {
+    this.calculator = calculator;
     this.init();
     this.registerEventListener();
   }
