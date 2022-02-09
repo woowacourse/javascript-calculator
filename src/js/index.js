@@ -20,7 +20,6 @@ class Calculator {
   }
 
   clickNumberButton = (e) => {
-    console.log(e.target.innerText);
     if (this.operator === '=') {
       if (this.firstNumber === '0') {
         this.firstNumber = e.target.innerText;
@@ -78,8 +77,6 @@ class Calculator {
   // 숫자 누를때마다 바로 결과값으로 보이게.
 
   calculate(firstNumber, secondNumber, operator) {
-    console.log('firstNumber', firstNumber);
-    console.log('secondNumber', secondNumber);
     switch (operator) {
       case '+':
         return firstNumber + secondNumber;
