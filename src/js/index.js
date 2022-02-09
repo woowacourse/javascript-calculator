@@ -10,16 +10,14 @@ import {
 class Calculator {
   constructor() {
     // 이벤트 핸들러를 붙일 돔 요소를 가져온다.
-    this.firstOperand = 0;
-    this.secondOperand;
-    this.currentOperator;
+    this.clearCalculator();
     this.initDOM();
     this.initHandler();
   }
   clearCalculator() {
     this.firstOperand = 0;
-    this.secondOperand;
-    this.currentOperator;
+    this.secondOperand = null;
+    this.currentOperator = null;
   }
   initDOM() {
     this.calculatorElement = document.querySelector(
@@ -53,6 +51,7 @@ class Calculator {
       }
 
       if (targetClassName === DOM.MODIFIER_CLASS_NAME) {
+        this.clearCalculator();
         return;
       }
     };
