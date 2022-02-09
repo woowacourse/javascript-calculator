@@ -1,4 +1,5 @@
 import { $ } from '../utils/common.js';
+import { isUnderThreeDigits } from '../utils/validator.js';
 
 class Calculator {
   constructor() {
@@ -26,8 +27,19 @@ class Calculator {
         this.$totalNumber.innerText = e.target.innerText;
         return;
       }
+      if (!isUnderThreeDigits(this.firstNumber)) {
+        return;
+      }
       this.firstNumber += e.target.innerText;
       this.$totalNumber.innerText += e.target.innerText;
+      return;
+    }
+    if (this.secondNumber === '0') {
+      this.secondNumber = e.target.innerText;
+      this.$totalNumber.innerText += e.target.innerText;
+      return;
+    }
+    if (!isUnderThreeDigits(this.secondNumber)) {
       return;
     }
     this.secondNumber += e.target.innerText;
