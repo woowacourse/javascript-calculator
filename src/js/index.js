@@ -12,11 +12,15 @@ class Calculator {
     this.reset();
   }
 
+  isValidLength() { 
+    return String($("#total").innerText).length >= 3;
+  }
+
   numberEvent() {
     $$(".digit").forEach((digit) => {
       digit.addEventListener("click", (e) => {
         if (this.operator === "") {
-          if (String($("#total").innerText).length >= 3) {
+          if (this.isValidLength()) {
             alert("3자리 숫자까지만 허용됩니다.");
             return;
           }
@@ -31,7 +35,7 @@ class Calculator {
           return;
         }
 
-        if (String($("#total").innerText).length >= 3) {
+        if (this.isValidLength()) {
           alert("3자리 숫자까지만 허용됩니다.");
           return;
         }
