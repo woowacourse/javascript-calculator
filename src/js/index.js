@@ -62,6 +62,11 @@ class Calculator {
           //추후 구현
           //피연산자 연산자 멤버변수를 초기화한다.
 
+          if (firstOperand === '' || secondOperand === '') {
+            alert('숫자는 두 개를 입력하셔야 합니다.');
+            return;
+          }
+
           //결과값을 렌더링한다.
           switch (this.operator) {
             case '+':
@@ -75,6 +80,7 @@ class Calculator {
               // 두번째 피연산자가 0인경우 예외처리
               if (secondOperand === '0') {
                 alert('0으로 나눌 수 없습니다.');
+                this.operands[1] = '';
                 return;
               }
               this.$total.innerText = Math.floor(Number(firstOperand) / Number(secondOperand));
@@ -85,27 +91,36 @@ class Calculator {
             default:
           }
 
+          // 초기화
+          const result = this.$total.innerText;
+          this.operator = null;
+          this.operands = [result, ''];
+
           return;
         }
 
         // operator 멤버 변수 체크
-        if (this.operator === null) {
-          this.operator = e.target.innerText;
-          this.$total.innerText = this.operator;
+        if (this.operator !== null) {
+          // 조건을 !== null
+          // 예외처리를
+          alert('연산자는 연달아 사용할 수 없습니다');
           return;
         }
 
         // operator는 있는데, 첫번째 operand가 없을때
         if (this.operands[0] === '') {
-          alert('연산자는 단독으로 사용할 수 없습니다');
+          alert('숫자를 입력해주세요');
           return;
         }
 
         // 두번째 피연산자가 '' 빈문자열이 아닐때 에러처리
         if (this.operands[1] !== '') {
-          alert('두 개의 피연산자만 연산이 가능합니다.');
+          alert('두 개의 숫자만 연산이 가능합니다.');
           return;
         }
+
+        this.operator = e.target.innerText;
+        this.$total.innerText = this.operator;
       }
     });
 
