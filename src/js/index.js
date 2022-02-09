@@ -96,7 +96,7 @@ class Calculator {
         this.result = this.firstDigit * this.secondDigit;
         break;
       case "/":
-        this.result = this.firstDigit / this.secondDigit;
+        this.result = this.roundOffDigit(this.firstDigit / this.secondDigit);
         break;
       default:
         break;
