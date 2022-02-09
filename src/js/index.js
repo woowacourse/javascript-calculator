@@ -1,3 +1,6 @@
+import {DIGITS_LIMIT,INIT_NUMBER,OPERATORS,alertMessage,CLASSES,ID,VALID_INPUT_NUMBERS_LENGTH,OPERATORS_REGEX} from "./utils/constants.js"
+import {$} from './utils/selector.js'
+
 class Calculator {
     constructor() {
         this.isStarted = false;
@@ -12,17 +15,26 @@ class Calculator {
     }
 
     bindEvent = () => {
-        document.querySelector(".digits").addEventListener("click", this.clickDigitHandler);
-        document.querySelector(".operations").addEventListener("click", this.clickOperatorHandler);
+        $(CLASSES.DIGITS).addEventListener("click", this.clickDigitHandler);
+        $(CLASSES.OPERATIONS).addEventListener("click", this.clickOperatorHandler);
+        $(CLASSES.MODIFIER).addEventListener("click", this.clickModifierHandler);
     }
 
     bindDOMs = () => {
-        this.$totalResult = document.querySelector("#total");
+        this.$totalResult = document.querySelector(ID.TOTAL);
+    }
+    
+    clickModifierHandler = () => {
+        this.isStarted = false;
+        this.currentNumber = '';
+        this.inputNumbers = [];
+        this.currentOpertor = '';
+        this.renderResult(INIT_NUMBER);
     }
 
     clickDigitHandler = (e) => {
         if (this.isOverThreeDigit()) {
-            alert("3글자가 넘어갔어요..");
+            alert(alertMessage.OVER_THREE_DIGIT);
             return;
         }
         const selectedNumber = e.target.innerText;
@@ -32,7 +44,7 @@ class Calculator {
 
     renderDigit = (digit) => {
         if(!this.isStarted){
-            this.isStarted =true;
+            this.isStarted = true;
             this.$totalResult.innerText = '';
         }   
         this.$totalResult.innerText += digit;
@@ -47,7 +59,7 @@ class Calculator {
     }
 
     isOverThreeDigit = () => {
-        return this.currentNumber.length >= 3;
+        return this.currentNumber.length >= DIGITS_LIMIT;
     }
 
     clickOperatorHandler = (e) => {
@@ -67,11 +79,11 @@ class Calculator {
 
     checkValidOperatorInput = (operator) => {
         if(!this.isEqualOperator(operator) && this.currentOpertor){
-            alert('2개의 수만 계산 가능합니다.');
+            alert(alertMessage.OVER_TWO_NUMBER);
             return false;
         }
         if(this.isDuplicatedOperator()){
-            alert('중복된 연산자 입력입니다.');
+            alert(alertMessage.DUPLICATED_OPERATOR);
             return false;
         }
         if(this.isEqualOperator(operator) && this.invalidEqualOperatorHandler()){
@@ -83,31 +95,31 @@ class Calculator {
     calculate = () => {
         const [first,second] = this.inputNumbers;
         switch (this.currentOpertor) {
-            case '+':
+            case OPERATORS.PLUS:
                 return first + second;
-            case 'X':
+            case OPERATORS.MULTIPLY:
                 return first * second;
-            case '-':
+            case OPERATORS.MINUS:
                 return first - second;
-            case '/':
+            case OPERATORS.DIVISION:
                 return Math.floor(first/second);
             default:
                 return;
         }
     }
 
-    isEqualOperator = (operator) => operator === "=";
+    isEqualOperator = (operator) => operator === OPERATORS.EQUAL;
 
     invalidEqualOperatorHandler = () => {
-        if(!this.currentOpertor || this.inputNumbers.length < 1){
-            alert('잘못된 = 연산자 입력입니다.')
+        if(!this.currentOpertor || this.inputNumbers.length < VALID_INPUT_NUMBERS_LENGTH){
+            alert(alertMessage.WRONG_EQUAL_INPUT)
             return true
         }
         return false
     }
     
     isDuplicatedOperator = () => {
-        return this.$totalResult.innerText[this.$totalResult.innerText.length - 1].match("[-X/+]");
+        return this.$totalResult.innerText[this.$totalResult.innerText.length - 1].match(OPERATORS_REGEX);
     }
 
 }
