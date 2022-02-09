@@ -40,7 +40,8 @@ class Calculator {
         }
         if (
           targetClassName === DOM.OPERATION_CLASS_NAME &&
-          targetTextContent !== OPERATION.EQUAL
+          targetTextContent !== OPERATION.EQUAL &&
+          !this.secondOperand
         ) {
           this.createOperator(targetTextContent);
         }
