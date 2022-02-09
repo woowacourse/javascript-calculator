@@ -10,7 +10,11 @@
     "plugin:import/warnings",
     "plugin:prettier/recommended"
   ],
+  "parserOptions": {
+    "requireConfigFile": false
+  },
   "rules": {
+    "no-undef": "off",
     "no-new": "off",
     "no-unused-vars": "warn",
     "class-methods-use-this": "off",
