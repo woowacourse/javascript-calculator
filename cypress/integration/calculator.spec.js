@@ -25,3 +25,12 @@ it("2개의 숫자에 대해 곱셈이 가능하다.", () => {
   cy.get(".operation").contains("=").click();
   cy.get("#total").should("have.text", "15");
 });
+
+it("2개의 숫자에 대해 나눗셈이 가능하다.", () => {
+  cy.visit("index.html");
+  cy.get(".digit").contains(9).click();
+  cy.get(".operation").contains("/").click();
+  cy.get(".digit").contains(3).click();
+  cy.get(".operation").contains("=").click();
+  cy.get("#total").should("have.text", "3");
+});
