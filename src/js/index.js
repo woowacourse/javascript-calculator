@@ -16,6 +16,10 @@ class Calculator {
           this.operator = "-";
           this.number1 = Number($("#total").innerText);
         }
+        if (e.target.innerText === "X") {
+          this.operator = "X";
+          this.number1 = Number($("#total").innerText);
+        }
       });
     });
   }
