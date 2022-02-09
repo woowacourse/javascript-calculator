@@ -67,5 +67,21 @@ it("자리 수가 3보다 큰 수를 입력할 경우 alert를 보여준다.", (
     });
 });
 
-// 숫자는 2개까지만 입력할 수 있다.
+it("숫자는 2개 입력되고 연산자가 입력되면 alert를 보여준다.", () => {
+  cy.visit("index.html");
+
+  const alertStub = cy.stub();
+  cy.on("window:alert", alertStub);
+
+  cy.get(".digit").contains(3).click();
+  cy.get(".operation").contains("+").click();
+  cy.get(".digit").contains(4).click();
+  cy.get(".operation")
+    .contains("-")
+    .click()
+    .then(() => {
+      expect(alertStub).to.be.called;
+    });
+});
+
 // 계산 결과를 표현할 때 소수점 이하는 버림한다.
