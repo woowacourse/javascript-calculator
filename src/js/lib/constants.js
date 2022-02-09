@@ -23,6 +23,8 @@ export const ZERO = 0;
 
 export const ONE_THOUSAND = 1000;
 
+export const ONE_HUNDRED = 100;
+
 export const ERROR_MESSAGE = Object.freeze({
   PARAMETER_ERROR: "두 개의 인자를 입력해주세요.",
   TYPE_ERROR: "숫자만 입력이 가능합니다.",

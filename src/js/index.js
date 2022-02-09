@@ -4,6 +4,7 @@ import {
   ONE_THOUSAND,
   TYPE,
   OPERATION,
+  ONE_HUNDRED,
   ZERO,
 } from "./lib/constants.js";
 
@@ -33,43 +34,58 @@ class Calculator {
       const {
         target: { className: targetClassName, textContent: targetTextContent },
       } = e;
-      if (targetClassName === DOM.DIGIT_CLASS_NAME) {
-        this.addToOperand(targetTextContent);
-        return;
-      }
-      if (
-        targetClassName === DOM.OPERATION_CLASS_NAME &&
-        targetTextContent !== OPERATION.EQUAL
-      ) {
-        this.createOperator(targetTextContent);
-        return;
-      }
+      try {
+        if (targetClassName === DOM.DIGIT_CLASS_NAME) {
+          this.addToOperand(targetTextContent);
+          return;
+        }
+        if (
+          targetClassName === DOM.OPERATION_CLASS_NAME &&
+          targetTextContent !== OPERATION.EQUAL
+        ) {
+          this.createOperator(targetTextContent);
+          return;
+        }
 
-      if (targetClassName === DOM.OPERATION_CLASS_NAME) {
-        // 결과 표시 함수
-        return;
-      }
+        if (targetClassName === DOM.OPERATION_CLASS_NAME) {
+          // 결과 표시 함수
+          return;
+        }
 
-      if (targetClassName === DOM.MODIFIER_CLASS_NAME) {
-        this.clearCalculator();
-        return;
+        if (targetClassName === DOM.MODIFIER_CLASS_NAME) {
+          this.clearCalculator();
+          return;
+        }
+      } catch (error) {
+        alert(error);
       }
     };
     this.calculatorElement.addEventListener("click", this.clickEventListener);
   }
   addToOperand(numberStr) {
-    if (this.currentOperator) {
+    // 여기서 4자리 수가 되면 에러
+    if (
+      this.currentOperator &&
+      this.isDigitOkay(this.secondOperand, ONE_HUNDRED)
+    ) {
       // 두번째 피연산자
       this.secondOperand = this.secondOperand
         ? Number(this.secondOperand + numberStr)
         : Number(numberStr);
+      return;
     }
     //첫번째 피연산자
-    this.firstOperand = Number(this.firstOperand + numberStr);
+    if (this.isDigitOkay(this.firstOperand, ONE_HUNDRED)) {
+      this.firstOperand = Number(this.firstOperand + numberStr);
+      return;
+    }
+
+    throw Error(ERROR_MESSAGE.NUMBER_SIZE_ERROR);
   }
   createOperator(operatorStr) {
     this.currentOperator = operatorStr;
   }
+
   hasEmptyParameters(number1, number2) {
     return number1 === TYPE.UNDEFINED || number2 === TYPE.UNDEFINED;
   }
@@ -78,8 +94,8 @@ class Calculator {
     return typeof number1 !== TYPE.NUMBER || typeof number2 !== TYPE.NUMBER;
   }
 
-  hasDigitOver(number1, number2, standard) {
-    return number1 >= standard || number2 >= standard;
+  isDigitOkay(number, standard) {
+    return number < standard;
   }
 
   isNumberZero(number) {
@@ -93,9 +109,9 @@ class Calculator {
     if (this.hasNonNumbers(number1, number2)) {
       throw Error(ERROR_MESSAGE.TYPE_ERROR);
     }
-    if (this.hasDigitOver(number1, number2, ONE_THOUSAND)) {
-      throw Error(ERROR_MESSAGE.NUMBER_SIZE_ERROR);
-    }
+    // if (this.hasDigitOver(number1, number2, ONE_THOUSAND)) {
+    //   throw Error(ERROR_MESSAGE.NUMBER_SIZE_ERROR);
+    // }
   }
 
   checkDenominator(number) {
