@@ -37,31 +37,38 @@ class Calculator {
       try {
         if (targetClassName === DOM.DIGIT_CLASS_NAME) {
           this.addToOperand(targetTextContent);
-          return;
         }
         if (
           targetClassName === DOM.OPERATION_CLASS_NAME &&
           targetTextContent !== OPERATION.EQUAL
         ) {
           this.createOperator(targetTextContent);
-          return;
         }
 
-        if (targetClassName === DOM.OPERATION_CLASS_NAME) {
+        if (
+          targetClassName === DOM.OPERATION_CLASS_NAME &&
+          targetTextContent === OPERATION.EQUAL
+        ) {
           // 결과 표시 함수
           this.calculate();
-          return;
         }
 
         if (targetClassName === DOM.MODIFIER_CLASS_NAME) {
           this.clearCalculator();
-          return;
         }
+        // 데이터가 변했으므로, 뷰가 변경된다.
+        this.rerender();
       } catch (error) {
         alert(error);
       }
     };
     this.calculatorElement.addEventListener("click", this.clickEventListener);
+  }
+
+  rerender() {
+    this.totalElement.textContent = `${this.firstOperand}${
+      this.currentOperator ? this.currentOperator : ""
+    }${this.secondOperand ? this.secondOperand : ""}`;
   }
   addToOperand(numberStr) {
     // 여기서 4자리 수가 되면 에러
@@ -110,9 +117,6 @@ class Calculator {
     if (this.hasNonNumbers(number1, number2)) {
       throw Error(ERROR_MESSAGE.TYPE_ERROR);
     }
-    // if (this.hasDigitOver(number1, number2, ONE_THOUSAND)) {
-    //   throw Error(ERROR_MESSAGE.NUMBER_SIZE_ERROR);
-    // }
   }
 
   checkDenominator(number) {
