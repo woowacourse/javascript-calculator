@@ -4,7 +4,7 @@ import {
   operationButton,
   totalText,
 } from './elements.js';
-import { MAX_LENGTH, EXCEPTION } from './constants.js';
+import { MAX_LENGTH, EXCEPTION, OPERATOR, MOUSE_EVENT } from './constants.js';
 
 export class User {
   constructor(calculator) {
@@ -43,7 +43,12 @@ export class User {
   }
 
   clickOperatorButton(operator) {
-    if (operator === '=' && this.num1 && this.operator && this.num2) {
+    if (
+      operator === OPERATOR.EQUAL &&
+      this.num1 &&
+      this.operator &&
+      this.num2
+    ) {
       // 정상 계산 (=)
       this.calculator.calculate(
         parseInt(this.num1),
@@ -52,7 +57,7 @@ export class User {
       );
       this.init();
       this.num1 = totalText.innerHTML;
-    } else if (operator !== '=' && this.num1 && !this.operator) {
+    } else if (operator !== OPERATOR.EQUAL && this.num1 && !this.operator) {
       // 연산자 입력
       if (this.num1.length > MAX_LENGTH) {
         return alert(EXCEPTION.OUT_OF_RANGE);
@@ -66,18 +71,18 @@ export class User {
   }
 
   registerEventListener() {
-    ACButton.addEventListener('click', () => {
+    ACButton.addEventListener(MOUSE_EVENT.CLICK, () => {
       this.clickACButton();
     });
 
     for (let index = 0; index < digitButton.length; index++) {
-      digitButton[index].addEventListener('click', () => {
+      digitButton[index].addEventListener(MOUSE_EVENT.CLICK, () => {
         this.clickDigitButton(digitButton[index].innerHTML);
       });
     }
 
     for (let index = 0; index < operationButton.length; index++) {
-      operationButton[index].addEventListener('click', () => {
+      operationButton[index].addEventListener(MOUSE_EVENT.CLICK, () => {
         this.clickOperatorButton(operationButton[index].innerHTML);
       });
     }
