@@ -8,7 +8,8 @@ class Calculator {
     }
 
     bindEvent = () => {
-        document.querySelector(".digits").addEventListener("click", this.clickDigitHandler)
+        document.querySelector(".digits").addEventListener("click", this.clickDigitHandler);
+        document.querySelector(".operations").addEventListener("click", this.clickOperatorHandler);
     }
 
     clickDigitHandler = (e) => {
@@ -28,6 +29,11 @@ class Calculator {
 
     isOverThreeDigit = () => {
         return this.currentNumber.length >= 3;
+    }
+
+    clickOperatorHandler = (e) => {
+        const selectedOperator = e.target.innerText;
+        console.log(selectedOperator);
     }
 }
 
