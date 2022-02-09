@@ -2,7 +2,14 @@ import { $, $$ } from "./dom.js";
 
 class Calculator {
   constructor() {
+    this.number1 = 0;
+    this.number2 = 0;
+    this.operator = "";
+    this.numberEvent();
     this.operatorEvent();
+    this.resultEvent();
+    this.flag = true;
+    this.reset();
   }
 
   operatorEvent() {
@@ -60,6 +67,16 @@ class Calculator {
         this.number2 = 0;
         this.operator = "";
       }
+    });
+  }
+
+  reset() {
+    $(".modifier").addEventListener("click", () => {
+      this.number1 = 0;
+      this.number2 = 0;
+      this.operator = "";
+      $("#total").innerHTML = 0;
+      this.flag = true;
     });
   }
 }
