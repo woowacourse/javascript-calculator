@@ -33,15 +33,27 @@ class Calculator {
       this.number2 = Number($("#total").innerText);
       if (this.operator === "+") {
         $("#total").innerHTML = this.number1 + this.number2;
+        this.number1 = 0;
+        this.number2 = 0;
+        this.operator = "";
       }
       if (this.operator === "-") {
         $("#total").innerHTML = this.number1 - this.number2;
+        this.number1 = 0;
+        this.number2 = 0;
+        this.operator = "";
       }
       if (this.operator === "X") {
         $("#total").innerHTML = this.number1 * this.number2;
+        this.number1 = 0;
+        this.number2 = 0;
+        this.operator = "";
       }
       if (this.operator === "/") {
         $("#total").innerHTML = Math.floor(this.number1 / this.number2);
+        this.number1 = 0;
+        this.number2 = 0;
+        this.operator = "";
       }
     });
   }
