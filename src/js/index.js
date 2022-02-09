@@ -14,8 +14,6 @@ class Calculator{
         this.$modifier = document.querySelector('.modifier');
     }
 
-    // let operation = undefined;
-
     mounted(){
         console.log(this.$digits)
         this.$digits.forEach(e => e.addEventListener('click', this.handleClickDigits.bind(this)))
@@ -75,6 +73,12 @@ class Calculator{
             console.log(this.$state.numbers[0],this.$state.numbers[1],this.$state.currentOperation)
         
         // 숫자, 기호 받아서 연산하는 함수
+
+            this.checkOperator(
+                this.toIntNumber(this.$state.numbers[0]),
+                this.toIntNumber(this.$state.numbers[1]),
+                this.$state.currentOperation
+            )
             return 
         }
 
@@ -88,11 +92,60 @@ class Calculator{
 
     }
 
-    clearResult = () => {
+    clearResult() {
         console.log('clear')
         $("#total").innerHTML = '0';
         this.$state.currentOperation = undefined;
         this.$state.numbers =['0','0'];
+    }
+
+    setResult(result) {
+        console.log('setResult', result)
+        $("#total").innerHTML = result;
+        this.$state.currentOperation = undefined;
+        this.$state.numbers =[result.toString(),'0'];
+    }
+
+    toIntNumber(num){
+        return Number(num)
+    }
+
+    checkOperator(num1,num2,operation) {
+        console.log('---checkOperator',num1,num2,operation);
+        if (operation === '+') {
+            return this.add(num1,num2)
+        }
+        if (operation === '-') {
+            return this.minus(num1,num2)
+        }
+        if (operation === 'X') {
+            return this.multiply(num1,num2)
+        }
+        if (operation === '/') {
+            return this.divide(num1,num2)
+        }
+    }
+
+    add(num1,num2) {
+        console.log('add',num1, num2)
+        const result = num1 + num2
+        this.setResult(result)
+        return this.$total.innerHTML = result;
+    }
+    minus(num1,num2) {
+        const result = num1 - num2;
+        this.setResult(result)
+        return this.$total.innerHTML = result;
+    }
+    multiply(num1,num2) {
+        const result = num1 * num2;
+        this.setResult(result)
+        return this.$total.innerHTML = result;
+    }
+    divide(num1,num2) {
+        const result = Math.floor(num1 / num2);
+        this.setResult(result)
+        return this.$total.innerHTML = result;
     }
 
     renderResult() {
