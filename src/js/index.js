@@ -23,7 +23,10 @@ class Calculator {
       digitButton.addEventListener("click", e => {
         e.preventDefault();
         // 첫번째 수 입력
-        if (!this.operation) {
+        if (
+          !this.operation &&
+          this.validateDigit(this.firstDigit + e.target.textContent)
+        ) {
           this.firstDigit += e.target.textContent;
           this.renderTotal(this.firstDigit);
         }
@@ -97,6 +100,15 @@ class Calculator {
       default:
         break;
     }
+  }
+
+  validateDigit(number) {
+    const num = parseInt(number, 10);
+    if (num >= 1000) {
+      alert("2자리 수 이하 수만 입력해주세요.");
+      return false;
+    }
+    return true;
   }
 }
 
