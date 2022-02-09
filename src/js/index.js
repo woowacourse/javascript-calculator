@@ -13,6 +13,14 @@ class Calculator {
             const eventClassName = event.target.className;
             let result = document.querySelector("#total");
             console.log(result.innerHTML);
+            if (eventClassName === 'modifier') {
+                this.left = '';
+                this.right = '';
+                this.operator = '';
+                this.result = '';
+                result.innerHTML = 0;
+                return;
+            }
             if (eventClassName === 'digit') {
                 const number = event.target.innerHTML;
                 console.log(number)
