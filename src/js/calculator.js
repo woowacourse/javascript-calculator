@@ -27,6 +27,9 @@ class Calculator {
             case 'X':
                 this.displayCalculateResult(this.multiply(num1, num2));
                 break;
+            case '/':
+                this.displayCalculateResult(this.divide(num1, num2));
+                break;
         }
     }
 
@@ -38,6 +41,9 @@ class Calculator {
     }
     multiply(num1, num2){
         return num1 * num2;  
+    }
+    divide(num1, num2){
+        return parseInt(num1 / num2);
     }
 }
     
