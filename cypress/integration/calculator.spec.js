@@ -54,6 +54,7 @@ it("자리 수가 3보다 큰 수를 입력할 경우 alert를 보여준다.", (
   cy.visit("index.html");
 
   const alertStub = cy.stub();
+  cy.on("window:alert", alertStub);
 
   cy.get(".digit").contains(4).click();
   cy.get(".digit").contains(4).click();
