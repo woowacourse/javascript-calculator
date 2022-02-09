@@ -22,59 +22,75 @@ class Calculator {
 
   bindEvents() {
     this.digits.forEach(digitButton => {
-      digitButton.addEventListener("click", e => {
-        e.preventDefault();
-        // 첫번째 수 입력
-        if (
-          !this.operation &&
-          this.validateDigit(this.firstDigit + e.target.textContent)
-        ) {
-          this.firstDigit += e.target.textContent;
-          this.firstDigit = parseInt(this.firstDigit, 10);
-          this.renderTotal(this.firstDigit);
-        }
-
-        // 두번째 수 입력
-        if (
-          this.firstDigit &&
-          this.operation &&
-          this.validateDigit(this.secondDigit + e.target.textContent)
-        ) {
-          this.secondDigit += e.target.textContent;
-          this.secondDigit = parseInt(this.secondDigit, 10);
-          this.renderTotal(this.firstDigit + this.operation + this.secondDigit);
-        }
-
-        // total.innerHTML = firstDigit + operation + secondDigit;
-      });
+      digitButton.addEventListener("click", e => this.handleDigit(e));
     });
 
     this.operations.forEach(digitButton => {
-      digitButton.addEventListener("click", e => {
-        e.preventDefault();
-        if (e.target.textContent === "=") {
-          if (!this.checkEnoughNumber()) {
-            return;
-          }
-          this.convertToInteger();
-          this.calculateMath();
-          this.renderTotal(this.result);
-          this.reset();
-          return;
-        }
-
-        if (!this.checkMoreThanTwoNumber()) {
-          return;
-        }
-        this.operation = e.target.textContent;
-        this.renderTotal(this.firstDigit + this.operation);
-      });
+      digitButton.addEventListener("click", e => this.handleOperation(e));
     });
 
     this.acBtn.addEventListener("click", () => {
       this.reset();
       this.renderTotal(this.result);
     });
+  }
+
+  handleDigit(e) {
+    // 첫번째 수 입력
+    const targetDigit = e.target.textContent;
+    if (this.validateFirstDigit(targetDigit)) {
+      this.updateFirstDigit(targetDigit);
+      this.renderTotal(this.firstDigit);
+    }
+    // 두번째 수 입력
+    if (this.validateSecondDigit(targetDigit)) {
+      this.updateSecondDigit(targetDigit);
+      this.renderTotal(this.firstDigit + this.operation + this.secondDigit);
+    }
+  }
+
+  handleOperation(e) {
+    if (e.target.textContent === "=") {
+      this.handleOperationEqual();
+      return;
+    }
+
+    if (!this.checkMoreThanTwoNumber()) {
+      return;
+    }
+
+    this.operation = e.target.textContent;
+    this.renderTotal(this.firstDigit + this.operation);
+  }
+
+  handleOperationEqual() {
+    if (!this.checkEnoughNumber()) return;
+    this.convertToInteger();
+    this.calculateMath();
+    this.renderTotal(this.result);
+    this.reset();
+  }
+
+  validateFirstDigit(targetDigit) {
+    return !this.operation && this.validateDigit(this.firstDigit + targetDigit);
+  }
+
+  validateSecondDigit(targetDigit) {
+    return (
+      this.firstDigit &&
+      this.operation &&
+      this.validateDigit(this.secondDigit + targetDigit)
+    );
+  }
+
+  updateFirstDigit(targetDigit) {
+    this.firstDigit += targetDigit;
+    this.firstDigit = parseInt(this.firstDigit, 10);
+  }
+
+  updateSecondDigit(targetDigit) {
+    this.secondDigit += targetDigit;
+    this.secondDigit = parseInt(this.secondDigit, 10);
   }
 
   renderTotal(value) {
@@ -87,13 +103,6 @@ class Calculator {
     this.operation = "";
     this.result = 0;
   }
-
-  //   validateInput(firstDigit, secondDigit, operation){
-  //     if (firstDigit !== "" && secondDigit !== "" && operation !== "") {
-  //       return true;
-  //     }
-  //     return false;
-  //   };
 
   calculateMath() {
     switch (this.operation) {
