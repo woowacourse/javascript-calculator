@@ -88,7 +88,7 @@ class Calculator {
       case 'X':
         return firstNumber * secondNumber;
       case '/':
-        return firstNumber / secondNumber;
+        return Math.floor(firstNumber / secondNumber);
       default:
         // 예외 처리
         return 0;
