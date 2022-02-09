@@ -13,7 +13,6 @@ class Calculator {
   }
 
   numberEvent() {
-    // operator 없는 경우
     $$(".digit").forEach((digit) => {
       digit.addEventListener("click", (e) => {
         if (this.operator === "") {
@@ -25,10 +24,8 @@ class Calculator {
           $("#total").innerText =
             Number($("#total").innerText) * 10 + Number(e.target.textContent);
           return;
-          // num1만 입력되는 과정
         }
         if (this.operator !== "" && this.flag) {
-          // + 누르고 난 직후의 작업
           this.flag = false;
           $("#total").innerText = e.target.textContent;
           return;
