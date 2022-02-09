@@ -30,12 +30,18 @@ class Calculator {
           this.validateDigit(this.firstDigit + e.target.textContent)
         ) {
           this.firstDigit += e.target.textContent;
+          this.firstDigit = parseInt(this.firstDigit, 10);
           this.renderTotal(this.firstDigit);
         }
 
         // 두번째 수 입력
-        if (this.firstDigit && this.operation) {
+        if (
+          this.firstDigit &&
+          this.operation &&
+          this.validateDigit(this.secondDigit + e.target.textContent)
+        ) {
           this.secondDigit += e.target.textContent;
+          this.secondDigit = parseInt(this.secondDigit, 10);
           this.renderTotal(this.firstDigit + this.operation + this.secondDigit);
         }
 
@@ -53,7 +59,7 @@ class Calculator {
           this.reset();
           return;
         }
-        // 2+3   +5
+
         if (!this.checkMoreThanTwoNumber()) {
           return;
         }
