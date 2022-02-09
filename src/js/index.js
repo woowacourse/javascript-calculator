@@ -90,8 +90,7 @@ class Calculator {
       case '/':
         return Math.floor(firstNumber / secondNumber);
       default:
-        // 예외 처리
-        return 0;
+        return;
     }
   }
 }
