@@ -7,13 +7,13 @@ describe('My First Test', () => {
       cy.get('.digit').contains(2).click();
 
       // 플러스 버튼을 누른다
-      cy.get('.digit').contains('+').click();
+      cy.get('.operation').contains('+').click();
 
       // 9 버튼을 누른다
       cy.get('.digit').contains(9).click();
 
       // = 버튼을 누른다
-      cy.get('.digit').contains("=").click();
+      cy.get('.operation').contains("=").click();
 
       // 11이 나오는지 확인한다
       cy.get('#total').should('have.text', '11');
@@ -27,13 +27,13 @@ describe('My First Test', () => {
       cy.get('.digit').contains(2).click();
 
       // 플러스 버튼을 누른다
-      cy.get('.digit').contains('-').click();
+      cy.get('.operation').contains('-').click();
 
       // 9 버튼을 누른다
       cy.get('.digit').contains(9).click();
 
       // = 버튼을 누른다
-      cy.get('.digit').contains("=").click();
+      cy.get('.operation').contains("=").click();
 
       // -7이 나오는지 확인한다
       cy.get('#total').should('have.text', '-7');
@@ -47,13 +47,13 @@ describe('My First Test', () => {
       cy.get('.digit').contains(2).click();
 
       // x 버튼을 누른다
-      cy.get('.digit').contains('x').click();
+      cy.get('.operation').contains('X').click();
 
       // 9 버튼을 누른다
       cy.get('.digit').contains(9).click();
 
       // = 버튼을 누른다
-      cy.get('.digit').contains("=").click();
+      cy.get('.operation').contains("=").click();
 
       // 18이 나오는지 확인한다
       cy.get('#total').should('have.text', '18');
@@ -67,13 +67,13 @@ describe('My First Test', () => {
       cy.get('.digit').contains(9).click();
 
       // 나눗셈 버튼을 누른다
-      cy.get('.digit').contains('/').click();
+      cy.get('.operation').contains('/').click();
 
       // 3 버튼을 누른다
       cy.get('.digit').contains(3).click();
 
       // = 버튼을 누른다
-      cy.get('.digit').contains("=").click();
+      cy.get('.operation').contains("=").click();
 
       // 3이 나오는지 확인한다
       cy.get('#total').should('have.text', '3');
