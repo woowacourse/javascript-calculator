@@ -8,6 +8,7 @@
 // 계산 결과를 표현할 때 소수점 이하는 버림한다.
 
 const $ = (selector) => document.querySelector(selector);
+const $$ = (selector) => document.querySelectorAll(selector);
 class Calculator {
   constructor() {
     this.numbers = ['', ''];
@@ -15,44 +16,87 @@ class Calculator {
     this.operator = '';
     this.initNumberClickEvent();
     this.initOperatorClickEvent();
+    this.initCalculateClickEvent();
   }
 
   print() {
     $('#total').innerText = this.numbers[0] + this.operator + this.numbers[1];
   }
 
+  numberClickEvent(e) {
+    if (e.target === e.currentTarget) {
+      return;
+    }
+    if (this.numbers[this.offset].length >= 3) return;
+
+    if (this.numbers[this.offset] === '0')
+      this.numbers[this.offset] = e.target.dataset.value;
+    else this.numbers[this.offset] += e.target.dataset.value;
+    this.print();
+  }
+
   initNumberClickEvent() {
     $('.digits').addEventListener('click', (e) => {
-      if (e.target === e.currentTarget) {
-          return;
-      }
-      if (this.numbers[this.offset].length >= 3) return;
-
-      if (this.numbers[this.offset] === '0')
-        this.numbers[this.offset] = e.target.dataset.value;
-      else this.numbers[this.offset] += e.target.dataset.value;
-      this.print();
+      this.numberClickEvent(e)
     })
   }
 
+  operatorClickEvent(e) {
+    // 빈 칸일 때
+    if ($('#total').innerText === '0') return;
+
+    // 이미 연산자가 있을 때
+    if ($('#total').innerText.match(/[+\-/x]+/)) return;
+
+    this.offset = 1;
+    this.operator = e.target.dataset.operator;
+    this.print();
+  }
+
   initOperatorClickEvent() {
-    $('.operations').addEventListener('click', (e) => {
-        if (e.target === e.currentTarget) {
-            return;
-        }
-
-        // 빈 칸일 때
-        if ($('#total').innerText === '0') return;
-
-        // 이미 연산자가 있을 때
-        if ($('#total').innerText.match(/[+\-/x]+/)) return;
-
-        this.offset = 1;
-        this.operator = e.target.dataset.operator;
-        this.print();
+    $$('.operation').forEach(($operation) => {
+      $operation.addEventListener('click', (e) => {
+        this.operatorClickEvent(e);
+      });
     });
   }
-  
+
+  calculateClickEvent(e) {
+    // 두 번째 숫자 입력이 없을 때
+    if (this.numbers[1] === '') return;
+
+    $('#total').innerText = new Operation(this.numbers.map(Number), this.operator).operate();
+  }
+
+  initCalculateClickEvent() {
+    $('#calculate-button').addEventListener('click', (e) => {
+      this.calculateClickEvent(e);
+    })
+  }
+
+}
+
+class Operation {
+  constructor(numbers, operator) {
+    this.numbers = numbers;
+    this.operator = operator;
+    this.operationFns = {
+      '+': this.add,
+      '-': this.minus,
+    };
+  }
+
+  operate() {
+    return this.operationFns[this.operator](this.numbers);
+  }
+
+  add(numbers) {
+    return numbers[0] + numbers[1];
+  }
+
+  minus(numbers) {
+    return numbers[0] - numbers[1];
+  }
 }
 
 const calculator = new Calculator();
