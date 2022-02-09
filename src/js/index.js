@@ -1,5 +1,5 @@
 import { $, $$ } from "./dom.js";
-import {CONSTANTS} from "./constants.js"
+import {CONSTANTS,ERR_MSG} from "./constants.js"
 
 class Calculator {
   constructor() {
@@ -22,7 +22,7 @@ class Calculator {
       digit.addEventListener("click", (e) => {
         if (this.operator === "") {
           if (this.isValidLength()) {
-            alert("3자리 숫자까지만 허용됩니다.");
+            alert(ERR_MSG.INVALID_LENGTH);
             return;
           }
 
@@ -37,7 +37,7 @@ class Calculator {
         }
 
         if (this.isValidLength()) {
-          alert("3자리 숫자까지만 허용됩니다.");
+          alert(ERR_MSG.INVALID_LENGTH);
           return;
         }
 
@@ -75,20 +75,20 @@ class Calculator {
       this.number2 = Number($("#total").innerText);
       if (this.operator === "+") {
         $("#total").innerHTML = this.number1 + this.number2;
-        this.initializeValue()
+        this.initializeValue();
       }
       if (this.operator === "-") {
         $("#total").innerHTML = this.number1 - this.number2;
-        this.initializeValue()
+        this.initializeValue();
       }
       if (this.operator === "X") {
         $("#total").innerHTML = this.number1 * this.number2;
-        this.initializeValue()
+        this.initializeValue();
       }
       if (this.operator === "/") {
         if (this.number2 === 0) {
-          alert("0으로 나눌 수 없습니다.");
-          this.initializeValue()
+          alert(ERR_MSG.DIVIDE_BY_ZERO);
+          this.initializeValue();
           $("#total").innerHTML = 0;
           this.flag = true;
           return;
