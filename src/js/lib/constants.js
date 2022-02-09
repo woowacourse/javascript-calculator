@@ -7,7 +7,7 @@ export const DOM = Object.freeze({
 });
 
 export const TYPE = Object.freeze({
-  UNDEFINED: "undefined",
+  UNDEFINED: undefined,
   NUMBER: "number",
 });
 
