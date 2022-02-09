@@ -1,4 +1,3 @@
-// - [ ] AC(All Clear)버튼을 누르면 0으로 초기화 한다.
 // - [ ] 숫자는 한번에 최대 3자리 수까지 입력 가능하다.
 // - [ ] 계산 결과를 표현할 때 소수점 이하는 버림한다.
 
@@ -15,6 +14,7 @@ class Calculator {
     this.total = document.getElementById("total");
     this.digits = document.querySelectorAll(".digit");
     this.operations = document.querySelectorAll(".operation");
+    this.acBtn = document.querySelector(".modifier");
     this.bindEvents();
   }
 
@@ -25,14 +25,13 @@ class Calculator {
         // 첫번째 수 입력
         if (!this.operation) {
           this.firstDigit += e.target.textContent;
-          this.total.innerHTML = this.firstDigit;
+          this.renderTotal(this.firstDigit);
         }
 
         // 두번째 수 입력
         if (this.firstDigit && this.operation) {
           this.secondDigit += e.target.textContent;
-          this.total.innerHTML =
-            this.firstDigit + this.operation + this.secondDigit;
+          this.renderTotal(this.firstDigit + this.operation + this.secondDigit);
         }
 
         // total.innerHTML = firstDigit + operation + secondDigit;
@@ -44,16 +43,30 @@ class Calculator {
         e.preventDefault();
         if (e.target.textContent === "=") {
           this.calculateMath();
-          this.total.innerHTML = this.result;
-          this.firstDigit = "";
-          this.secondDigit = "";
-          this.operation = "";
+          this.renderTotal(this.result);
+          this.reset();
           return;
         }
         this.operation = e.target.textContent;
         this.total.innerHTML += this.operation;
       });
     });
+
+    this.acBtn.addEventListener("click", () => {
+      this.reset();
+      this.renderTotal(this.result);
+    });
+  }
+
+  renderTotal(value) {
+    this.total.innerHTML = value;
+  }
+
+  reset() {
+    this.firstDigit = "";
+    this.secondDigit = "";
+    this.operation = "";
+    this.result = 0;
   }
 
   //   validateInput(firstDigit, secondDigit, operation){
