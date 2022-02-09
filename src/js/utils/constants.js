@@ -3,7 +3,4 @@ export const ERROR = {
   NOT_NUMBERS: '숫자를 입력해야합니다.',
 };
 
-export const NUMBERS = {
-  MAX_INPUT_NUMBER: 1000,
-};
-
+export const MAX_LENGTH = 2;

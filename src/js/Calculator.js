@@ -1,6 +1,5 @@
 import { $ } from './utils/dom.js';
 import Validator from './validator.js';
-import { NUMBERS } from './utils/constants.js';
 
 export default class Calculator {
   constructor () {

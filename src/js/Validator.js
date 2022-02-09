@@ -1,4 +1,4 @@
-import { ERROR } from './utils/constants.js';
+import { ERROR, MAX_LENGTH } from './utils/constants.js';
 
 export default class Validator {
   static hasTwoNumbers(number1, number2) {
@@ -16,7 +16,7 @@ export default class Validator {
   }
 
   static isLongerThanThree(number) {
-    if (number.length > 2) {
+    if (number.length > MAX_LENGTH) {
       return true;
     }
   }
