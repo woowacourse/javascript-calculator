@@ -1,7 +1,4 @@
 class Calculator {
-    constructor() {
-        
-    }
 
     displayInputResult(prevNumber, operand, nextNumber) {
         const total = document.querySelector('#total');

@@ -4,30 +4,26 @@ import { TOO_MANY_NUMBERS, DUPLICATE_OPERAND} from './constants/error.js';
 const digit = document.querySelectorAll('.digit');
 const operation = document.querySelectorAll('.operation');
 const modifier = document.querySelector('.modifier');
-const total = document.querySelector('#total');
 
 let prevNumber = [];
 let operand = '';
 let nextNumber = [];
 const calculator = new Calculator();
 
+function checkNumberCount(numberArray, e) {
+    if(numberArray.length >= 3){
+        throw new Error(TOO_MANY_NUMBERS);
+    }
+    numberArray.push(e.target.innerText);
+}
+
 digit.forEach((item) => {
     item.addEventListener('click', function(e){
         e.preventDefault();
-        if(operand === ''){
-            if(prevNumber.length >= 3){
-                throw new Error(TOO_MANY_NUMBERS);
-            }
-            prevNumber.push(e.target.innerText);
-        }else{
-            if(nextNumber.length >= 3) {
-                throw new Error(TOO_MANY_NUMBERS);
-            }
-            nextNumber.push(e.target.innerText);
-        }
+        operand ? checkNumberCount(nextNumber, e) : checkNumberCount(prevNumber, e);
         calculator.displayInputResult(prevNumber, operand, nextNumber);
-    })
-})
+    });
+});
 
 operation.forEach((item) => {
     item.addEventListener('click', function(e){
