@@ -15,7 +15,7 @@ class Calculator {
 
     checkOperand(prevNumber, operand, nextNumber) {
         const num1 = Number(prevNumber.join(''));
-        const num2 = Number(prevNumber.join(''));
+        const num2 = Number(nextNumber.join(''));
 
         switch(operand) {
             case '+':

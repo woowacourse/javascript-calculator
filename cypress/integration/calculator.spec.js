@@ -5,9 +5,9 @@ it('덧셈에 대한 테스트 케이스' , () => {
 	cy.get('.digit').contains(2).click();
 	cy.get('.operation').contains('+').click();
 	cy.get('.digit').contains(5).click();
-	cy.get('.opertaion').contains('=').click();
+	cy.get('.operation').contains('=').click();
 	
-	cy.get('#total').should('have.text', '11');
+	cy.get('#total').should('have.text', '7');
 });
 
 //- [ ] 2개의 숫자에 대해 뺄셈이 가능하다.
