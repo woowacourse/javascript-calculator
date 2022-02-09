@@ -67,5 +67,24 @@ it("AC(All Clear)버튼을 누르면 0으로 초기화 한다.", () => {
   cy.get(".modifier").click();
   cy.get("#total").should("have.text", "0");
 });
-// - [ ] 숫자는 한번에 최대 3자리 수까지 입력 가능하다.
+
+// - [x] 숫자는 한번에 최대 3자리 수까지 입력 가능하다.
+it("숫자는 한번에 최대 3자리 수까지 입력 가능하다.", () => {
+  cy.visit("index.html");
+  const stub = cy.stub();
+  cy.on("window:alert", stub);
+
+  cy.get(".digit").contains(1).click();
+  cy.get(".digit").contains(0).click();
+  cy.get(".digit").contains(0).click();
+
+  cy.get(".digit")
+    .contains(0)
+    .click()
+    .then(() => {
+      expect(stub.getCall(0)).to.be.calledWith(
+        "2자리 수 이하 수만 입력해주세요."
+      );
+    });
+});
 // - [ ] 계산 결과를 표현할 때 소수점 이하는 버림한다.
