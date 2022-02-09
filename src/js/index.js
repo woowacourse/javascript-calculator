@@ -9,69 +9,143 @@
 
 const $ = (selector) => document.querySelector(selector);
 const $$ = (selector) => document.querySelectorAll(selector);
+
+class Formula {
+  constructor() {
+    this.initializeData();
+  }
+
+  initializeData() {
+    this.numbers = ['', ''];
+    this.operator = '';
+  }
+
+  offset() {
+    return this.operator === '' ? 0 : 1;
+  }
+
+  result() {
+    return this.numbers[0] + this.operator + this.numbers[1];
+  }
+
+  setNumber(value) {
+    this.setCurNumber(this.isZero() ? value : this.getCurNumber() + value);
+  }
+
+  setOperator(operator) {
+    this.operator = operator;
+  }
+
+  isZero() {
+    return this.getCurNumber() === '0';
+  }
+
+  setCurNumber(value) {
+    this.numbers[this.offset()] = value;
+  }
+
+  getCurNumber() {
+    return this.numbers[this.offset()];
+  }
+
+  toInts() {
+    return this.numbers.map(Number);
+  }
+
+  calculate() {
+    return new Operation(this.toInts(), this.operator).operate();
+  }
+}
+
+class Validation {
+  constructor(formula) {
+    this.formula = formula;
+  }
+
+  isExceed() {
+    return this.formula.getCurNumber().length >= 3;
+  }
+
+  haveNumber(index) {
+    return this.formula.numbers[index] !== '';
+  }
+
+  haveFirstNumber() {
+    return this.haveNumber(0);
+  }
+
+  haveSecondNumber() {
+    return this.haveNumber(1);
+  }
+
+  haveOperator() {
+    return this.formula.offset() > 0;
+  }
+}
+
 class Calculator {
   constructor() {
-    this.numbers = ['', ''];
-    this.offset = 0;
-    this.operator = '';
+    this.formula = new Formula();
+    this.validation = new Validation(this.formula);
     this.initNumberClickEvent();
     this.initOperatorClickEvent();
     this.initCalculateClickEvent();
+    this.initClearClickEvent();
+  }
+
+  setResult(result) {
+    $('#total').innerText = result;
   }
 
   print() {
-    $('#total').innerText = this.numbers[0] + this.operator + this.numbers[1];
+    this.setResult(this.formula.result());
   }
 
   numberClickEvent(e) {
-    if (e.target === e.currentTarget) {
-      return;
-    }
-    if (this.numbers[this.offset].length >= 3) return;
-
-    if (this.numbers[this.offset] === '0')
-      this.numbers[this.offset] = e.target.dataset.value;
-    else this.numbers[this.offset] += e.target.dataset.value;
+    if (this.validation.isExceed()) return alert('글자수를 초과했습니다!');
+    
+    this.formula.setNumber(e.target.dataset.value);
     this.print();
   }
 
   initNumberClickEvent() {
-    $('.digits').addEventListener('click', (e) => {
-      this.numberClickEvent(e)
-    })
+    $$('.digit').forEach(($digit) => {
+      $digit.addEventListener('click', this.numberClickEvent.bind(this));
+    });
   }
 
   operatorClickEvent(e) {
-    // 빈 칸일 때
-    if ($('#total').innerText === '0') return;
+    if (!this.validation.haveFirstNumber()) return alert('숫자를 먼저 입력해주세요!');
+    if (this.validation.haveOperator()) return alert('이미 연산자를 입력하셨습니다.');
 
-    // 이미 연산자가 있을 때
-    if ($('#total').innerText.match(/[+\-/x]+/)) return;
-
-    this.offset = 1;
-    this.operator = e.target.dataset.operator;
+    this.formula.setOperator(e.target.dataset.operator);
     this.print();
   }
 
   initOperatorClickEvent() {
     $$('.operation').forEach(($operation) => {
-      $operation.addEventListener('click', (e) => {
-        this.operatorClickEvent(e);
-      });
+      $operation.addEventListener('click', this.operatorClickEvent.bind(this));
     });
   }
 
   calculateClickEvent(e) {
-    // 두 번째 숫자 입력이 없을 때
-    if (this.numbers[1] === '') return;
+    if (!this.validation.haveSecondNumber()) return alert('숫자 입력이 부족합니다!');
 
-    $('#total').innerText = new Operation(this.numbers.map(Number), this.operator).operate();
+    this.setResult(this.formula.calculate());
+
   }
 
   initCalculateClickEvent() {
-    $('#calculate-button').addEventListener('click', (e) => {
-      this.calculateClickEvent(e);
-    })
+    $('#calculate-button').addEventListener('click', this.calculateClickEvent.bind(this));
+  }
+
+  clearClickEvent() {
+    this.formula.initializeData();
+    this.print();
+  }
+
+  initClearClickEvent() {
+    $('#clear-button').addEventListener('click', this.clearClickEvent.bind(this));
   }
 
 }
@@ -83,6 +157,8 @@ class Operation {
     this.operationFns = {
       '+': this.add,
       '-': this.minus,
+      '/': this.division,
+      'x': this.multi,
     };
   }
 
@@ -97,6 +173,35 @@ class Operation {
   minus(numbers) {
     return numbers[0] - numbers[1];
   }
+
+  division(numbers) {
+    return Math.floor(numbers[0] / numbers[1]);
+  }
+
+  multi(numbers) {
+    return numbers[0] * numbers[1];
+  }
 }
 
 const calculator = new Calculator();
+
+
+// '='를 눌러서 결과가 나왔을 때
+// flag = true;
+
+// - 숫자를 누른 경우
+//   - flag === true 
+//        formula.initializeData();
+//        flag = false;
+
+// - 연산자를 누른 경우
+//   - flag === true 
+//      formula.initializeData();
+//      1. 결과값 numbers[0]에 저장
+//      2. 연산자 저장 
+//      flag = false;
+// - '='를 누른 경우
+//   - flag === true 
+//     결과값 numbers[0]에 저장
+//     formular.calculate
+  
