@@ -8,11 +8,9 @@ class Calculator {
     }
     
     onClickButtons() {
-        console.log("onClick")
         document.querySelector(".calculator").addEventListener('click',(event) => {
             const eventClassName = event.target.className;
             let result = document.querySelector("#total");
-            console.log(result.innerHTML);
             if (eventClassName === 'modifier') {
                 this.left = '';
                 this.right = '';
@@ -23,24 +21,7 @@ class Calculator {
             }
             if (eventClassName === 'digit') {
                 const number = event.target.innerHTML;
-                console.log(number)
-                if (!this.operator) {
-                    if (this.left.length < 3) {
-                        this.left += number;
-                        result.innerHTML = this.left;
-                        return;
-                    }
-                    return alert('3자리 숫자까지만 입력 가능합니다.');
-                }
-                else{
-                    if (this.right.length < 3) {
-                        this.right += number;
-                        result.innerHTML+=this.right;
-                        return;
-                    }
-                    return alert('3자리 숫자까지만 입력 가능합니다.');
-                }
-                return;
+               
             }
             if (eventClassName === 'operation') {
                 const operator = event.target.innerHTML;
@@ -57,7 +38,6 @@ class Calculator {
                     this.left = this.result;
                     this.right = '';
                     this.operator = '';
-                    console.log(this.result)
                     return;
                 }
                 else{
@@ -71,7 +51,28 @@ class Calculator {
             }
         })
     }
+    
+    digitHandler(number) {
+        if (!this.operator) {
+            if (this.left.length < 3) {
+                if(this.left.length === 0) {
+                    if(number==='0') return alert('0으로 시작되는 숫자는 불가능')
+                }
+                this.left += number;
+                result.innerHTML = this.left;
+                return;
+            }
+            return alert('3자리 숫자까지만 입력 가능합니다.');
+        }
 
+            if (this.right.length < 3) {
+                this.right += number;
+                result.innerHTML+=this.right;
+                return;
+            }
+            return alert('3자리 숫자까지만 입력 가능합니다.');
+    }
+    
     validateNumber(number){
         return typeof number === 'number'
     }
