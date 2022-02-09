@@ -34,12 +34,12 @@ it("2개의 숫자에 대해 곱셈이 가능하다.", () => {
 it("2개의 숫자에 대해 나눗셈이 가능하다.", () => {
   cy.visit("index.html");
 
-  // 10 / 2 = 5
-  cy.get(".digit").contains(10).click();
-  cy.get(".operation").contains("-").click();
+  // 5 / 2 = 2
+  cy.get(".digit").contains(5).click();
+  cy.get(".operation").contains("/").click();
   cy.get(".digit").contains(2).click();
   cy.get(".operation").contains("=").click();
-  cy.get("#total").should("have.text", "5");
+  cy.get("#total").should("have.text", "2");
 });
 
 // AC(All Clear)버튼을 누르면 0으로 초기화 한다.

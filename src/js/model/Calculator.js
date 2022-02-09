@@ -16,6 +16,46 @@ export default class Calculator {
     return number1 + number2;
   }
 
+  subtract(number1, number2) {
+    if (!number1 || !number2) {
+      throw new Error(ERROR_MESSAGES.NOT_ENOUGHT_PARAMETER);
+    }
+
+    if (typeof number1 !== "number" || typeof number2 !== "number") {
+      throw new Error(ERROR_MESSAGES.NOT_A_NUMBER);
+    }
+
+    return number1 - number2;
+  }
+
+  multiply(number1, number2) {
+    if (!number1 || !number2) {
+      throw new Error(ERROR_MESSAGES.NOT_ENOUGHT_PARAMETER);
+    }
+
+    if (typeof number1 !== "number" || typeof number2 !== "number") {
+      throw new Error(ERROR_MESSAGES.NOT_A_NUMBER);
+    }
+
+    return number1 * number2;
+  }
+
+  divide(number1, number2) {
+    if (!number1 || !number2) {
+      throw new Error(ERROR_MESSAGES.NOT_ENOUGHT_PARAMETER);
+    }
+
+    if (typeof number1 !== "number" || typeof number2 !== "number") {
+      throw new Error(ERROR_MESSAGES.NOT_A_NUMBER);
+    }
+
+    if (number2 === 0) {
+      throw new Error(ERROR_MESSAGES.DIVIDED_BY_ZERO);
+    }
+
+    return Math.floor(number1 / number2);
+  }
+
   // 2개의 숫자에 대해 뺄셈이 가능하다.
   // 2개의 숫자에 대해 곱셈이 가능하다.
   // 2개의 숫자에 대해 나눗셈이 가능하다.
