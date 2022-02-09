@@ -5,6 +5,7 @@ export default class Controller {
 
     this.view.bindClickDigitButton(this.addUserInputCharacter.bind(this));
     this.view.bindClickOperationButton(this.clickOperationButton.bind(this));
+    this.view.bindClickACButton(this.clickACButton.bind(this));
   }
 
   addUserInputCharacter(character) {
@@ -20,5 +21,10 @@ export default class Controller {
     }
 
     this.addUserInputCharacter(operation);
+  }
+
+  clickACButton() {
+    this.view.render(0);
+    this.model.initializeUserInputString();
   }
 }

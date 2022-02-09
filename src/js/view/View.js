@@ -2,7 +2,6 @@ export default class View {
   constructor() {
     this.$app = document.querySelector("#app");
     this.$total = document.querySelector("#total");
-    this.userInputString = "";
   }
 
   bindEventListener(type, selector, callback) {
@@ -29,21 +28,13 @@ export default class View {
     });
   }
 
+  bindClickACButton(callback) {
+    this.bindEventListener("click", ".modifier", (e) => {
+      callback();
+    });
+  }
+
   render(str) {
     this.$total.innerText = str;
   }
-
-  // bindClickEvent() {
-  //   this.$app.addEventListener("click", (event) => {
-  //     if (event.target.classList.contains("operation")) {
-  //       if (event.target.innerText === "=") {
-  //         this.calculate();
-
-  //         return;
-  //       }
-
-  //       this.userInputString += event.target.innerText;
-  //     }
-  //   });
-  // }
 }
