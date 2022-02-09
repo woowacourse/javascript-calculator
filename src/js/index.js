@@ -1,6 +1,8 @@
 class Calculator {
     constructor() {
+        this.currentNumber = '';
     }
+
 
     init = () => {
         this.bindEvent();
@@ -12,8 +14,13 @@ class Calculator {
     
     clickDigitHandler = (e) => {
         const selectedNumber = e.target.innerText;
+        this.currentNumber += selectedNumber;
+        this.renderResult();
+    }
+
+    renderResult = (e) => {
         const totalResult = document.getElementById("total");
-        totalResult.innerText = selectedNumber;
+        totalResult.innerText = this.currentNumber;
     }
 }
 
