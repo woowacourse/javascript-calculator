@@ -17,6 +17,19 @@ function checkNumberCount(numberArray, e) {
     numberArray.push(e.target.innerText);
 }
 
+function checkOperands(inputOperand) {
+    if(!operand && inputOperand !== "=") {
+        operand = inputOperand;
+        calculator.displayInputResult(prevNumber, operand, nextNumber);
+    }
+    else if(operand && inputOperand !== "=") {
+        throw new Error(DUPLICATE_OPERAND);
+    }
+    else if(operand && inputOperand === "=") {
+        calculator.checkOperand(prevNumber, operand, nextNumber);
+    }
+}
+
 digit.forEach((item) => {
     item.addEventListener('click', function(e){
         e.preventDefault();
@@ -28,18 +41,7 @@ digit.forEach((item) => {
 operation.forEach((item) => {
     item.addEventListener('click', function(e){
         e.preventDefault();
-        
-        const inputOperand = e.target.innerText;
-        if(!operand && inputOperand !== "=") {
-            operand = inputOperand;
-            calculator.displayInputResult(prevNumber, operand, nextNumber);
-        }
-        else if(operand && inputOperand !== "=") {
-            throw new Error(DUPLICATE_OPERAND);
-        }
-        else if(operand && inputOperand === "=") {
-            calculator.checkOperand(prevNumber, operand, nextNumber);
-        }
+        checkOperands(e.target.innerText);
     })
 })
 
