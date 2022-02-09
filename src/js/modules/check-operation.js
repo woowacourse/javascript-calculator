@@ -1,3 +1,3 @@
-export default function checkNumberCount(totalInputArray) {
+export default function checkOperand(operand) {
     return totalInputArray.length < 5;
 };
