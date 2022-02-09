@@ -27,63 +27,40 @@ export class User {
   clickDigitButton(digit) {
     if (!this.operator) {
       // 첫 번째 숫자 입력
-      if (this.num1.length > MAX_LENGTH) {
+      if (this.num1.length >= MAX_LENGTH) {
         return alert(EXCEPTION.OUT_OF_RANGE);
       }
       this.num1 += digit;
-      if (totalText.innerHTML === '0') {
-        totalText.innerHTML = digit;
-      } else {
-        totalText.innerHTML += digit;
-      }
+      this.calculator.updateTotalText(digit);
     } else {
       // 두 번째 숫자 입력
-      if (this.num2.length > MAX_LENGTH) {
+      if (this.num2.length >= MAX_LENGTH) {
         return alert(EXCEPTION.OUT_OF_RANGE);
       }
       this.num2 += digit;
-      totalText.innerHTML += digit;
+      this.calculator.updateTotalText(digit);
     }
   }
 
   clickOperatorButton(operator) {
     if (operator === '=' && this.num1 && this.operator && this.num2) {
-      this.num1 = parseInt(this.num1);
-      this.num2 = parseInt(this.num2);
-
-      switch (this.operator) {
-        case '+':
-          totalText.innerHTML = this.calculator.add(this.num1, this.num2);
-          break;
-
-        case '-':
-          totalText.innerHTML = this.calculator.substract(this.num1, this.num2);
-          break;
-
-        case 'X':
-          totalText.innerHTML = this.calculator.multiply(this.num1, this.num2);
-          break;
-
-        case '/':
-          let result = this.calculator.divide(this.num1, this.num2);
-
-          if (typeof result == 'number') {
-            totalText.innerHTML = result;
-          } else {
-            return alert(EXCEPTION.DIVISION_BY_ZERO);
-          }
-          break;
-      }
+      // 정상 계산 (=)
+      this.calculator.calculate(
+        parseInt(this.num1),
+        parseInt(this.num2),
+        this.operator
+      );
       this.init();
       this.num1 = totalText.innerHTML;
     } else if (operator !== '=' && this.num1 && !this.operator) {
+      // 연산자 입력
       if (this.num1.length > MAX_LENGTH) {
         return alert(EXCEPTION.OUT_OF_RANGE);
       }
-
       this.operator = operator;
-      totalText.innerHTML += operator;
+      this.calculator.updateTotalText(operator);
     } else {
+      // 비정상 계산 (=)
       return alert(EXCEPTION.UNCORRECT_VALUE);
     }
   }
