@@ -53,6 +53,9 @@ class Calculator {
       digitButton.addEventListener("click", e => {
         e.preventDefault();
         if (e.target.textContent === "=") {
+          if (!this.checkEnoughNumber()) {
+            return;
+          }
           this.convertToInteger();
           this.calculateMath();
           this.renderTotal(this.result);
@@ -127,6 +130,14 @@ class Calculator {
   checkMoreThanTwoNumber() {
     if (this.firstDigit && this.secondDigit && this.operation) {
       alert("2개 이하의 수만 입력해주세요.");
+      return false;
+    }
+    return true;
+  }
+
+  checkEnoughNumber() {
+    if (!this.secondDigit) {
+      alert("2번째 수를 입력한 후 =를 입력해주세요");
       return false;
     }
     return true;
