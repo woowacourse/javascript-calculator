@@ -14,6 +14,7 @@ class Calculator {
     this.offset = 0;
     this.operator = '';
     this.initNumberClickEvent();
+    this.initOperatorClickEvent();
   }
 
   print() {
@@ -27,12 +28,30 @@ class Calculator {
       }
       if (this.numbers[this.offset].length >= 3) return;
 
-      this.numbers[this.offset] += e.target.dataset.value;
+      if (this.numbers[this.offset] === '0')
+        this.numbers[this.offset] = e.target.dataset.value;
+      else this.numbers[this.offset] += e.target.dataset.value;
       this.print();
     })
   }
 
+  initOperatorClickEvent() {
+    $('.operations').addEventListener('click', (e) => {
+        if (e.target === e.currentTarget) {
+            return;
+        }
 
+        // 빈 칸일 때
+        if ($('#total').innerText === '0') return;
+
+        // 이미 연산자가 있을 때
+        if ($('#total').innerText.match(/[+\-/x]+/)) return;
+
+        this.offset = 1;
+        this.operator = e.target.dataset.operator;
+        this.print();
+    });
+  }
   
 }
 
