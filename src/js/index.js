@@ -1,6 +1,5 @@
 class Calculator {
     constructor() {
-        this.init()
     }
 
     init = () => {
