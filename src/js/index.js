@@ -1,6 +1,6 @@
 import $ from "./utils/dom.js";
 import arrayToNumber from "./utils/arrayToNumber.js";
-import { SELECTORS, OPERATIONS } from "./constants.js";
+import { SELECTORS, OPERATIONS, INITIAL_NUMBER } from "./constants.js";
 
 class Calculator {
   constructor() {
@@ -26,9 +26,11 @@ class Calculator {
       const digit = parseInt(e.target.innerText, 10);
       if (!this.currentOperation) {
         this.firstNumberArray.push(digit);
+        this.renderTotal(this.firstNumberArray.join(''));
         return;
       }
       this.secondNumberArray.push(digit);
+      this.renderTotal(this.secondNumberArray.join(''));
     });
 
     this.$operations.addEventListener('click', (e) => {
@@ -36,8 +38,8 @@ class Calculator {
       if (operation === OPERATIONS.equal) {
         const firstNum = arrayToNumber(this.firstNumberArray);
         const secondNum = arrayToNumber(this.secondNumberArray);
-        const result = this.calculate(firstNum, secondNum);
-        console.log('result :', result);
+        this.calculatedResult = this.calculate(firstNum, secondNum);
+        this.renderTotal(`${this.calculatedResult}`);
         this.currentOperation = '';
         return;
       }
@@ -52,10 +54,16 @@ class Calculator {
     this.currentOperation = '';
     this.firstNumberArray = [];
     this.secondNumberArray = [];
+    this.calculatedResult = INITIAL_NUMBER;
+    this.renderTotal(this.calculatedResult);
   }
 
   reset() {
     this.initState();
+  }
+
+  renderTotal(result) {
+    this.$total.innerText = result;
   }
 
   calculate(firstNum, secondNum) {

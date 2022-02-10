@@ -18,3 +18,5 @@ export const OPERATIONS = {
   divide: 'divide',
   equal: 'equal',
 }
+
+export const INITIAL_NUMBER = '0';
