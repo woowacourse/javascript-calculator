@@ -2,7 +2,7 @@ class Calculator {
   constructor() {
     this.firstNumber = 0;
     this.secondNumber = 0;
-    this.operation = '';
+    this.operation = "";
     this.phase = true;
 
     this.digitsElement = document.querySelector(".digits");
@@ -32,11 +32,20 @@ class Calculator {
     this.totalElement.textContent = num1 - num2;
   }
 
+  multiply(num1, num2) {
+    if (!num1 || !num2) {
+      return;
+    }
+    if (typeof num1 !== "number" || typeof num2 !== "number") {
+      return;
+    }
+    this.totalElement.textContent = num1 * num2;
+  }
+
   digitsClick() {
     this.digitsElement.addEventListener("click", ({ target }) => {
       if (this.phase) {
-        this.firstNumber =
-          this.firstNumber * 10 + parseInt(target.textContent);
+        this.firstNumber = this.firstNumber * 10 + parseInt(target.textContent);
         this.totalElement.textContent = this.firstNumber;
       } else {
         this.secondNumber =
@@ -50,7 +59,12 @@ class Calculator {
     this.operationElement.addEventListener("click", ({ target }) => {
       if (target.textContent === "=") {
         this.showAnswer();
-      } else if (target.textContent === "+" || target.textContent === "-" || target.textContent === "X" || targuments.textContent === "/") {
+      } else if (
+        target.textContent === "+" ||
+        target.textContent === "-" ||
+        target.textContent === "X" ||
+        targuments.textContent === "/"
+      ) {
         this.phase = false;
         this.operation = target.textContent;
         this.totalElement.textContent = target.textContent;
@@ -59,10 +73,12 @@ class Calculator {
   }
 
   showAnswer() {
-    if(this.operation === "+") {
+    if (this.operation === "+") {
       this.add(this.firstNumber, this.secondNumber);
     } else if (this.operation === "-") {
       this.submit(this.firstNumber, this.secondNumber);
+    } else if (this.operation === "X") {
+      this.multiply(this.firstNumber, this.secondNumber);
     }
   }
 }
