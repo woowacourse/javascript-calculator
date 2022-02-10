@@ -1,6 +1,6 @@
 import $ from "./utils/dom.js";
 import arrayToNumber from "./utils/arrayToNumber.js";
-import { SELECTORS, OPERATIONS, INITIAL_NUMBER } from "./constants.js";
+import { SELECTORS, OPERATIONS, INITIAL_NUMBER, MAX_DIGIT_SIZE, ERROR_MESSAGES } from "./constants.js";
 
 class Calculator {
   constructor() {
@@ -24,11 +24,23 @@ class Calculator {
   addEventListeners() {
     this.$digits.addEventListener('click', (e) => {
       const digit = parseInt(e.target.innerText, 10);
+
+      if (!this.currentOperation && this.isOverMaxDigitSize(this.firstNumberArray)) {
+        alert(ERROR_MESSAGES.underMaxDigitSize);
+        return;
+      }
+
       if (!this.currentOperation) {
         this.firstNumberArray.push(digit);
         this.renderTotal(this.firstNumberArray.join(''));
         return;
       }
+
+      if (this.isOverMaxDigitSize(this.secondNumberArray)) {
+        alert(ERROR_MESSAGES.underMaxDigitSize);
+        return;
+      }
+
       this.secondNumberArray.push(digit);
       this.renderTotal(this.secondNumberArray.join(''));
     });
@@ -48,6 +60,13 @@ class Calculator {
 
     this.$modifier.addEventListener('click', () => {
     });
+  }
+
+  isOverMaxDigitSize(numArr) {
+    if (numArr.length >= MAX_DIGIT_SIZE) {
+      return true;
+    }
+    return false;
   }
 
   initState() {

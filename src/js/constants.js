@@ -20,3 +20,9 @@ export const OPERATIONS = {
 }
 
 export const INITIAL_NUMBER = '0';
+
+export const MAX_DIGIT_SIZE = 3;
+
+export const ERROR_MESSAGES = {
+  underMaxDigitSize: '세자리수 까지만 입력 가능합니다',
+};
