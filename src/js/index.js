@@ -82,19 +82,24 @@ class Calculator {
   }
 
   calc([numberStack, operatorStack]) {
-    let result = 0;
-
-    operatorStack.forEach((operator) => {
+    return operatorStack.map((operator) => {
       if (operator === '+') {
-        result += this.add(numberStack.shift(), numberStack.shift());
+        return this.add(numberStack.shift(), numberStack.shift());
       }
-    });
+      if (operator === '/') {
+        return this.divide(numberStack.shift(), numberStack.shift());
+      }
 
-    return result;
+      return false;
+    });
   }
 
   add(leftNumber, rightNumber) {
     return leftNumber + rightNumber;
+  }
+
+  divide(leftNumber, rightNumber) {
+    return Math.floor(leftNumber / rightNumber);
   }
 }
 
