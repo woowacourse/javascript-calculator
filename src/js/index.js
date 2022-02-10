@@ -1,9 +1,12 @@
+/* eslint-disable max-lines-per-function */
 import { $ } from './util.js';
 
 class Calculator {
   constructor() {
     this.selectDOM();
     this.attachEvents();
+
+    this.currentNumberLength = 0;
   }
 
   selectDOM() {
@@ -20,8 +23,27 @@ class Calculator {
   }
 
   handleDigit(event) {
-    const clickedDigit = event.target.innerText;
+    this.currentNumberLength += 1;
 
+    if (this.currentNumberLength > 3) return;
+
+    const clickedDigit = event.target.innerText;
+    this.renderNumber(clickedDigit);
+  }
+
+  handleOperator(event) {
+    this.currentNumberLength = 0;
+
+    const clickedOperator = event.target.innerText;
+    this.renderTotal(clickedOperator);
+  }
+
+  handleModifier() {
+    this.currentNumberLength = 0;
+    this.$total.innerText = '0';
+  }
+
+  renderNumber(clickedDigit) {
     if (this.$total.innerText === '0') {
       this.$total.innerText = clickedDigit;
 
@@ -29,16 +51,6 @@ class Calculator {
     }
 
     this.$total.innerText += clickedDigit;
-  }
-
-  handleOperator(event) {
-    const clickedOperator = event.target.innerText;
-
-    this.renderTotal(clickedOperator);
-  }
-
-  handleModifier() {
-    this.$total.innerText = '0';
   }
 
   renderTotal(clickedOperator) {
@@ -95,7 +107,6 @@ class Calculator {
       if (operator === '/') {
         return this.divide(numberStack.shift(), numberStack.shift());
       }
-      return false;
     });
   }
 
