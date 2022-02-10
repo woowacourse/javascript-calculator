@@ -89,10 +89,12 @@ class Calculator {
       if (operator === '-') {
         return this.subtract(numberStack.shift(), numberStack.shift());
       }
+      if (operator === 'X') {
+        return this.multiply(numberStack.shift(), numberStack.shift());
+      }
       if (operator === '/') {
         return this.divide(numberStack.shift(), numberStack.shift());
       }
-
       return false;
     });
   }
@@ -103,6 +105,10 @@ class Calculator {
 
   subtract(leftNumber, rightNumber) {
     return leftNumber - rightNumber;
+  }
+
+  multiply(leftNumber, rightNumber) {
+    return leftNumber * rightNumber;
   }
 
   divide(leftNumber, rightNumber) {
