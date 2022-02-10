@@ -96,8 +96,8 @@ it('숫자는 2개까지만 입력할 수 있다.', () => {
   cy.get('.digit').contains(2).click();
   // =을 누른다.
   cy.get('.operation').contains('=').click();
-  // 75가 도출된다.
-  cy.get('#total').should('have.text', '75');
+  // 104가 도출된다.
+  cy.get('#total').should('have.text', '104');
 });
 
 it('계산 결과를 표현할 때 소수점 이하는 버림한다.', () => {
