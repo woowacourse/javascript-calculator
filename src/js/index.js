@@ -5,24 +5,13 @@ import { SELECTORS, OPERATIONS, INITIAL_NUMBER, MAX_DIGIT_SIZE, ERROR_MESSAGES }
 class Calculator {
   constructor() {
     document.addEventListener('DOMContentLoaded', () => {
-      this.bindElements();
       this.addEventListeners();
       this.initState();
     });
   }
 
-  bindElements() {
-    this.$total = $(SELECTORS.total);
-    this.$modifier = $(SELECTORS.modifier);
-    this.$digits = $(SELECTORS.digits);
-    this.$digit = $(SELECTORS.digit);
-    this.$modifier = $(SELECTORS.modifier);
-    this.$operations = $(SELECTORS.operations);
-    this.$operation = $(SELECTORS.operation);
-  }
-
   addEventListeners() {
-    this.$digits.addEventListener('click', (e) => {
+    $(SELECTORS.digits).addEventListener('click', (e) => {
       if (this.calculatedResult !== 0) {
         this.reset();
       }
@@ -49,7 +38,7 @@ class Calculator {
       this.renderTotal(this.secondNumberArray.join(''));
     });
 
-    this.$operations.addEventListener('click', (e) => {
+    $(SELECTORS.operations).addEventListener('click', (e) => {
       const operation = e.target.getAttribute('data-operation');
 
       // 이전의 결과 값이 남아 있는데, +,- 같은 연산을 하는 경우
@@ -96,16 +85,13 @@ class Calculator {
       this.currentOperation = operation;
     });
 
-    this.$modifier.addEventListener('click', () => {
+    $(SELECTORS.modifier).addEventListener('click', () => {
       this.reset();
     });
   }
 
   isOverMaxDigitSize(numArr) {
-    if (numArr.length >= MAX_DIGIT_SIZE) {
-      return true;
-    }
-    return false;
+    return numArr.length >= MAX_DIGIT_SIZE;
   }
 
   initState() {
@@ -121,7 +107,7 @@ class Calculator {
   }
 
   renderTotal(result) {
-    this.$total.innerText = result;
+    $(SELECTORS.total).innerText = result;
   }
 
   calculate(firstNum, secondNum) {
