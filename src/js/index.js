@@ -47,6 +47,15 @@ class Calculator {
 
     this.$operations.addEventListener('click', (e) => {
       const operation = e.target.getAttribute('data-operation');
+
+      // 이전의 결과 값이 남아 있는데, +,- 같은 연산을 하는 경우
+      if (this.calculatedResult) {
+        // firstNumArray에 이전 결과값을 채운다
+        this.firstNumberArray = `${this.calculatedResult}`.split('').map((numStr) => Number(numStr));
+        this.secondNumberArray = [];
+        this.calculatedResult = null;
+      }
+
       if (operation === OPERATIONS.equal) {
         const firstNum = arrayToNumber(this.firstNumberArray);
         const secondNum = arrayToNumber(this.secondNumberArray);
