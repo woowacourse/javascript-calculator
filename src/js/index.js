@@ -59,6 +59,7 @@ class Calculator {
     });
 
     this.$modifier.addEventListener('click', () => {
+      this.reset();
     });
   }
 
