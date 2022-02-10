@@ -68,6 +68,13 @@ class Calculator {
         return;
       }
 
+      // + -> + / + -> - / + -> =
+      if (operation !== OPERATIONS.equal && this.currentOperation) {
+        alert(ERROR_MESSAGES.operationBetweenNumber);
+        this.currentOperation = '';
+        return;
+      }
+
       if (operation === OPERATIONS.equal) {
         const firstNum = arrayToNumber(this.firstNumberArray);
         const secondNum = arrayToNumber(this.secondNumberArray);
