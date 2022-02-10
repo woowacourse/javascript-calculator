@@ -31,16 +31,17 @@ export default class User {
   }
 
   clickDigitButton(digit) {
-    if (
-      this.num1.length > MAX_LENGTH ||
-      this.num2.length > MAX_LENGTH
-    ) {
-      return alert(EXCEPTION.OUT_OF_RANGE);
-    }
-
-    if (!this.operator) { // 첫 번째 숫자 입력
+    if (!this.operator) {
+      // 첫 번째 숫자 입력
+      if (this.num1.length >= MAX_LENGTH) {
+        return alert(EXCEPTION.OUT_OF_RANGE);
+      }
       this.num1 += digit;
-    } else {  // 두 번째 숫자 입력
+    } else {
+      // 두 번째 숫자 입력
+      if (this.num2.length >= MAX_LENGTH) {
+        return alert(EXCEPTION.OUT_OF_RANGE);
+      }
       this.num2 += digit;
     }
     this.calculator.updateTotalText(digit);
