@@ -1,5 +1,3 @@
-// - [ ] 숫자는 한번에 최대 3자리 수까지 입력 가능하다.
-
 it('2개의 숫자에 대해 덧셈이 가능하다.', () => {
   cy.visit('index.html');
   // 6을 누른다.
@@ -64,6 +62,21 @@ it('AC(All Clear)버튼을 누르면 0으로 초기화 한다.', () => {
   cy.get('.modifier').click();
   // 0이 도출된다.
   cy.get('#total').should('have.text', '0');
+});
+
+it('숫자는 한번에 최대 3자리 수까지 입력 가능하다.', () => {
+  // 초기화 한다.
+  cy.get('.modifier').click();
+  // 7을 누른다.
+  cy.get('.digit').contains(7).click();
+  // 2을 누른다.
+  cy.get('.digit').contains(2).click();
+  // 3을 누른다.
+  cy.get('.digit').contains(3).click();
+  // 4을 누른다.
+  cy.get('.digit').contains(4).click();
+  // 723이 도출된다.
+  cy.get('#total').should('have.text', '723');
 });
 
 it('계산 결과를 표현할 때 소수점 이하는 버림한다.', () => {
