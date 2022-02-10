@@ -4,7 +4,13 @@ import {
   operationButtons,
   totalText,
 } from './elements.js';
-import { MAX_LENGTH, EXCEPTION, OPERATOR, MOUSE_EVENT } from './constants.js';
+import {
+  MAX_LENGTH,
+  EXCEPTION,
+  OPERATOR,
+  MOUSE_EVENT,
+  INITIAL_NUMBER,
+} from './constants.js';
 
 export default class User {
   constructor(calculator) {
@@ -47,7 +53,9 @@ export default class User {
       this.operator
     );
     this.init();
-    this.num1 = totalText.innerHTML;
+    if (totalText.innerHTML !== INITIAL_NUMBER) {
+      this.num1 = totalText.innerHTML;
+    }
   }
 
   clickToEnterOperator(operator) {
@@ -75,7 +83,7 @@ export default class User {
 
   registerEventListener() {
     const { CLICK } = MOUSE_EVENT;
-    
+
     ACButton.addEventListener(CLICK, () => {
       this.clickACButton();
     });
