@@ -45,13 +45,17 @@ class Calculator {
   }
 
   divide(num1, num2) {
+    if (num2 === 0) {
+      alert("숫자는 0으로 나눌 수 없습니다.");
+      return;
+    }
     if (!num1 || !num2) {
       return;
     }
     if (typeof num1 !== "number" || typeof num2 !== "number") {
       return;
     }
-    this.totalElement.textContent = num1 / num2;
+    this.totalElement.textContent = parseInt(num1 / num2);
   }
 
   digitsClick() {
