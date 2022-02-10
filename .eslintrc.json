@@ -16,6 +16,7 @@
     "no-param-reassign": "off",
     "no-continue": "off",
     "no-new": "off",
+    "no-useless-escape": "off",
     "consistent-return": "off",
     "max-depth": ["error", 2],
     "max-lines-per-function": ["error", 15]
