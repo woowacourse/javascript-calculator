@@ -30,25 +30,25 @@ class Calculator {
             if(!validateNumberLength(this.left))  return alert('3자리 숫자까지만 입력 가능합니다.');
             this.left += number;
             total.innerHTML = this.left;
-            if(isStartZero(this.left, number)) return alert('0으로 시작되는 숫자는 불가능') 
+            if(isStartZero(this.left, number)) return alert('0으로 시작되는 숫자는 불가능합니다') 
             return;
         }
         if(!validateNumberLength(this.right))  return alert('3자리 숫자까지만 입력 가능합니다.');
-        if (isStartZero(this.left, number)) return alert('0으로 시작되는 숫자는 불가능');
+        if (isStartZero(this.left, number)) return alert('0으로 시작되는 숫자는 불가능합니다');
         this.right += number;
         total.innerHTML+= number;
     }
 
     operationHandler(operator) {
         const total = document.querySelector("#total");
-        if (!this.left) return alert('숫자를 먼저 입력해주세요1.'); // +8 // =
+        if (!this.left) return alert('올바르지 않은 식입니다.'); // +8 // =
         if(!this.operator){
             this.operator = operator;
             total.innerHTML+=this.operator;
             return;
         }
-        if(operator !== '=') return alert('올바르지 않은 식입니다.2') // 8++
-        if(!this.right) return alert('올바르지 않은 식입니다3.') // 8+=  // 8=
+        if(operator !== '=') return alert('올바르지 않은 식입니다.') // 8++
+        if(!this.right) return alert('올바르지 않은 식입니다.') // 8+=  // 8=
         this.left = String(calculate[this.operator](+this.left,+this.right));
         total.innerHTML = this.left;
         this.right = '';
