@@ -1,4 +1,3 @@
-/* eslint-disable max-lines-per-function */
 import { $ } from './util.js';
 import { DIGIT, LENGTH, RESULT, SIGN } from './constants.js';
 
@@ -50,7 +49,7 @@ class Calculator {
   }
 
   renderNumber(clickedDigit) {
-    if (this.$total.innerText === RESULT.DEFAULT) {
+    if (this.isDefaultResult()) {
       this.$total.innerText = clickedDigit;
 
       return;
@@ -61,15 +60,7 @@ class Calculator {
 
   renderTotal(clickedOperator) {
     if (this.isEqual(clickedOperator)) {
-      this.isOperatorUsed = false;
-
-      const currentInputArray = this.$total.innerText.split('');
-      this.$total.innerText = this.calc(this.preprocess(currentInputArray));
-
-      this.currentNumberLength =
-        this.$total.innerText === RESULT.DEFAULT ? RESULT.DEFAULT : this.$total.innerText.length;
-
-      return;
+      return this.renderResult();
     }
 
     if (!this.isOperatorUsed) {
@@ -78,24 +69,27 @@ class Calculator {
     }
   }
 
-  preprocess(currentInputArray) {
-    const numberStack = [];
-    const operatorStack = [];
-    let tempNumber = '';
+  renderResult() {
+    this.isOperatorUsed = false;
 
-    for (let i = 0; i < currentInputArray.length; i += 1) {
-      if (this.isDigit(currentInputArray[i])) {
-        tempNumber += currentInputArray[i];
+    const currentInputArray = this.$total.innerText.split('');
+    this.$total.innerText = this.calc(this.preprocess(currentInputArray));
 
-        continue;
-      }
-      numberStack.push(Number(tempNumber));
-      tempNumber = '';
-      operatorStack.push(currentInputArray[i]);
-    }
-    numberStack.push(Number(tempNumber));
+    this.currentNumberLength = this.isDefaultResult()
+      ? RESULT.DEFAULT
+      : this.$total.innerText.length;
+  }
 
-    return [numberStack, operatorStack];
+  preprocess() {
+    const current = this.$total.innerText;
+    const operator = current.match(/[\+\-X\/]/)[0];
+    const numberStack = current.split(operator).map((v) => parseInt(v, 10));
+
+    return [numberStack, operator];
+  }
+
+  isDefaultResult() {
+    return this.$total.innerText === RESULT.DEFAULT;
   }
 
   isDigit(element) {
@@ -106,21 +100,19 @@ class Calculator {
     return clickedOperator === SIGN.EQUAL;
   }
 
-  calc([numberStack, operatorStack]) {
-    return operatorStack.map((operator) => {
-      if (operator === SIGN.ADD) {
-        return this.add(numberStack.shift(), numberStack.shift());
-      }
-      if (operator === SIGN.SUBTRACT) {
-        return this.subtract(numberStack.shift(), numberStack.shift());
-      }
-      if (operator === SIGN.MULTIPLY) {
-        return this.multiply(numberStack.shift(), numberStack.shift());
-      }
-      if (operator === SIGN.DIVIDE) {
-        return this.divide(numberStack.shift(), numberStack.shift());
-      }
-    });
+  calc([numberStack, operator]) {
+    if (operator === SIGN.ADD) {
+      return this.add(numberStack.shift(), numberStack.shift());
+    }
+    if (operator === SIGN.SUBTRACT) {
+      return this.subtract(numberStack.shift(), numberStack.shift());
+    }
+    if (operator === SIGN.MULTIPLY) {
+      return this.multiply(numberStack.shift(), numberStack.shift());
+    }
+    if (operator === SIGN.DIVIDE) {
+      return this.divide(numberStack.shift(), numberStack.shift());
+    }
   }
 
   add(leftNumber, rightNumber) {
