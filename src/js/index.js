@@ -42,6 +42,16 @@ class Calculator {
     this.totalElement.textContent = num1 * num2;
   }
 
+  divide(num1, num2) {
+    if (!num1 || !num2) {
+      return;
+    }
+    if (typeof num1 !== "number" || typeof num2 !== "number") {
+      return;
+    }
+    this.totalElement.textContent = num1 / num2;
+  }
+
   digitsClick() {
     this.digitsElement.addEventListener("click", ({ target }) => {
       if (this.phase) {
@@ -63,7 +73,7 @@ class Calculator {
         target.textContent === "+" ||
         target.textContent === "-" ||
         target.textContent === "X" ||
-        targuments.textContent === "/"
+        target.textContent === "/"
       ) {
         this.phase = false;
         this.operation = target.textContent;
@@ -79,6 +89,8 @@ class Calculator {
       this.submit(this.firstNumber, this.secondNumber);
     } else if (this.operation === "X") {
       this.multiply(this.firstNumber, this.secondNumber);
+    } else if (this.operation === "/") {
+      this.divide(this.firstNumber, this.secondNumber);
     }
   }
 }
