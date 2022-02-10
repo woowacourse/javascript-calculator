@@ -45,11 +45,13 @@ export default class Model {
     this.digitCount = NUMBER.INITIAL_RESULT;
   }
 
+  getNumberCount() {
+    return this.userInputString.split(/[+\-X/]+/).filter((elem) => typeof Number(elem) === "number")
+      .length;
+  }
+
   calculate() {
-    if (
-      this.userInputString.split(/[+\-X/]+/).filter((elem) => typeof Number(elem) === "number")
-        .length > NUMBER.COUNT_MAXIMUM
-    ) {
+    if (this.getNumberCount() > NUMBER.COUNT_MAXIMUM) {
       alert(ERROR_MESSAGES.MAXIMUM_NUMBER_COUNT);
 
       this.initializeDigitCount();
