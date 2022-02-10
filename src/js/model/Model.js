@@ -50,6 +50,10 @@ export default class Model {
       .length;
   }
 
+  getFirstOperation() {
+    return this.userInputString.split("").find((char) => "+-X/".includes(char));
+  }
+
   calculate() {
     if (this.getNumberCount() > NUMBER.COUNT_MAXIMUM) {
       alert(ERROR_MESSAGES.MAXIMUM_NUMBER_COUNT);
@@ -60,9 +64,7 @@ export default class Model {
       return INITIAL_VALUE;
     }
 
-    const operation = this.userInputString.split("").find((char) => "+-X/".includes(char));
-
-    return Model.operate(this.userInputString, operation);
+    return Model.operate(this.userInputString, this.getFirstOperation());
   }
 
   initializeUserInputString() {
