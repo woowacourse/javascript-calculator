@@ -1,5 +1,5 @@
 import { $ } from './util.js';
-import { DIGIT, LENGTH, RESULT, SIGN } from './constants.js';
+import { DIGIT, LENGTH, REGEXP, RESULT, SIGN, TYPE } from './constants.js';
 
 class Calculator {
   constructor() {
@@ -8,6 +8,7 @@ class Calculator {
 
     this.currentNumberLength = LENGTH.DEFAULT;
     this.isOperatorUsed = false;
+    this.previousType = false;
   }
 
   selectDOM() {
@@ -25,6 +26,7 @@ class Calculator {
 
   handleDigit(event) {
     this.currentNumberLength += 1;
+    this.previousType = TYPE.DIGIT;
 
     if (this.currentNumberLength > LENGTH.MAX) return;
 
@@ -35,9 +37,10 @@ class Calculator {
   handleOperator(event) {
     const clickedOperator = event.target.innerText;
 
-    if (this.isEqual(clickedOperator) && !this.isOperatorUsed) return;
+    if (this.isEqual(clickedOperator) && this.isEqualAllowed()) return;
     if (!this.isEqual(clickedOperator) && this.isOperatorUsed) return;
 
+    this.previousType = TYPE.OPERATOR;
     this.currentNumberLength = LENGTH.DEFAULT;
     this.renderTotal(clickedOperator);
   }
@@ -82,7 +85,7 @@ class Calculator {
 
   preprocess() {
     const current = this.$total.innerText;
-    const operator = current.match(/[\+\-X\/]/)[0];
+    const operator = current.match(REGEXP.OPERATOR)[0];
     const numberStack = current.split(operator).map((v) => parseInt(v, 10));
 
     return [numberStack, operator];
@@ -98,6 +101,10 @@ class Calculator {
 
   isEqual(clickedOperator) {
     return clickedOperator === SIGN.EQUAL;
+  }
+
+  isEqualAllowed() {
+    return !this.isOperatorUsed || this.previousType === TYPE.OPERATOR;
   }
 
   calc([numberStack, operator]) {
