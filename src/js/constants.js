@@ -1,0 +1,22 @@
+export const DIGIT = {
+  MIN: 0,
+  MAX: 9,
+};
+
+export const LENGTH = {
+  DEFAULT: 0,
+  MAX: 3,
+};
+
+export const RESULT = {
+  DEFAULT: '0',
+  DIVIDE_BY_ZERO: '0으로 나눌 수 없습니다',
+};
+
+export const SIGN = {
+  ADD: '+',
+  SUBTRACT: '-',
+  MULTIPLY: 'X',
+  DIVIDE: '/',
+  EQUAL: '=',
+};

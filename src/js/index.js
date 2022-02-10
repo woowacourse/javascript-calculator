@@ -1,12 +1,13 @@
 /* eslint-disable max-lines-per-function */
 import { $ } from './util.js';
+import { DIGIT, LENGTH, RESULT, SIGN } from './constants.js';
 
 class Calculator {
   constructor() {
     this.selectDOM();
     this.attachEvents();
 
-    this.currentNumberLength = 0;
+    this.currentNumberLength = LENGTH.DEFAULT;
     this.isOperatorUsed = false;
   }
 
@@ -26,7 +27,7 @@ class Calculator {
   handleDigit(event) {
     this.currentNumberLength += 1;
 
-    if (this.currentNumberLength > 3) return;
+    if (this.currentNumberLength > LENGTH.MAX) return;
 
     const clickedDigit = event.target.innerText;
     this.renderNumber(clickedDigit);
@@ -38,18 +39,18 @@ class Calculator {
     if (this.isEqual(clickedOperator) && !this.isOperatorUsed) return;
     if (!this.isEqual(clickedOperator) && this.isOperatorUsed) return;
 
-    this.currentNumberLength = 0;
+    this.currentNumberLength = LENGTH.DEFAULT;
     this.renderTotal(clickedOperator);
   }
 
   handleModifier() {
-    this.currentNumberLength = 0;
+    this.currentNumberLength = LENGTH.DEFAULT;
     this.isOperatorUsed = false;
-    this.$total.innerText = '0';
+    this.$total.innerText = RESULT.DEFAULT;
   }
 
   renderNumber(clickedDigit) {
-    if (this.$total.innerText === '0') {
+    if (this.$total.innerText === RESULT.DEFAULT) {
       this.$total.innerText = clickedDigit;
 
       return;
@@ -65,7 +66,8 @@ class Calculator {
       const currentInputArray = this.$total.innerText.split('');
       this.$total.innerText = this.calc(this.preprocess(currentInputArray));
 
-      this.currentNumberLength = this.$total.innerText === '0' ? 0 : this.$total.innerText.length;
+      this.currentNumberLength =
+        this.$total.innerText === RESULT.DEFAULT ? RESULT.DEFAULT : this.$total.innerText.length;
 
       return;
     }
@@ -97,25 +99,25 @@ class Calculator {
   }
 
   isDigit(element) {
-    return element >= '0' && element <= '9';
+    return element >= DIGIT.MIN && element <= DIGIT.MAX;
   }
 
   isEqual(clickedOperator) {
-    return clickedOperator === '=';
+    return clickedOperator === SIGN.EQUAL;
   }
 
   calc([numberStack, operatorStack]) {
     return operatorStack.map((operator) => {
-      if (operator === '+') {
+      if (operator === SIGN.ADD) {
         return this.add(numberStack.shift(), numberStack.shift());
       }
-      if (operator === '-') {
+      if (operator === SIGN.SUBTRACT) {
         return this.subtract(numberStack.shift(), numberStack.shift());
       }
-      if (operator === 'X') {
+      if (operator === SIGN.MULTIPLY) {
         return this.multiply(numberStack.shift(), numberStack.shift());
       }
-      if (operator === '/') {
+      if (operator === SIGN.DIVIDE) {
         return this.divide(numberStack.shift(), numberStack.shift());
       }
     });
@@ -135,7 +137,7 @@ class Calculator {
 
   divide(leftNumber, rightNumber) {
     if (!rightNumber) {
-      return '0으로 나눌 수 없습니다';
+      return RESULT.DIVIDE_BY_ZERO;
     }
 
     return Math.floor(leftNumber / rightNumber);
