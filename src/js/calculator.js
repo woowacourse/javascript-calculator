@@ -1,5 +1,5 @@
-import { EXCEPTION, OPERATOR, TYPE, INITIAL_NUMBER } from './constants.js';
 import { totalText } from './elements.js';
+import { EXCEPTION, OPERATOR, TYPE, INITIAL_NUMBER } from './constants.js';
 
 export default class Calculator {
   add(num1, num2) {
@@ -22,6 +22,16 @@ export default class Calculator {
     return Math.floor(num1 / num2);
   }
 
+  divisionLogic(num1, num2) {
+    const result = this.divide(num1, num2);
+
+    if (typeof result === TYPE.NUMBER) {
+      totalText.innerHTML = result;
+    } else {  // ERROR
+      return alert(EXCEPTION.DIVISION_BY_ZERO);
+    }
+  }
+
   calculate(num1, num2, operator) {
     switch (operator) {
       case OPERATOR.ADD:
@@ -37,13 +47,7 @@ export default class Calculator {
         break;
 
       case OPERATOR.DIVIDE:
-        let result = this.divide(num1, num2);
-
-        if (typeof result == TYPE.NUMBER) {
-          totalText.innerHTML = result;
-        } else {
-          return alert(EXCEPTION.DIVISION_BY_ZERO);
-        }
+        this.divisionLogic(num1, num2);
         break;
     }
   }
@@ -54,9 +58,8 @@ export default class Calculator {
 
   updateTotalText(text) {
     if (totalText.innerHTML === INITIAL_NUMBER) {
-      totalText.innerHTML = text;
-    } else {
-      totalText.innerHTML += text;
+      totalText.innerHTML = '';
     }
+    totalText.innerHTML += text;
   }
 }

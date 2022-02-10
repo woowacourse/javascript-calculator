@@ -1,12 +1,12 @@
 import {
   ACButton,
-  digitButton,
-  operationButton,
+  digitButtons,
+  operationButtons,
   totalText,
 } from './elements.js';
 import { MAX_LENGTH, EXCEPTION, OPERATOR, MOUSE_EVENT } from './constants.js';
 
-export class User {
+export default class User {
   constructor(calculator) {
     this.calculator = calculator;
     this.init();
@@ -25,21 +25,37 @@ export class User {
   }
 
   clickDigitButton(digit) {
-    if (!this.operator) {
-      // 첫 번째 숫자 입력
-      if (this.num1.length >= MAX_LENGTH) {
-        return alert(EXCEPTION.OUT_OF_RANGE);
-      }
-      this.num1 += digit;
-      this.calculator.updateTotalText(digit);
-    } else {
-      // 두 번째 숫자 입력
-      if (this.num2.length >= MAX_LENGTH) {
-        return alert(EXCEPTION.OUT_OF_RANGE);
-      }
-      this.num2 += digit;
-      this.calculator.updateTotalText(digit);
+    if (
+      this.num1.length > MAX_LENGTH ||
+      this.num2.length > MAX_LENGTH
+    ) {
+      return alert(EXCEPTION.OUT_OF_RANGE);
     }
+
+    if (!this.operator) { // 첫 번째 숫자 입력
+      this.num1 += digit;
+    } else {  // 두 번째 숫자 입력
+      this.num2 += digit;
+    }
+    this.calculator.updateTotalText(digit);
+  }
+
+  clickToCalculate() {
+    this.calculator.calculate(
+      parseInt(this.num1),
+      parseInt(this.num2),
+      this.operator
+    );
+    this.init();
+    this.num1 = totalText.innerHTML;
+  }
+
+  clickToEnterOperator(operator) {
+    if (this.num1.length > MAX_LENGTH) {
+      return alert(EXCEPTION.OUT_OF_RANGE);
+    }
+    this.operator = operator;
+    this.calculator.updateTotalText(operator);
   }
 
   clickOperatorButton(operator) {
@@ -49,41 +65,28 @@ export class User {
       this.operator &&
       this.num2
     ) {
-      // 정상 계산 (=)
-      this.calculator.calculate(
-        parseInt(this.num1),
-        parseInt(this.num2),
-        this.operator
-      );
-      this.init();
-      this.num1 = totalText.innerHTML;
+      this.clickToCalculate();
     } else if (operator !== OPERATOR.EQUAL && this.num1 && !this.operator) {
-      // 연산자 입력
-      if (this.num1.length > MAX_LENGTH) {
-        return alert(EXCEPTION.OUT_OF_RANGE);
-      }
-      this.operator = operator;
-      this.calculator.updateTotalText(operator);
+      this.clickToEnterOperator(operator);
     } else {
-      // 비정상 계산 (=)
-      return alert(EXCEPTION.UNCORRECT_VALUE);
+      return alert(EXCEPTION.INCORRECT_VALUE);
     }
   }
 
   registerEventListener() {
-    ACButton.addEventListener(MOUSE_EVENT.CLICK, () => {
+    const { CLICK } = MOUSE_EVENT;
+    
+    ACButton.addEventListener(CLICK, () => {
       this.clickACButton();
     });
-
-    for (let index = 0; index < digitButton.length; index++) {
-      digitButton[index].addEventListener(MOUSE_EVENT.CLICK, () => {
-        this.clickDigitButton(digitButton[index].innerHTML);
+    for (let index = 0; index < digitButtons.length; index++) {
+      digitButtons[index].addEventListener(CLICK, () => {
+        this.clickDigitButton(digitButtons[index].innerHTML);
       });
     }
-
-    for (let index = 0; index < operationButton.length; index++) {
-      operationButton[index].addEventListener(MOUSE_EVENT.CLICK, () => {
-        this.clickOperatorButton(operationButton[index].innerHTML);
+    for (let index = 0; index < operationButtons.length; index++) {
+      operationButtons[index].addEventListener(CLICK, () => {
+        this.clickOperatorButton(operationButtons[index].innerHTML);
       });
     }
   }
