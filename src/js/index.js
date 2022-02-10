@@ -23,6 +23,10 @@ class Calculator {
 
   addEventListeners() {
     this.$digits.addEventListener('click', (e) => {
+      if (this.calculatedResult !== 0) {
+        this.reset();
+      }
+
       const digit = parseInt(e.target.innerText, 10);
 
       if (!this.currentOperation && this.isOverMaxDigitSize(this.firstNumberArray)) {
@@ -53,7 +57,7 @@ class Calculator {
         // firstNumArray에 이전 결과값을 채운다
         this.firstNumberArray = `${this.calculatedResult}`.split('').map((numStr) => Number(numStr));
         this.secondNumberArray = [];
-        this.calculatedResult = null;
+        this.calculatedResult = 0;
       }
 
       // validation
