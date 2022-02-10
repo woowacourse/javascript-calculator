@@ -1,3 +1,4 @@
+/* eslint-disable max-lines-per-function */
 import { $ } from './util.js';
 
 class Calculator {
@@ -133,6 +134,10 @@ class Calculator {
   }
 
   divide(leftNumber, rightNumber) {
+    if (!rightNumber) {
+      return '0으로 나눌 수 없습니다';
+    }
+
     return Math.floor(leftNumber / rightNumber);
   }
 }
