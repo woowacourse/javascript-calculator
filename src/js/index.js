@@ -56,6 +56,19 @@ class Calculator {
         this.calculatedResult = null;
       }
 
+      // validation
+      // =인데, 피연산자가 하나라도 없다면 ERROR
+      if ((operation === OPERATIONS.equal) && (this.firstNumberArray.length === 0 || this.secondNumberArray.length === 0)) {
+        alert(ERROR_MESSAGES.operationBetweenNumber);
+        return;
+      }
+
+      // =이 아닌데(+, -, *, /) 첫번째 피연산자가 없다면
+      if (operation !== OPERATIONS.equal && (this.firstNumberArray.length === 0)) {
+        alert(ERROR_MESSAGES.operationBetweenNumber);
+        return;
+      }
+
       if (operation === OPERATIONS.equal) {
         const firstNum = arrayToNumber(this.firstNumberArray);
         const secondNum = arrayToNumber(this.secondNumberArray);
