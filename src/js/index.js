@@ -86,6 +86,9 @@ class Calculator {
       if (operator === '+') {
         return this.add(numberStack.shift(), numberStack.shift());
       }
+      if (operator === '-') {
+        return this.subtract(numberStack.shift(), numberStack.shift());
+      }
       if (operator === '/') {
         return this.divide(numberStack.shift(), numberStack.shift());
       }
@@ -96,6 +99,10 @@ class Calculator {
 
   add(leftNumber, rightNumber) {
     return leftNumber + rightNumber;
+  }
+
+  subtract(leftNumber, rightNumber) {
+    return leftNumber - rightNumber;
   }
 
   divide(leftNumber, rightNumber) {
