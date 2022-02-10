@@ -8,8 +8,10 @@ class Calculator {
     this.digitsElement = document.querySelector(".digits");
     this.operationElement = document.querySelector(".operations");
     this.totalElement = document.querySelector("#total");
+    this.ACElement = document.querySelector(".modifier");
     this.digitsClick();
     this.operationClick();
+    this.ACClick();
   }
 
   add(num1, num2) {
@@ -92,6 +94,20 @@ class Calculator {
     } else if (this.operation === "/") {
       this.divide(this.firstNumber, this.secondNumber);
     }
+  }
+  
+  ACClick() {
+    this.ACElement.addEventListener("click", () => {
+      this.calculatorInit();
+    });
+  }
+
+  calculatorInit() {
+    this.totalElement.textContent = 0;
+    this.firstNumber = 0;
+    this.secondNumber = 0;
+    this.phase = true;
+    this.operation = "";
   }
 }
 
