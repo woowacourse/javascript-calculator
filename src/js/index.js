@@ -1,4 +1,3 @@
-/* eslint-disable max-lines-per-function */
 import { $ } from './util.js';
 
 class Calculator {
@@ -7,6 +6,7 @@ class Calculator {
     this.attachEvents();
 
     this.currentNumberLength = 0;
+    this.isOperatorUsed = false;
   }
 
   selectDOM() {
@@ -32,14 +32,18 @@ class Calculator {
   }
 
   handleOperator(event) {
-    this.currentNumberLength = 0;
-
     const clickedOperator = event.target.innerText;
+
+    if (this.isEqual(clickedOperator) && !this.isOperatorUsed) return;
+    if (!this.isEqual(clickedOperator) && this.isOperatorUsed) return;
+
+    this.currentNumberLength = 0;
     this.renderTotal(clickedOperator);
   }
 
   handleModifier() {
     this.currentNumberLength = 0;
+    this.isOperatorUsed = false;
     this.$total.innerText = '0';
   }
 
@@ -54,15 +58,21 @@ class Calculator {
   }
 
   renderTotal(clickedOperator) {
-    if (!this.isEqual(clickedOperator)) {
-      this.$total.innerText += clickedOperator;
+    if (this.isEqual(clickedOperator)) {
+      this.isOperatorUsed = false;
+
+      const currentInputArray = this.$total.innerText.split('');
+      this.$total.innerText = this.calc(this.preprocess(currentInputArray));
+
+      this.currentNumberLength = this.$total.innerText === '0' ? 0 : this.$total.innerText.length;
 
       return;
     }
 
-    const currentInputArray = this.$total.innerText.split('');
-
-    this.$total.innerText = this.calc(this.preprocess(currentInputArray));
+    if (!this.isOperatorUsed) {
+      this.isOperatorUsed = true;
+      this.$total.innerText += clickedOperator;
+    }
   }
 
   preprocess(currentInputArray) {
