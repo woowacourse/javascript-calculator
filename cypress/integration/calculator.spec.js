@@ -79,6 +79,27 @@ it('숫자는 한번에 최대 3자리 수까지 입력 가능하다.', () => {
   cy.get('#total').should('have.text', '723');
 });
 
+it('숫자는 2개까지만 입력할 수 있다.', () => {
+  // 초기화 한다.
+  cy.get('.modifier').click();
+  // 7을 누른다.
+  cy.get('.digit').contains(7).click();
+  // 2을 누른다.
+  cy.get('.digit').contains(2).click();
+  // +를 누른다.
+  cy.get('.operation').contains('+').click();
+  // 3을 누른다.
+  cy.get('.digit').contains(3).click();
+  // +를 누른다.
+  cy.get('.operation').contains('+').click();
+  // 2을 누른다.
+  cy.get('.digit').contains(2).click();
+  // =을 누른다.
+  cy.get('.operation').contains('=').click();
+  // 75가 도출된다.
+  cy.get('#total').should('have.text', '75');
+});
+
 it('계산 결과를 표현할 때 소수점 이하는 버림한다.', () => {
   // 초기화 한다.
   cy.get('.modifier').click();
