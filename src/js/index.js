@@ -4,4 +4,4 @@ import Model from "./model/Model.js";
 
 const view = new View();
 const model = new Model();
-const controller = new Controller(view, model);
+new Controller(view, model);

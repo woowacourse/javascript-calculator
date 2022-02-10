@@ -2,8 +2,22 @@ import { NUMBER, OPERATIONS, ERROR_MESSAGES, INITIAL_VALUE } from "../constants.
 import Calculator from "./Calculator.js";
 
 export default class Model {
+  static operate(inputString, operation) {
+    const operationSwitch = {
+      [OPERATIONS.PLUS]: Calculator.add,
+      [OPERATIONS.MINUS]: Calculator.subtract,
+      [OPERATIONS.MULTIPLY]: Calculator.multiply,
+      [OPERATIONS.DIVIDE]: Calculator.divide,
+    };
+
+    if (inputString.includes(operation)) {
+      const [number1, number2] = inputString.split(operation);
+
+      return operationSwitch[operation](Number(number1), Number(number2));
+    }
+  }
+
   constructor() {
-    this.calculator = new Calculator();
     this.userInputString = "";
     this.digitCount = NUMBER.INITIAL_RESULT;
   }
@@ -32,10 +46,8 @@ export default class Model {
   }
 
   calculate() {
-    let result;
-
     if (
-      this.userInputString.split(/[\+\-X/]+/).filter((elem) => typeof Number(elem) === "number")
+      this.userInputString.split(/[+\-X/]+/).filter((elem) => typeof Number(elem) === "number")
         .length > NUMBER.COUNT_MAXIMUM
     ) {
       alert(ERROR_MESSAGES.MAXIMUM_NUMBER_COUNT);
@@ -46,31 +58,9 @@ export default class Model {
       return INITIAL_VALUE;
     }
 
-    if (this.userInputString.includes(OPERATIONS.PLUS)) {
-      const [number1, number2] = this.userInputString.split(OPERATIONS.PLUS);
+    const operation = this.userInputString.split("").find((char) => "+-X/".includes(char));
 
-      result = this.calculator.add(Number(number1), Number(number2));
-    }
-
-    if (this.userInputString.includes(OPERATIONS.MINUS)) {
-      const [number1, number2] = this.userInputString.split(OPERATIONS.MINUS);
-
-      result = this.calculator.subtract(Number(number1), Number(number2));
-    }
-
-    if (this.userInputString.includes(OPERATIONS.MULTIPLY)) {
-      const [number1, number2] = this.userInputString.split(OPERATIONS.MULTIPLY);
-
-      result = this.calculator.multiply(Number(number1), Number(number2));
-    }
-
-    if (this.userInputString.includes(OPERATIONS.DIVIDE)) {
-      const [number1, number2] = this.userInputString.split(OPERATIONS.DIVIDE);
-
-      result = this.calculator.divide(Number(number1), Number(number2));
-    }
-
-    return result;
+    return Model.operate(this.userInputString, operation);
   }
 
   initializeUserInputString() {
