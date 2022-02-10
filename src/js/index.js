@@ -22,6 +22,16 @@ class Calculator {
     this.totalElement.textContent = num1 + num2;
   }
 
+  submit(num1, num2) {
+    if (!num1 || !num2) {
+      return;
+    }
+    if (typeof num1 !== "number" || typeof num2 !== "number") {
+      return;
+    }
+    this.totalElement.textContent = num1 - num2;
+  }
+
   digitsClick() {
     this.digitsElement.addEventListener("click", ({ target }) => {
       if (this.phase) {
@@ -50,7 +60,9 @@ class Calculator {
 
   showAnswer() {
     if(this.operation === "+") {
-        this.add(this.firstNumber, this.secondNumber);
+      this.add(this.firstNumber, this.secondNumber);
+    } else if (this.operation === "-") {
+      this.submit(this.firstNumber, this.secondNumber);
     }
   }
 }
