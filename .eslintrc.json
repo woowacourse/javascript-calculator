@@ -12,6 +12,8 @@
     "import/extensions": ["off"],
     "no-alert": "off",
     "camelcase": "off",
-    "class-methods-use-this": "off"
+    "class-methods-use-this": "off",
+    "no-new": "off",
+    "consistent-return": "off"
   }
 }
