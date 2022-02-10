@@ -19,7 +19,7 @@ export const OPERATIONS = {
   equal: 'equal',
 }
 
-export const INITIAL_NUMBER = '0';
+export const INITIAL_NUMBER = 0;
 
 export const MAX_DIGIT_SIZE = 3;
 
