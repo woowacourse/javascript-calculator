@@ -32,6 +32,22 @@ it('2개의 숫자에 대해 나눗셈이 가능하다.', () => {
   cy.get('#total').should('have.text', '2');
 });
 
+// - [ ] 2개의 숫자에 대해 뺄셈이 가능하다.
+it('2개의 숫자에 대해 뺄셈이 가능하다.', () => {
+  // 초기화 한다.
+  cy.get('.modifier').click();
+  // 5를 누른다.
+  cy.get('.digit').contains(5).click();
+  // -를 누른다.
+  cy.get('.operation').contains('-').click();
+  // 3을 누른다.
+  cy.get('.digit').contains(3).click();
+  // =을 누른다.
+  cy.get('.operation').contains('=').click();
+  // 2가 도출된다.
+  cy.get('#total').should('have.text', '2');
+});
+
 it('AC(All Clear)버튼을 누르면 0으로 초기화 한다.', () => {
   // AC를 누른다.
   cy.get('.modifier').click();
