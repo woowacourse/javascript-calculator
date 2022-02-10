@@ -82,7 +82,13 @@ class Calculator {
       if (operation === OPERATIONS.equal) {
         const firstNum = arrayToNumber(this.firstNumberArray);
         const secondNum = arrayToNumber(this.secondNumberArray);
-        this.calculatedResult = this.calculate(firstNum, secondNum);
+        const result = this.calculate(firstNum, secondNum);
+        // 에러가 발생해서 null을 리턴한 경우, 계산기를 초기화 해버린다
+        if (result === null) {
+          this.reset();
+          return;
+        }
+        this.calculatedResult = result;
         this.renderTotal(`${this.calculatedResult}`);
         this.currentOperation = '';
         return;
@@ -146,6 +152,10 @@ class Calculator {
   }
 
   divide(firstNum, secondNum) {
+    if (secondNum === 0) {
+      alert(ERROR_MESSAGES.divideWithPositiveNumber);
+      return null;
+    }
     return Math.floor(firstNum / secondNum);
   }
 }
