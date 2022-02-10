@@ -73,6 +73,12 @@ class Calculator {
         return;
       }
 
+      // =이 아닌데(+, -, *, /) 피연산자가 2개 꽉 차있다면
+      if (operation !== OPERATIONS.equal && (this.firstNumberArray.length > 0 && this.secondNumberArray.length > 0)) {
+        alert(ERROR_MESSAGES.onlyTwoOperlands);
+        return;
+      }
+
       if (operation === OPERATIONS.equal) {
         const firstNum = arrayToNumber(this.firstNumberArray);
         const secondNum = arrayToNumber(this.secondNumberArray);
