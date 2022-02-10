@@ -51,3 +51,87 @@ describe('정상 시나리오에 대해 만족해야 한다.', () => {
     cy.get('#total').should('have.text', 0);
   });
 });
+
+describe('비정상 시나리오에 대해 사용자에게 alert를 띄운다. ', () => {
+  it('사용자가 수를 0으로 나눌 경우 alert를 띄운다.', () => {
+    const alertStub = cy.stub();
+    cy.on('window:alert', alertStub);
+
+    cy.get('.digit').contains(5).click();
+    cy.get('.operation').contains('/').click();
+    cy.get('.digit').contains(0).click();
+    cy.get('.operation')
+      .contains('=')
+      .click()
+      .then(() => {
+        expect(alertStub).to.be.called;
+      });
+
+    cy.get('.modifier').click();
+  });
+
+  it('연산자가 두번 이상 눌렸을 경우 alert를 띄운다.', () => {
+    const alertStub = cy.stub();
+    cy.on('window:alert', alertStub);
+
+    cy.get('.digit').contains(5).click();
+    cy.get('.operation').contains('/').click();
+    cy.get('.operation')
+      .contains('+')
+      .click()
+      .then(() => {
+        expect(alertStub).to.be.called;
+      });
+
+    cy.get('.modifier').click();
+  });
+
+  it('세자리를 초과하는 수가 입력됐을 경우 alert를 띄운다.', () => {
+    const alertStub = cy.stub();
+    cy.on('window:alert', alertStub);
+    const num = '1234';
+
+    for (let i = 0; i < num.length - 1; i++) {
+      cy.get('.digit').contains(parseInt(num[i])).click();
+    }
+    cy.get('.digit')
+      .contains(parseInt(num[3]))
+      .click()
+      .then(() => {
+        expect(alertStub).to.be.called;
+      });
+
+    cy.get('.modifier').click();
+  });
+
+  it('숫자 2개와 연산자를 입력하기 전에 `=`을 눌렀을 경우 alert를 띄운다.', () => {
+    const alertStub = cy.stub();
+    cy.on('window:alert', alertStub);
+
+    cy.get('.digit').contains(8).click();
+    cy.get('.operation').contains('/').click();
+
+    cy.get('.operation')
+      .contains('=')
+      .click()
+      .then(() => {
+        expect(alertStub).to.be.called;
+      });
+
+    cy.get('.modifier').click();
+  });
+
+  it('첫 번째 숫자가 입력되기 전에 연산자가 먼저 입력될 경우 alert를 띄운다.', () => {
+    const alertStub = cy.stub();
+    cy.on('window:alert', alertStub);
+
+    cy.get('.operation')
+      .contains('/')
+      .click()
+      .then(() => {
+        expect(alertStub).to.be.called;
+      });
+
+    cy.get('.modifier').click();
+  });
+});
