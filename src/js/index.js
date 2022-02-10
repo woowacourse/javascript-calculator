@@ -56,12 +56,11 @@ class Calculator {
 
   digitsClick() {
     this.digitsElement.addEventListener("click", ({ target }) => {
-      if (this.phase) {
+      if (this.phase && this.firstNumber.toString().length < 3) {
         this.firstNumber = this.firstNumber * 10 + parseInt(target.textContent);
         this.totalElement.textContent = this.firstNumber;
-      } else {
-        this.secondNumber =
-          this.secondNumber * 10 + parseInt(target.textContent);
+      } else if (!this.phase && this.secondNumber.toString().length < 3) {
+        this.secondNumber = this.secondNumber * 10 + parseInt(target.textContent);
         this.totalElement.textContent = this.secondNumber;
       }
     });
