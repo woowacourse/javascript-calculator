@@ -1,10 +1,4 @@
-// - 2개의 숫자에 대해 덧셈이 가능하다.
-// - 2개의 숫자에 대해 뺄셈이 가능하다.
-// - 2개의 숫자에 대해 곱셈이 가능하다.
-// - 2개의 숫자에 대해 나눗셈이 가능하다.
-// - AC(All Clear)버튼을 누르면 0으로 초기화 한다.
-// - 숫자는 한번에 최대 3자리 수까지 입력 가능하다.
-// - 계산 결과를 표현할 때 소수점 이하
+import { ERROR } from "../../src/js/constant.js";
 
 const digitClick = (number) => {
     const stringNumber = String(number).split("")
@@ -81,25 +75,25 @@ describe("예외사항을 처리한다.", ()=> {
 
     it('3자리를 초과할 시 에러를 띄운다.', () => {
         digitClick(3333);
-        checkAlertMessage('3자리 숫자까지만 입력 가능합니다.');
+        checkAlertMessage(ERROR.DIGIT_LENGTH);
     });    
     
     it('0으로 숫자가 시작될 시 에러를 띄운다.', () => {
         digitClick(0);
-        checkAlertMessage('0으로 시작되는 숫자는 불가능합니다');
+        checkAlertMessage(ERROR.START_ZERO);
     }); 
     
     it('올바른 형식의 식이 아닐 경우 에러를 띄운다', () => {
         operationClick("+")
-        checkAlertMessage('올바르지 않은 식입니다.');
+        checkAlertMessage(ERROR.WRONG_EXPRESSION);
         acClick();
         digitClick(8);
         operationClick("+");
         operationClick("+");
-        checkAlertMessage('올바르지 않은 식입니다.');
+        checkAlertMessage(ERROR.WRONG_EXPRESSION);
         acClick();
         digitClick(8);
         operationClick("=");
-        checkAlertMessage('올바르지 않은 식입니다.');
+        checkAlertMessage(ERROR.WRONG_EXPRESSION);
     });   
 })
