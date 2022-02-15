@@ -26,13 +26,14 @@
                     <button class="modifier">AC</button>
                 </div>
                 <div class="operations subgrid">
-                    <button class="operation">/</button>
-                    <button class="operation">X</button>
-                    <button class="operation">-</button>
-                    <button class="operation">+</button>
-                    <button class="operation">=</button>
+                    <button class="operation" data-operation="divide">/</button>
+                    <button class="operation" data-operation="multiply">X</button>
+                    <button class="operation" data-operation="minus">-</button>
+                    <button class="operation" data-operation="plus">+</button>
+                    <button id="calculate-equal" class="operation" data-operation="equal">=</button>
                 </div>
             </div>
         </div>
+    <script type="module" src="./src/js/index.js"></script>
     </body>
 </html>
