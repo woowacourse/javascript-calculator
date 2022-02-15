@@ -1,3 +1,9 @@
+# Cypress Test Result File
+/cypress/screenshots
+/cypress/videos
+/cypress/fixtures
+/cypress/support
+/cypress/plugins
 
 # Created by https://www.toptal.com/developers/gitignore/api/vscode,node,intellij
 # Edit at https://www.toptal.com/developers/gitignore?templates=vscode,node,intellij
@@ -12,7 +18,7 @@
 Icon
 
 
-# Thumbnails
+ # Thumbnails
 ._*
 
 # Files that might appear in the root of a volume
