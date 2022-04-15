@@ -1,0 +1,21 @@
+{
+    "name": "calculator",
+    "version": "1.0.0",
+    "description": "<br/> <br/> <p align=\"middle\" >   <img width=\"100px;\" src=\"src/images/calculator_icon.png\"/> </p> <h2 align=\"middle\">level1 - 자바스크립트 계산기</h2> <p align=\"middle\">자바스크립트 계산기로 익혀보는 Cypress</p> <p align=\"middle\">   <img src=\"https://img.shields.io/badge/version-1.0.0-blue?style=flat-square\" alt=\"template version\"/>   <img src=\"https://img.shields.io/badge/language-html-red.svg?style=flat-square\"/>   <img src=\"https://img.shields.io/badge/language-css-blue.svg?style=flat-square\"/>   <img src=\"https://img.shields.io/badge/language-js-yellow.svg?style=flat-square\"/>   <img src=\"https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat-square\"/> </p>",
+    "main": "index.js",
+    "scripts": {
+        "test": "cypress open"
+    },
+    "author": "",
+    "license": "ISC",
+    "dependencies": {
+        "eslint": "^7.32.0",
+        "eslint-config-airbnb-base": "^15.0.0",
+        "eslint-config-prettier": "^8.5.0",
+        "eslint-plugin-import": "^2.26.0"
+    },
+    "devDependencies": {
+        "cypress": "^9.5.4",
+        "eslint-plugin-cypress": "^2.12.1"
+    }
+}
